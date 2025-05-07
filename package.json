@@ -1,0 +1,26 @@
+{
+  "name": "log_my_work",
+  "version": "1.0.0",
+  "description": "FacultyTrack is a centralized web platform designed for college faculty to seamlessly log and monitor their academic contributions, including research papers, seminars, book publications, and more. It provides a streamlined interface for tracking monthly activities, ensuring organized documentation, performance insights, and institutional reporting.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhinav Kosta",
+  "license": "ISC",
+  "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^5.1.0",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.18.1",
+    "joi": "^17.13.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.14.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^8.0.0"
+  }
+}
