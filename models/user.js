@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["faculty", "hoi", "admin"],
     required: true
+  },
+  department: {
+    type: String,
+    required: function () {
+      return this.role !== "admin"; // only required for faculty and HOI
+    }
   }
 });
 

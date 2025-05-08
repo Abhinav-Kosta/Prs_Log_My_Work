@@ -25,8 +25,14 @@ const init = async () => {
     console.log("Old users removed.");
   
     for (let user of initData) {
-      const { facultyId, username ,role, password } = user;
-      const newUser = new User({ facultyId, username, role });
+      const { facultyId, username, role, password, department } = user;
+
+      const newUserData = { facultyId, username, role };
+      if (role !== "admin") {
+        newUserData.department = department;
+      }
+
+      const newUser = new User(newUserData);
 
       try {
         await User.register(newUser, password); // Make sure to call register with the `facultyId`
