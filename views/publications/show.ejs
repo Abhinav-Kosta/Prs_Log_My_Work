@@ -1,0 +1,26 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <h2>Publication Details</h2>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h4 class="card-title"><%= publication.title %></h4>
+        <p><strong>Journal:</strong> <%= publication.journalName %></p>
+        <p><strong>ISSN:</strong> <%= publication.issnNumber %></p>
+        <p><strong>Volume:</strong> <%= publication.volume %></p>
+        <p><strong>Pages:</strong> <%= publication.pageNumber %></p>
+        <p><strong>Indexed In:</strong> <%= publication.indexedIn %></p>
+        <p><strong>Publication Date:</strong> <%= publication.publicationDate.toDateString() %></p>
+        <p><strong>Impact Factor:</strong> <%= publication.impactFactor %></p>
+        <p><strong>Co-Authors:</strong> <%= publication.coAuthors %></p>
+        <p><strong>Link:</strong> <a href="<%= publication.link %>" target="_blank"><%= publication.link %></a></p>
+        <form>
+            <button>Edit</button>
+        </form>
+        <br>
+        <form>
+            <button>Delete</button>
+        </form>
+      </div>
+    </div>
+</body>

@@ -9,7 +9,7 @@ const MongoStore = require("connect-mongo");
 const flash = require('express-flash');
 const port = 8080;
 
-// const ExpressError = require("./utils/ExpressError.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 //For Authentication
 const passport = require("passport");
@@ -75,19 +75,25 @@ app.use((req, res, next) => {
 });
 
 const userRouter = require("./routes/user.js");//User routes of authenticate
+const facultyRouter = require("./routes/faculty.js");
+const hoiRouter = require("./routes/hoi.js");
+const adminRouter = require("./routes/admin.js");
 
 app.use("/", userRouter);
+app.use("/faculty", facultyRouter);
+app.use("/hoi", hoiRouter);
+app.use("/admin", adminRouter);
 
-app.get("/faculty/dashboard", (req, res) => {
-    res.render("faculty/dashboard.ejs");
-})
 
-app.get("/hoi/dashboard", (req, res) => {
-    res.send("HOI Dashboard");
-})
+// app.all("*", (req, res, next) => {
+//     next(new ExpressError(404, "Page not found!"));
+// })
 
-app.get("/admin/dashboard", (req, res) => {
-    res.send("Admin Dashboard");
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "Something unexpected occured." } = err;
+    res.status(statusCode).render("./error.ejs", { message });
+
+    // res.send("Something went wrong!");
 })
 
 app.listen(port, () => {

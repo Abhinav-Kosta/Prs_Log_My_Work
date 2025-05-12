@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <h2>Project Submission Details</h2>
+    <br>
+    <div class="card mt-3 shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= project.title %></h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Principal Investigator / Co-PI:</strong> <%= project.piOrCoPi %></li>
+          <li class="list-group-item"><strong>Funding Agency:</strong> <%= project.fundingAgency %></li>
+          <li class="list-group-item"><strong>Date of Submission:</strong> <%= project.dateOfSubmission.toDateString() %></li>
+          <li class="list-group-item"><strong>Fund Requested:</strong> ₹<%= project.fundRequestedLacs %> Lakhs</li>
+          <li class="list-group-item"><strong>Duration:</strong> <%= project.durationYears %> Year(s)</li>
+          <li class="list-group-item"><strong>Remarks:</strong> <%= project.remarks || 'None' %></li>
+        </ul>
+        <a href="/faculty/projects/<%= user._id %>" class="btn btn-secondary mt-3">Back to All Projects</a>
+        <br><br>
+        <form>
+            <button>Edit</button>
+        </form>
+        <br>
+        <form>
+            <button>Delete</button>
+        </form>
+      </div>
+    </div>
+</body>

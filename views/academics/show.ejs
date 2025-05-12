@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <br>
+    <h2>Academic Event Details</h2>
+  <br>
+
+    <div class="card mt-3 shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= academic.eventName %> (<%= academic.type %>)</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Title of Paper:</strong> <%= academic.titleOfPaperPresented %></li>
+          <li class="list-group-item"><strong>Sponsored By:</strong> <%= academic.sponsoredBy %></li>
+          <li class="list-group-item"><strong>Date:</strong> <%= academic.date.toDateString() %></li>
+          <li class="list-group-item"><strong>Venue:</strong> <%= academic.venue %></li>
+          <li class="list-group-item"><strong>Participation Type:</strong> <%= academic.participationType %></li>
+        </ul>
+        <a href="/faculty/academic-events/<%= user._id %>" class="btn btn-secondary mt-3">Back to All Events</a>
+        <br><br>
+        <form>
+            <button>Edit</button>
+        </form>
+        <br>
+        <form>
+            <button>Delete</button>
+        </form>
+      </div>
+    </div>
+</body>

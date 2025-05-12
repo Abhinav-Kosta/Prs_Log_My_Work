@@ -1,0 +1,27 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <h2><%= user.username %>'s Books and Chapters</h2>
+    <br>
+    <% if (books.length === 0) { %>
+      <p>No awards or achievements recorded yet.</p>
+    <% } else { %>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+        <% books.forEach(book => { %>
+          <div class="col">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= book.title %></h5>
+                <p class="card-text">
+                  <strong>ISBN:</strong> <%= book.isbn %><br>
+                  <strong>Publication Date:</strong> <%= book.publicationDate.toDateString() %><br>
+                  <strong>Publisher:</strong> <%= book.publisher %>
+                </p>
+                <a href="/faculty/books/<%= user._id %>/<%= book._id %>" class="btn btn-primary btn-sm mt-2">View Details</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+</body>

@@ -2,7 +2,7 @@
 <body>
   <div class="container mt-4">
       <h2>Welcome, <%= user.username %>!</h2>
-      <p class="lead">Faculty Dashboard</p>
+      <p class="lead">HOI Dashboard</p>
 
       <div class="row mt-4">
           <div class="col-md-4 mb-3">
@@ -10,7 +10,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Publications</h5>
                       <p class="display-4"><%= counts.publications %></p>
-                      <a href="/faculty/publications/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/publications/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -20,7 +20,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Academic Events</h5>
                       <p class="display-4"><%= counts.academicEvents %></p>
-                      <a href="/faculty/academic-events/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/academic-events/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -30,7 +30,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Projects</h5>
                       <p class="display-4"><%= counts.projects %></p>
-                      <a href="/faculty/projects/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/projects/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -40,7 +40,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Patents</h5>
                       <p class="display-4"><%= counts.patents %></p>
-                      <a href="/faculty/patents/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/patents/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -50,7 +50,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Book Chapters</h5>
                       <p class="display-4"><%= counts.bookChapters %></p>
-                      <a href="/faculty/books/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/books/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -60,7 +60,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Awards</h5>
                       <p class="display-4"><%= counts.awards %></p>
-                      <a href="/faculty/awards/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/awards/<%= user._id %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>

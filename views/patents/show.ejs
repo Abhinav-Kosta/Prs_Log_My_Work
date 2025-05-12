@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <h2>Patent Details</h2>
+    <br>
+    <div class="card mt-3 shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3"><%= patent.title %></h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Type:</strong> <%= patent.type %></li>
+          <li class="list-group-item"><strong>Patent File No:</strong> <%= patent.patentFileNo %></li>
+          <li class="list-group-item"><strong>Application No:</strong> <%= patent.applicationNo %></li>
+          <li class="list-group-item"><strong>Date of Filing:</strong> <%= patent.dateOfFiling.toDateString() %></li>
+          <li class="list-group-item"><strong>Specification Type:</strong> <%= patent.specificationType %></li>
+          <li class="list-group-item"><strong>Remarks:</strong> <%= patent.remarks %></li>
+        </ul>
+        <a href="/faculty/patents/<%= user._id %>" class="btn btn-secondary mt-3">Back to All Patents</a>
+        <br><br>
+        <form>
+            <button>Edit</button>
+        </form>
+        <br>
+        <form>
+            <button>Delete</button>
+        </form>
+      </div>
+    </div>
+</body>

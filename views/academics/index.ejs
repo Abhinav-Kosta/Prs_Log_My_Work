@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <h2><%= user.username %>'s Academic Events</h2>
+    <br>
+    <% if (academics.length === 0) { %>
+      <p>No academic events recorded yet.</p>
+    <% } else { %>
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <% academics.forEach(event => { %>
+          <div class="col">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= event.eventName %> - <%= event.type %></h5>
+                <p class="card-text">
+                  <strong>Title:</strong> <%= event.titleOfPaperPresented %><br>
+                  <strong>Date:</strong> <%= event.date.toDateString() %><br>
+                  <strong>Venue:</strong> <%= event.venue %><br>
+                  <strong>Role:</strong> <%= event.participationType %>
+                </p>
+                <a href="/faculty/academic-events/<%= user._id %>/<%= event._id %>" class="btn btn-primary btn-sm">View Details</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+</body>

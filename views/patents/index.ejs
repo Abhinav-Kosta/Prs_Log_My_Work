@@ -1,0 +1,27 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+    <br>
+    <h2><%= user.username %>'s Patents</h2>
+    <br>
+    <% if (patents.length === 0) { %>
+      <p>No patent entries yet.</p>
+    <% } else { %>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+        <% patents.forEach(patent => { %>
+          <div class="col">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title"><%= patent.title %></h5>
+                <p class="card-text">
+                  <strong>Type:</strong> <%= patent.type %><br>
+                  <strong>Filing Date:</strong> <%= patent.dateOfFiling.toDateString() %><br>
+                  <strong>Status:</strong> <%= patent.remarks %>
+                </p>
+                <a href="/faculty/patents/<%= user._id %>/<%= patent._id %>" class="btn btn-primary btn-sm mt-2">View Details</a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+</body>
