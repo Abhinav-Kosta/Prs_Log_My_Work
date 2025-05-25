@@ -1,20 +1,93 @@
 <% layout("/layouts/boilerplate") %>
 <body>
-  <br>
-    <h2><%= user.username %>'s Publications</h2>
-  <br>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="mb-1"><i class="bi bi-journal-text me-2"></i><%= user.username %>'s Publications</h2>
+        <p class="text-muted mb-0">Research articles and journal publications</p>
+      </div>
+      <a href="/<%= user.role %>/publications/new" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Add Publication
+      </a>
+    </div>
+
     <% if (publications.length === 0) { %>
-      <p>No publications found.</p>
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-journal-x text-muted" style="font-size: 3rem;"></i>
+          <h5 class="mt-3">No publications found</h5>
+          <p class="text-muted">Start by adding your first publication</p>
+          <a href="/<%= user.role %>/publications/new" class="btn btn-primary mt-2">
+            <i class="bi bi-plus-lg"></i> Add Publication
+          </a>
+        </div>
+      </div>
     <% } else { %>
-      <ul class="list-group">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <% publications.forEach(pub => { %>
-          <li class="list-group-item">
-            <strong><%= pub.title %></strong> — <%= pub.journalName %> (ISSN: <%= pub.issnNumber %>)<br/>
-            <small>Published on: <%= pub.publicationDate.toDateString() %> | Indexed: <%= pub.indexedIn %></small><br/>
-            <a href="/<%=user.role%>/publications/<%=user._id%>/<%=pub._id%>">View Link</a>
-          </li>
-          <br>
+          <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+              <div class="card-header bg-white border-bottom-0 pb-0">
+                <span class="badge rounded-pill bg-<%= 
+                  pub.indexedIn === 'Scopus' ? 'danger' : 
+                  pub.indexedIn === 'PubMed' ? 'primary' : 
+                  pub.indexedIn === 'Medline' ? 'success' : 'secondary'
+                %> mb-2">
+                  <i class="bi bi-database me-1"></i>
+                  <%= pub.indexedIn %>
+                </span>
+                <h5 class="card-title mb-1"><%= pub.title %></h5>
+                <p class="text-muted small mb-2">
+                  <i class="bi bi-journal"></i> <%= pub.journalName %>
+                </p>
+              </div>
+              
+              <div class="card-body pt-0">
+                <div class="d-flex justify-content-between mb-3">
+                  <% if (pub.volume) { %>
+                    <div>
+                      <i class="bi bi-book text-primary me-1"></i>
+                      <small>Vol. <%= pub.volume %></small>
+                    </div>
+                  <% } %>
+                  <% if (pub.pageNumber) { %>
+                    <div>
+                      <i class="bi bi-file-text text-primary me-1"></i>
+                      <small>pp. <%= pub.pageNumber %></small>
+                    </div>
+                  <% } %>
+                </div>
+                
+                <div class="d-flex align-items-center text-muted small mb-3">
+                  <i class="bi bi-calendar-date me-2"></i>
+                  <span><%= pub.publicationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+                </div>
+                
+                <% if (pub.impactFactor) { %>
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    <small>Impact Factor: <%= pub.impactFactor %></small>
+                  </div>
+                <% } %>
+              </div>
+              
+              <div class="card-footer bg-white border-top-0 pt-0">
+                <div class="d-flex justify-content-between">
+                  <a href="/<%= user.role %>/publications/<%= user._id %>/<%= pub._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" 
+                     class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-eye"></i> View
+                  </a>
+                  <% if (pub.link) { %>
+                    <a href="<%= pub.link %>" target="_blank" class="btn btn-sm btn-outline-secondary">
+                      <i class="bi bi-box-arrow-up-right"></i> Visit
+                    </a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% }) %>
-      </ul>
+      </div>
     <% } %>
+  </div>
 </body>

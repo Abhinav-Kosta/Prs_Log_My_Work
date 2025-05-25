@@ -1,9 +1,20 @@
 const { getUserStats } = require("./stats.js");
 
 module .exports.dashboard = async (req, res) => {
-    const stats = await getUserStats(req.user._id);
+    const range = req.query.range || 'all';
+    const month = parseInt(req.query.month);
+    const year = parseInt(req.query.year);
+    const quarter = parseInt(req.query.quarter);
+    const half = parseInt(req.query.half);
+
+    const stats = await getUserStats(req.user._id, range, year, month, quarter, half);
     res.render("faculty/dashboard.ejs", { 
         user: req.user,
-        counts: stats
+        counts: stats,
+        range,
+        year,
+        month,
+        quarter,
+        half
     });
 };

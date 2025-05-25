@@ -25,6 +25,67 @@ body {
     align-items: center;
 }
 
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 1000px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.login-image {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+}
+
+.login-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+}
+
+.login-form {
+    flex: 1;
+    padding: 40px;
+}
+
+@media (max-width: 768px) {
+    .login-content {
+        flex-direction: column;
+    }
+    
+    .login-image {
+        padding: 20px;
+        background: none;
+    }
+    
+    .login-image img {
+        max-height: 200px;
+    }
+    
+    .login-form {
+        padding: 30px;
+        width: 100%;
+    }
+}
+
 /* Heading styling */
 h2 {
     color: #333;

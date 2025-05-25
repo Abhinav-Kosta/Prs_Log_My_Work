@@ -8,22 +8,27 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   username: {
-    type: String,
+    type: String
   },
   role: {
     type: String,
     enum: ["faculty", "hoi", "admin"],
     required: true
   },
+  school: {
+    type: String,
+    required: function () {
+      return this.role === "faculty" || this.role === "hoi";
+    }
+  },
   department: {
     type: String,
     required: function () {
-      return this.role !== "admin"; // only required for faculty and HOI
+      return this.role === "faculty";
     }
   }
 });
 
-// Add username + hashed password fields
 userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', userSchema);

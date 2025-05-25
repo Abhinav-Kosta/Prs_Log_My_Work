@@ -15,8 +15,31 @@ function randomDate(start, end) {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
+const getSchoolSpecificData = (user) => {
+  const isALS = user.school === "ALS";
+  
+  return {
+    techAreas: isALS 
+      ? ['Legal Tech', 'IP Law', 'Human Rights', 'Corporate Law', 'Criminal Reform']
+      : ['AI', 'IoT', 'Blockchain', 'Robotics', 'Biotech'],
+    projectTypes: isALS
+      ? ['Legal Framework', 'Policy Analysis', 'Judicial Reform', 'Comparative Study']
+      : ['Application', 'Framework', 'System', 'Model'],
+    academicTopics: isALS
+      ? ['Judicial', 'Legislative', 'Human Rights', 'Corporate']
+      : ['Tech', 'Science', 'Engineering', 'Research'],
+    publicationTopics: isALS
+      ? ['Constitutional Law', 'International Law', 'Human Rights', 'Corporate Governance']
+      : ['AI', 'ML', 'Blockchain', 'IoT', 'Cloud Computing'],
+    bookTopics: isALS
+      ? ['Legal Principles', 'Case Studies', 'Jurisprudence', 'Legislative Analysis']
+      : ['AI', 'Machine Learning', 'Data Science', 'Blockchain', 'Cybersecurity']
+  };
+};
+
 // Demo data generators for each collection
-const academicEventData = (userId) => {
+const academicEventData = (user) => {
+  const { academicTopics } = getSchoolSpecificData(user);
   const types = ['Conference', 'Workshop', 'Seminar', 'Symposia', 'FDP'];
   const participationTypes = [
     'Poster Presentation', 
@@ -31,10 +54,10 @@ const academicEventData = (userId) => {
   const venues = ['New York', 'London', 'Tokyo', 'Bangalore', 'Virtual'];
 
   return {
-    user: userId,
+    user: user._id,
     type: types[Math.floor(Math.random() * types.length)],
-    titleOfPaperPresented: `Paper on ${['AI', 'ML', 'Blockchain', 'IoT', 'Cloud Computing'][Math.floor(Math.random() * 5)]}`,
-    eventName: `International ${['Tech', 'Science', 'Engineering', 'Research'][Math.floor(Math.random() * 4)]} ${types[Math.floor(Math.random() * types.length)]}`,
+    titleOfPaperPresented: `Paper on ${academicTopics[Math.floor(Math.random() * academicTopics.length)]}`,
+    eventName: `International ${academicTopics[Math.floor(Math.random() * academicTopics.length)]} ${types[Math.floor(Math.random() * types.length)]}`,
     sponsoredBy: sponsors[Math.floor(Math.random() * sponsors.length)],
     date: randomDate(new Date(2018, 0, 1), new Date()),
     venue: venues[Math.floor(Math.random() * venues.length)],
@@ -42,13 +65,13 @@ const academicEventData = (userId) => {
   };
 };
 
-const awardData = (userId) => {
+const awardData = (user) => {
   const awards = ['Best Paper', 'Outstanding Researcher', 'Teaching Excellence', 'Innovation Award', 'Young Scientist'];
   const agencies = ['University', 'IEEE', 'ACM', 'Government', 'Industry Partner'];
   const details = ['Certificate', 'Memento', 'Cash Prize', 'Other'];
 
   return {
-    user: userId,
+    user: user._id,
     date: randomDate(new Date(2018, 0, 1), new Date()),
     awardTitle: awards[Math.floor(Math.random() * awards.length)],
     awardingAgency: agencies[Math.floor(Math.random() * agencies.length)],
@@ -56,27 +79,27 @@ const awardData = (userId) => {
   };
 };
 
-const bookChapterData = (userId) => {
+const bookChapterData = (user) => {
+  const { bookTopics } = getSchoolSpecificData(user);
   const publishers = ['Springer', 'Elsevier', 'Wiley', 'CRC Press', 'McGraw-Hill'];
-  const topics = ['AI', 'Machine Learning', 'Data Science', 'Blockchain', 'Cybersecurity'];
 
   return {
-    user: userId,
-    title: `Chapter on ${topics[Math.floor(Math.random() * topics.length)]}`,
+    user: user._id,
+    title: `Chapter on ${bookTopics[Math.floor(Math.random() * bookTopics.length)]}`,
     publicationDate: randomDate(new Date(2018, 0, 1), new Date()),
     isbn: `978-${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 10)}`,
     publisher: publishers[Math.floor(Math.random() * publishers.length)]
   };
 };
 
-const patentData = (userId) => {
+const patentData = (user) => {
+  const { techAreas } = getSchoolSpecificData(user);
   const types = ["National", "International"];
   const specs = ["Provisional", "Complete"];
   const remarks = ["Applied", "Awarded", "Published", "Under Examination"];
-  const techAreas = ['AI', 'IoT', 'Blockchain', 'Robotics', 'Biotech'];
 
   return {
-    user: userId,
+    user: user._id,
     title: `Patent for ${techAreas[Math.floor(Math.random() * techAreas.length)]} ${['Device', 'Method', 'System', 'Process'][Math.floor(Math.random() * 4)]}`,
     type: types[Math.floor(Math.random() * types.length)],
     patentFileNo: `PF${Math.floor(Math.random() * 10000)}`,
@@ -87,13 +110,13 @@ const patentData = (userId) => {
   };
 };
 
-const projectSubmissionData = (userId) => {
+const projectSubmissionData = (user) => {
+  const { techAreas, projectTypes } = getSchoolSpecificData(user);
   const agencies = ['DST', 'UGC', 'AICTE', 'DRDO', 'ISRO', 'Industry Partner'];
-  const techAreas = ['AI', 'IoT', 'Blockchain', 'Robotics', 'Biotech'];
 
   return {
-    user: userId,
-    title: `Project on ${techAreas[Math.floor(Math.random() * techAreas.length)]} ${['Application', 'Framework', 'System', 'Model'][Math.floor(Math.random() * 4)]}`,
+    user: user._id,
+    title: `Project on ${techAreas[Math.floor(Math.random() * techAreas.length)]} ${projectTypes[Math.floor(Math.random() * projectTypes.length)]}`,
     piOrCoPi: Math.random() > 0.5 ? 'PI' : 'Co-PI',
     fundingAgency: agencies[Math.floor(Math.random() * agencies.length)],
     dateOfSubmission: randomDate(new Date(2018, 0, 1), new Date()),
@@ -103,16 +126,16 @@ const projectSubmissionData = (userId) => {
   };
 };
 
-const publicationData = (userId) => {
+const publicationData = (user) => {
   const journals = ['IEEE Transactions', 'Springer Journal', 'Elsevier Journal', 'ACM Journal', 'Nature'];
   const indexes = ["Scopus", "PubMed", "Medline", "Other", "None"];
-  const techAreas = ['AI', 'ML', 'Blockchain', 'IoT', 'Cloud Computing'];
+  const { publicationTopics } = getSchoolSpecificData(user);
 
   return {
-    user: userId,
+    user: user._id,
     coAuthors: `Co-author ${Math.floor(Math.random() * 5) + 1}, Co-author ${Math.floor(Math.random() * 5) + 1}`,
-    title: `Research on ${techAreas[Math.floor(Math.random() * techAreas.length)]} ${['Applications', 'Methods', 'Systems', 'Frameworks'][Math.floor(Math.random() * 4)]}`,
-    journalName: `${journals[Math.floor(Math.random() * journals.length)]} on ${techAreas[Math.floor(Math.random() * techAreas.length)]}`,
+    title: `Research on ${publicationTopics[Math.floor(Math.random() * publicationTopics.length)]} ${['Applications', 'Methods', 'Systems', 'Frameworks'][Math.floor(Math.random() * 4)]}`,
+    journalName: `${journals[Math.floor(Math.random() * journals.length)]} on ${publicationTopics[Math.floor(Math.random() * publicationTopics.length)]}`,
     issnNumber: `ISSN ${Math.floor(Math.random() * 10000)}-${Math.floor(Math.random() * 1000)}`,
     publicationDate: randomDate(new Date(2018, 0, 1), new Date()),
     volume: `Vol. ${Math.floor(Math.random() * 20) + 1}`,
@@ -143,8 +166,7 @@ const populateCollections = async () => {
 
     // For each user, create random number of documents in each collection
     for (const user of users) {
-      const userId = user._id;
-      
+
       // Create 1-5 documents for each collection per user
       const academicEventCount = Math.floor(Math.random() * 5) + 1;
       const awardCount = Math.floor(Math.random() * 3) + 1;
@@ -155,32 +177,32 @@ const populateCollections = async () => {
 
       // Create academic events
       for (let i = 0; i < academicEventCount; i++) {
-        await AcademicEvent.create(academicEventData(userId));
+        await AcademicEvent.create(academicEventData(user));
       }
 
       // Create awards
       for (let i = 0; i < awardCount; i++) {
-        await Award.create(awardData(userId));
+        await Award.create(awardData(user));
       }
 
       // Create book chapters
       for (let i = 0; i < bookChapterCount; i++) {
-        await BookChapter.create(bookChapterData(userId));
+        await BookChapter.create(bookChapterData(user));
       }
 
       // Create patents
       for (let i = 0; i < patentCount; i++) {
-        await Patent.create(patentData(userId));
+        await Patent.create(patentData(user));
       }
 
       // Create project submissions
       for (let i = 0; i < projectCount; i++) {
-        await ProjectSubmission.create(projectSubmissionData(userId));
+        await ProjectSubmission.create(projectSubmissionData(user));
       }
 
       // Create publications
       for (let i = 0; i < publicationCount; i++) {
-        await Publication.create(publicationData(userId));
+        await Publication.create(publicationData(user));
       }
 
       console.log(`Created data for user ${user.facultyId}`);

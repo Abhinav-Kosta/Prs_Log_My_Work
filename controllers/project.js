@@ -1,8 +1,10 @@
 const Project = require("../models/projectSubmission");
 const User = require("../models/user");
+const getDateRange = require("../utils/dateRange"); //For filter purpose
 
 module.exports.index = async (req, res) => {
   const { userId } = req.params;
+  const { range = 'all', year, month, quarter, half } = req.query;
 
   const user = await User.findById(userId);
   if (!user) {
@@ -10,16 +12,25 @@ module.exports.index = async (req, res) => {
     return res.redirect("/");
   }
 
-  const projects = await Project.find({ user: userId }).sort({ date: -1 });
+  const dateFilter = getDateRange(range, parseInt(year), parseInt(month), parseInt(quarter), parseInt(half));
+  const filter = dateFilter.$gte ? { user: userId, dateOfSubmission: dateFilter } : { user: userId };
+
+  const projects = await Project.find(filter).sort({ dateOfSubmission: -1 });
 
   res.render("projects/index.ejs", {
     user,
-    projects
+    projects,
+    range,
+    year,
+    month,
+    quarter,
+    half
   });
 };
 
 module.exports.show = async (req, res) => {
   const { userId, pjtId } = req.params;
+  const { range, year, month, quarter, half } = req.query;
 
   const project = await Project.findOne({ _id: pjtId, user: userId });
   if (!project) {
@@ -31,6 +42,11 @@ module.exports.show = async (req, res) => {
 
   res.render("projects/show.ejs", {
     user,
-    project
+    project,
+    range,
+    year,
+    month,
+    quarter,
+    half
   });
 };

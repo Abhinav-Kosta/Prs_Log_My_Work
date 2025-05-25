@@ -25,23 +25,26 @@ const init = async () => {
     console.log("Old users removed.");
   
     for (let user of initData) {
-      const { facultyId, username, role, password, department } = user;
+      const { facultyId, username, role, password, department, school } = user;
 
       const newUserData = { facultyId, username, role };
       if (role !== "admin") {
-        newUserData.department = department;
+        newUserData.school = school; // Add school for non-admin users
+        if (role === "faculty") {
+          newUserData.department = department; // Department only for faculty
+        }
       }
 
       const newUser = new User(newUserData);
 
       try {
-        await User.register(newUser, password); // Make sure to call register with the `facultyId`
+        await User.register(newUser, password);
         console.log(`${facultyId} created`);
       } catch (error) {
         console.error(`Error creating ${facultyId}:`, error);
-      } // hashes password properly
+      }
     }
   
     console.log("Users initialized successfully.");
     mongoose.connection.close();
-  };
+};

@@ -4,28 +4,50 @@ module.exports = [
     username: "admin001",
     role: "admin",
     password: "admin123"
-    // No department needed
+    // No school or department needed for admin
   },
   {
     facultyId: "hoi001",
     username: "hoi001",
     role: "hoi",
-    department: "Computer Science",
+    school: "ASET",
+    department: "Computer Science", // Optional for HOI but included for example
     password: "hoi123"
   },
   {
     facultyId: "hoi002",
     username: "hoi002",
     role: "hoi",
-    department: "Information Technology",
+    school: "ALS",
     password: "hoi123"
   },
-  // 10 faculty
-  ...Array.from({ length: 10 }, (_, i) => ({
-    facultyId: `fac${(i + 1).toString().padStart(3, '0')}`,
-    username: `fac${(i + 1).toString().padStart(3, '0')}`,
-    role: "faculty",
-    department: i < 5 ? "Computer Science" : "Information Technology", // or any distribution logic
-    password: "faculty123"
-  }))
+  // Faculty members
+  ...Array.from({ length: 10 }, (_, i) => {
+    const school = "ASET";
+    const department = i < 5 ? "Computer Science" : "Information Technology";
+    
+    return {
+      facultyId: `fac${(i + 1).toString().padStart(3, '0')}`,
+      username: `fac${(i + 1).toString().padStart(3, '0')}`,
+      role: "faculty",
+      school: school,
+      department: department,
+      password: "faculty123"
+    };
+  }),
+
+  // ALS Faculty members
+  ...Array.from({ length: 10 }, (_, i) => {
+      const school = "ALS";
+      const department = i < 5 ? "Civil Law" : "Criminal Law"; // Example ALS departments
+      
+      return {
+          facultyId: `als${(i + 1).toString().padStart(3, '0')}`, // als prefix for ALS faculty
+          username: `als${(i + 1).toString().padStart(3, '0')}`,
+          role: "faculty",
+          school: school,
+          department: department,
+          password: "faculty123"
+      };
+  })
 ];

@@ -4,8 +4,18 @@ const BookChapter = require('../models/bookChapter');
 const Patent = require('../models/patent');
 const ProjectSubmission = require('../models/projectSubmission');
 const Publication = require('../models/publish');
+const getDateRange = require('../utils/dateRange.js');
 
-module.exports.getUserStats = async (userId) => {
+module.exports.getUserStats = async (userId, range = 'all', year, month, quarter, half) => {
+    const dateFilter = getDateRange(range, year, month, quarter, half);
+
+    // Build conditional queries
+    const dateQuery = (field) => {
+      return Object.keys(dateFilter).length > 0
+        ? { user: userId, [field]: dateFilter }
+        : { user: userId };
+    };
+
     const [
         academicEventsCount,
         awardsCount,
@@ -14,13 +24,13 @@ module.exports.getUserStats = async (userId) => {
         projectsCount,
         publicationsCount
         ] = await Promise.all([
-            AcademicEvent.countDocuments({ user: userId }),
-            Award.countDocuments({ user: userId }),
-            BookChapter.countDocuments({ user: userId }),
-            Patent.countDocuments({ user: userId }),
-            ProjectSubmission.countDocuments({ user: userId }),
-            Publication.countDocuments({ user: userId })
-        ]);
+        AcademicEvent.countDocuments(dateQuery("date")),
+        Award.countDocuments(dateQuery("date")),
+        BookChapter.countDocuments(dateQuery("publicationDate")),
+        Patent.countDocuments(dateQuery("dateOfFiling")),
+        ProjectSubmission.countDocuments(dateQuery("dateOfSubmission")),
+        Publication.countDocuments(dateQuery("publicationDate"))
+      ]);
 
     return {
         academicEvents: academicEventsCount,

@@ -4,13 +4,75 @@
       <h2>Welcome, <%= user.username %>!</h2>
       <p class="lead">HOI Dashboard</p>
 
+      <form class="row g-3 mb-4" method="GET" action="/hoi/dashboard">
+            <div class="col-md-3">
+              <label for="range" class="form-label">Filter Range</label>
+              <select class="form-select" id="range" name="range" required onchange="toggleDateSelectors()">
+                <option value="all" <%= range === 'all' ? 'selected' : '' %>>All Time</option>
+                <option value="monthly" <%= range === 'monthly' ? 'selected' : '' %>>Monthly</option>
+                <option value="quarterly" <%= range === 'quarterly' ? 'selected' : '' %>>Quarterly</option>
+                <option value="half" <%= range === 'half' ? 'selected' : '' %>>Half-Yearly</option>
+                <option value="yearly" <%= range === 'yearly' ? 'selected' : '' %>>Yearly</option>
+              </select>
+            </div>
+
+            <div id="date-selectors" class="col-md-5 row">
+            <!-- Month selector -->
+            <div class="col-md-6" id="month-group">
+              <label for="month" class="form-label">Month</label>
+              <select class="form-select" id="month" name="month">
+                <% for (let m = 0; m < 12; m++) { %>
+                  <option value="<%= m %>" <%= month == m ? 'selected' : '' %>>
+                    <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
+                  </option>
+                <% } %>
+              </select>
+            </div>
+
+            <!-- Quarter selector -->
+            <div class="col-md-6 d-none" id="quarter-group">
+              <label for="quarter" class="form-label">Quarter</label>
+              <select class="form-select" id="quarter" name="quarter">
+                <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
+                <option value="1" <%= quarter == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
+                <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
+                <option value="3" <%= quarter == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
+              </select>
+            </div>
+
+            <!-- Half-year selector -->
+            <div class="col-md-6 d-none" id="half-group">
+              <label for="half" class="form-label">Half-Year</label>
+              <select class="form-select" id="half" name="half">
+                <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
+                <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
+              </select>
+            </div>
+
+            <!-- Year always shown -->
+            <div class="col-md-6">
+              <label for="year" class="form-label">Year</label>
+              <select class="form-select" id="year" name="year">
+                <% const thisYear = new Date().getFullYear(); %>
+                <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
+                  <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
+                <% } %>
+                    </select>
+            </div>
+        </div>
+
+        <div class="col-md-2 align-self-end">
+            <button class="btn btn-primary w-100">Apply</button>
+        </div>
+      </form>
+
       <div class="row mt-4">
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
                       <h5 class="card-title">Publications</h5>
                       <p class="display-4"><%= counts.publications %></p>
-                      <a href="/hoi/publications/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/publications/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -20,7 +82,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Academic Events</h5>
                       <p class="display-4"><%= counts.academicEvents %></p>
-                      <a href="/hoi/academic-events/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/academic-events/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -30,7 +92,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Projects</h5>
                       <p class="display-4"><%= counts.projects %></p>
-                      <a href="/hoi/projects/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/projects/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -40,7 +102,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Patents</h5>
                       <p class="display-4"><%= counts.patents %></p>
-                      <a href="/hoi/patents/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/patents/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -50,7 +112,7 @@
                   <div class="card-body">
                       <h5 class="card-title">Book Chapters</h5>
                       <p class="display-4"><%= counts.bookChapters %></p>
-                      <a href="/hoi/books/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/books/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -60,10 +122,11 @@
                   <div class="card-body">
                       <h5 class="card-title">Awards</h5>
                       <p class="display-4"><%= counts.awards %></p>
-                      <a href="/hoi/awards/<%= user._id %>" class="btn btn-primary">View All</a>
+                      <a href="/hoi/awards/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
       </div>
   </div>
+  <script src="/js/filter.js"></script>
 </body>

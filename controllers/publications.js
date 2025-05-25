@@ -1,8 +1,10 @@
 const Publication = require("../models/publish");
 const User = require("../models/user");
+const getDateRange = require("../utils/dateRange");
 
 module.exports.index = async (req, res) => {
   const { userId } = req.params;
+  const { range = 'all', year, month, quarter, half } = req.query;
 
   const user = await User.findById(userId);
   if (!user) {
@@ -10,16 +12,25 @@ module.exports.index = async (req, res) => {
     return res.redirect("/");
   }
 
-  const publications = await Publication.find({ user: userId }).sort({ publicationDate: -1 });
+  const dateFilter = getDateRange(range, parseInt(year), parseInt(month), parseInt(quarter), parseInt(half));
+  const filter = dateFilter.$gte ? { user: userId, publicationDate: dateFilter } : { user: userId };
+
+  const publications = await Publication.find(filter).sort({ publicationDate: -1 });
 
   res.render("publications/index.ejs", {
     user,
-    publications
+    publications,
+    range,
+    year,
+    month,
+    quarter,
+    half
   });
 };
 
 module.exports.show = async (req, res) => {
   const { userId, pubId } = req.params;
+  const { range, year, month, quarter, half } = req.query;
 
   const publication = await Publication.findOne({ _id: pubId, user: userId });
   if (!publication) {
@@ -31,6 +42,11 @@ module.exports.show = async (req, res) => {
 
   res.render("publications/show.ejs", {
     user,
-    publication
+    publication,
+    range,
+    year,
+    month,
+    quarter,
+    half
   });
 };
