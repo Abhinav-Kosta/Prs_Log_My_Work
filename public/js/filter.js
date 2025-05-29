@@ -23,6 +23,22 @@ function toggleScopeSelectors() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize for all prefixes
+  toggleDateSelectors('personal');
+
+  if (document.getElementById('range-school')) {
+    toggleDateSelectors('school');
+  }
+
+
   toggleScopeSelectors();
-  toggleDateSelectors();
+
+  // Attach onchange handlers
+  document.getElementById('range-personal').addEventListener('change', () => toggleDateSelectors('personal'));
+  if(document.getElementById('range-school')){
+    document.getElementById('range-school').addEventListener('change', () => toggleDateSelectors('school'));
+  }
+  if(document.getElementById('scope')){
+    document.getElementById('scope').addEventListener('change', toggleScopeSelectors);
+  }
 });

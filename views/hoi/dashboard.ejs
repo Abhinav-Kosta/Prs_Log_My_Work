@@ -164,15 +164,15 @@
                 </select>
             </div>
             
-            <!-- Time Filter -->
+            <!-- Time Filter --> 
             <div class="col-md-3">
                 <label for="range-school" class="form-label">Filter Range</label>
                 <select class="form-select" id="range-school" name="range-school" required onchange="toggleDateSelectors('school')">
-                  <option value="all" <%= range === 'all' ? 'selected' : '' %>>All Time</option>
-                  <option value="monthly" <%= range === 'monthly' ? 'selected' : '' %>>Monthly</option>
-                  <option value="quarterly" <%= range === 'quarterly' ? 'selected' : '' %>>Quarterly</option>
-                  <option value="half" <%= range === 'half' ? 'selected' : '' %>>Half-Yearly</option>
-                  <option value="yearly" <%= range === 'yearly' ? 'selected' : '' %>>Yearly</option>
+                  <option value="all" <%= rangeSchool === 'all' ? 'selected' : '' %>>All Time</option>
+                  <option value="monthly" <%= rangeSchool === 'monthly' ? 'selected' : '' %>>Monthly</option>
+                  <option value="quarterly" <%= rangeSchool === 'quarterly' ? 'selected' : '' %>>Quarterly</option>
+                  <option value="half" <%= rangeSchool === 'half' ? 'selected' : '' %>>Half-Yearly</option>
+                  <option value="yearly" <%= rangeSchool === 'yearly' ? 'selected' : '' %>>Yearly</option>
                 </select>
             </div>
 
@@ -182,7 +182,7 @@
                 <label for="month-school" class="form-label">Month</label>
                 <select class="form-select" id="month-school" name="month-school">
                   <% for (let m = 0; m < 12; m++) { %>
-                    <option value="<%= m %>" <%= month == m ? 'selected' : '' %>>
+                    <option value="<%= m %>" <%= monthSchool == m ? 'selected' : '' %>>
                       <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
                     </option>
                   <% } %>
@@ -193,10 +193,10 @@
               <div class="col-md-6 d-none" id="quarter-group-school">
                 <label for="quarter-school" class="form-label">Quarter</label>
                 <select class="form-select" id="quarter-school" name="quarter-school">
-                  <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
-                  <option value="1" <%= quarter == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
-                  <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
-                  <option value="3" <%= quarter == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
+                  <option value="0" <%= quarterSchool == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
+                  <option value="1" <%= quarterSchool == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
+                  <option value="2" <%= quarterSchool == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
+                  <option value="3" <%= quarterSchool == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
                 </select>
               </div>
 
@@ -204,8 +204,8 @@
               <div class="col-md-6 d-none" id="half-group-school">
                 <label for="half-school" class="form-label">Half-Year</label>
                 <select class="form-select" id="half-school" name="half-school">
-                  <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
-                  <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
+                  <option value="0" <%= halfSchool == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
+                  <option value="1" <%= halfSchool == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
                 </select>
               </div>
 
@@ -215,7 +215,7 @@
                 <select class="form-select" id="year-school" name="year-school">
                   
                   <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
-                    <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
+                    <option value="<%= y %>" <%= yearSchool == y ? 'selected' : '' %>><%= y %></option>
                   <% } %>
                       </select>
               </div>
@@ -225,7 +225,7 @@
               <button class="btn btn-success w-100">Apply</button>
             </div>
           </form>
-
+        
         <!--Department Wise Records -->
       <div class="row mt-4">
           <div class="col-md-4 mb-3">
@@ -233,7 +233,31 @@
                   <div class="card-body">
                       <h5 class="card-title">Publications</h5>
                       <p class="display-4"><%= filteredCounts.publications %></p>
-                      <a href="/hoi/publications/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+                      
+                      <!-- route for index page -->
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathPub = '/summary/publications';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathPub += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathPub += `/department/${department}`;
+                        } else {
+                          basePathPub += '/school'; // default is school-wide
+                        }
+                      
+                        // Append time filters
+                        let query = `?range=${rangeSchool}`;
+
+                        if (rangeSchool !== 'all') {
+                          query += `&year=${yearSchool}`;
+                          if (rangeSchool === 'monthly') query += `&month=${monthSchool}`;
+                          if (rangeSchool === 'quarterly') query += `&quarter=${quarterSchool}`;
+                          if (rangeSchool === 'half') query += `&half=${halfSchool}`;
+                        }
+                      %>
+
+                      <a href="<%= basePathPub + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -243,7 +267,21 @@
                   <div class="card-body">
                       <h5 class="card-title">Academic Events</h5>
                       <p class="display-4"><%= filteredCounts.academicEvents %></p>
-                      <a href="/hoi/academic-events/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+
+                      <!-- route for index page -->
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathAcad = '/summary/academic-events';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathAcad += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathAcad += `/department/${department}`;
+                        } else {
+                          basePathAcad += '/school'; // default is school-wide
+                        }
+                      %>
+
+                      <a href="<%= basePathAcad + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -253,7 +291,20 @@
                   <div class="card-body">
                       <h5 class="card-title">Projects</h5>
                       <p class="display-4"><%= filteredCounts.projects %></p>
-                      <a href="/hoi/projects/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathProj = '/summary/projects';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathProj += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathProj += `/department/${department}`;
+                        } else {
+                          basePathProj += '/school'; // default is school-wide
+                        }
+                      %>
+
+                      <a href="<%= basePathProj + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -263,7 +314,20 @@
                   <div class="card-body">
                       <h5 class="card-title">Patents</h5>
                       <p class="display-4"><%= filteredCounts.patents %></p>
-                      <a href="/hoi/patents/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathPat = '/summary/patents';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathPat += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathPat += `/department/${department}`;
+                        } else {
+                          basePathPat += '/school'; // default is school-wide
+                        }
+                      %>
+
+                      <a href="<%= basePathPat + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -273,7 +337,20 @@
                   <div class="card-body">
                       <h5 class="card-title">Book Chapters</h5>
                       <p class="display-4"><%= filteredCounts.bookChapters %></p>
-                      <a href="/hoi/books/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathBook = '/summary/books';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathBook += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathBook += `/department/${department}`;
+                        } else {
+                          basePathBook += '/school'; // default is school-wide
+                        }
+                      %>
+
+                      <a href="<%= basePathBook + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>
@@ -283,7 +360,20 @@
                   <div class="card-body">
                       <h5 class="card-title">Awards</h5>
                       <p class="display-4"><%= filteredCounts.awards %></p>
-                      <a href="/hoi/awards/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
+
+                      <% 
+                        // Construct dynamic URL for school/department/faculty scope
+                        let basePathAwards = '/summary/awards';
+                        if (scope === 'faculty' && facultyId) {
+                          basePathAwards += `/${facultyId}`;
+                        } else if (scope === 'department' && department) {
+                          basePathAwards += `/department/${department}`;
+                        } else {
+                          basePathAwards += '/school'; // default is school-wide
+                        }
+                      %>
+
+                      <a href="<%= basePathAwards + query %>" class="btn btn-primary">View All</a>
                   </div>
               </div>
           </div>

@@ -78,11 +78,13 @@ const userRouter = require("./routes/user.js");//User routes of authenticate
 const facultyRouter = require("./routes/faculty.js");
 const hoiRouter = require("./routes/hoi.js");
 const adminRouter = require("./routes/admin.js");
+const summaryRouter = require("./routes/summary.js");
 
 app.use("/", userRouter);
 app.use("/faculty", facultyRouter);
 app.use("/hoi", hoiRouter);
 app.use("/admin", adminRouter);
+app.use("/summary", summaryRouter);
 
 
 // app.all("*", (req, res, next) => {

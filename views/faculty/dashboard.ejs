@@ -6,8 +6,8 @@
 
       <form class="row g-3 mb-4" method="GET" action="/faculty/dashboard">
             <div class="col-md-3">
-              <label for="range" class="form-label">Filter Range</label>
-              <select class="form-select" id="range" name="range" required onchange="toggleDateSelectors()">
+              <label for="range-personal" class="form-label">Filter Range</label>
+              <select class="form-select" id="range-personal" name="range-personal" required onchange="toggleDateSelectors('personal')">
                 <option value="all" <%= range === 'all' ? 'selected' : '' %>>All Time</option>
                 <option value="monthly" <%= range === 'monthly' ? 'selected' : '' %>>Monthly</option>
                 <option value="quarterly" <%= range === 'quarterly' ? 'selected' : '' %>>Quarterly</option>
@@ -16,11 +16,11 @@
               </select>
             </div>
 
-            <div id="date-selectors" class="col-md-5 row">
+            <div id="date-selectors-personal" class="col-md-5 row">
             <!-- Month selector -->
-            <div class="col-md-6" id="month-group">
-              <label for="month" class="form-label">Month</label>
-              <select class="form-select" id="month" name="month">
+            <div class="col-md-6" id="month-group-personal">
+              <label for="month-personal" class="form-label">Month</label>
+              <select class="form-select" id="month-personal" name="month-personal">
                 <% for (let m = 0; m < 12; m++) { %>
                   <option value="<%= m %>" <%= month == m ? 'selected' : '' %>>
                     <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
@@ -30,9 +30,9 @@
             </div>
 
             <!-- Quarter selector -->
-            <div class="col-md-6 d-none" id="quarter-group">
-              <label for="quarter" class="form-label">Quarter</label>
-              <select class="form-select" id="quarter" name="quarter">
+            <div class="col-md-6 d-none" id="quarter-group-personal">
+              <label for="quarter-personal" class="form-label">Quarter</label>
+              <select class="form-select" id="quarter-personal" name="quarter-personal">
                 <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
                 <option value="1" <%= quarter == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
                 <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
@@ -41,9 +41,9 @@
             </div>
 
             <!-- Half-year selector -->
-            <div class="col-md-6 d-none" id="half-group">
-              <label for="half" class="form-label">Half-Year</label>
-              <select class="form-select" id="half" name="half">
+            <div class="col-md-6 d-none" id="half-group-personal">
+              <label for="half-personal" class="form-label">Half-Year</label>
+              <select class="form-select" id="half-personal" name="half-personal">
                 <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
                 <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
               </select>
@@ -51,8 +51,8 @@
 
             <!-- Year always shown -->
             <div class="col-md-6">
-              <label for="year" class="form-label">Year</label>
-              <select class="form-select" id="year" name="year">
+              <label for="year-personal" class="form-label">Year</label>
+              <select class="form-select" id="year-personal" name="year-personal">
                 <% const thisYear = new Date().getFullYear(); %>
                 <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
                   <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
