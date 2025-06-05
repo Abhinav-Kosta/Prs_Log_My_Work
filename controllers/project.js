@@ -101,3 +101,47 @@ module.exports.summaryIndex = async (req, res) => {
     scope: userId ? "faculty" : department ? "department" : "school"
   });
 };
+
+module.exports.renderNew = async (req, res) => {
+  res.render("./projects/new.ejs");
+}
+
+module.exports.create = async (req, res) => {
+  const {
+      title,
+      piOrCoPi,
+      fundingAgency,
+      dateOfSubmission,
+      fundRequestedLacs,
+      durationYears,
+      remarks
+  } = req.body;
+
+  const newProject = new Project({
+      user: req.user._id,
+      title,
+      piOrCoPi,
+      fundingAgency,
+      dateOfSubmission,
+      fundRequestedLacs,
+      durationYears,
+      remarks
+  });
+
+  if (req.file) {
+    let url = req.file.path;
+    if (!url.endsWith('.pdf')) {
+      url += '.pdf';
+    }
+    newProject.proof = {
+      url: url,
+      filename: req.file.filename
+    };
+  }
+
+  await newProject.save();
+
+  console.log("Cloudinary Upload File Info:", req.file);
+  req.flash("success", "New Project Entry Created!");
+  res.redirect(`/${req.user.role}/projects/${req.user._id}`);
+}

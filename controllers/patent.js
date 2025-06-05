@@ -101,3 +101,41 @@ module.exports.summaryIndex = async (req, res) => {
     scope: userId ? "faculty" : department ? "department" : "school"
   });
 };
+
+module.exports.renderNew = async (req, res) => {
+  res.render("./patents/new.ejs");
+}
+
+module.exports.create = async (req, res) => {
+    const { title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
+
+    const newPatent = new Patent({
+        user: req.user._id,
+        title,
+        type,
+        patentFileNo,
+        applicationNo,
+        dateOfFiling,
+        specificationType,
+        remarks
+    });
+
+    // Handle Cloudinary file upload (PDF)
+    if (req.file) {
+        let url = req.file.path;
+        if (!url.endsWith('.pdf')) {
+            url += '.pdf';
+        }
+
+        newPatent.proof = {
+            url: url,
+            filename: req.file.filename
+        };
+    }
+
+    await newPatent.save();
+
+    console.log("Cloudinary Upload File Info:", req.file);
+    req.flash("success", "New Patent Entry Created!");
+    res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+};

@@ -41,6 +41,10 @@ const publicationSchema = new mongoose.Schema({
   },
   impactFactor: {
     type: Number
+  },
+  proof: {
+    url: String,        // Cloudinary secure URL
+    filename: String    // Cloudinary public_id or original filename
   }
 });
 

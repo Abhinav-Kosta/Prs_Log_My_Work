@@ -6,6 +6,10 @@ router.get("/", (req, res) => {
     res.redirect("/login/faculty");
 });
 
+router.get("/new", (req, res) => {
+    res.render("record.ejs");
+})
+
 // All 3 login routes
 router.get("/login/:role", userController.renderLogin);
 

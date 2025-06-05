@@ -2,6 +2,10 @@ const Publication = require("../models/publish");
 const User = require("../models/user");
 const getDateRange = require("../utils/dateRange");
 
+module.exports.renderNew = async (req, res) => {
+  res.render("./publications/new.ejs");
+}
+
 module.exports.index = async (req, res) => {
   const { userId } = req.params;
   const { range = 'all', year, month, quarter, half } = req.query;
@@ -101,4 +105,51 @@ module.exports.summaryIndex = async (req, res) => {
     department,
     scope: userId ? 'faculty' : department ? 'department' : 'school'
   });
+};
+
+module.exports.create = async (req, res) => {
+    const {
+        title,
+        coAuthors,
+        journalName,
+        issnNumber,
+        publicationDate,
+        volume,
+        pageNumber,
+        indexedIn,
+        link,
+        impactFactor
+    } = req.body;
+
+    const newPublication = new Publication({
+        user: req.user._id,
+        title,
+        coAuthors,
+        journalName,
+        issnNumber,
+        publicationDate,
+        volume,
+        pageNumber,
+        indexedIn,
+        link,
+        impactFactor
+    });
+
+    if (req.file) {
+      let url = req.file.path;
+      if (!url.endsWith('.pdf')) {
+        url += '.pdf';
+      }
+
+      newPublication.proof = {
+        url: url,
+        filename: req.file.filename
+      };
+    }
+
+    await newPublication.save();
+
+    console.log("Cloudinary Upload File Info:", req.file);
+    req.flash("success", "New Publication Entry Created!");
+    res.redirect(`/${req.user.role}/publications/${req.user._id}`);
 };

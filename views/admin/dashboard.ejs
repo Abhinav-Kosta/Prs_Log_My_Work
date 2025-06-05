@@ -1,7 +1,15 @@
 <% layout("/layouts/boilerplate") %>
 <body>
   <div class="container mt-4">
-      <h2>Welcome, <%= user.username %>!</h2>
-      <p class="lead">Admin Dashboard</p>
+    <h2>Welcome, <%= user.username %>!</h2>
+    <p class="lead">Admin Dashboard</p>
+
+    <hr>
+
+    <div class="mt-4">
+      <a href="/admin/signup" class="btn btn-success">
+        <i class="bi bi-person-plus"></i> Register New User
+      </a>
+    </div>
   </div>
 </body>

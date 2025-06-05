@@ -101,3 +101,47 @@ module.exports.summaryIndex = async (req, res) => {
     scope: userId ? "faculty" : department ? "department" : "school"
   });
 };
+
+module.exports.renderNew = async (req, res) => {
+  res.render("./academics/new.ejs");
+}
+
+module.exports.create = async (req, res) => {
+  const {
+      type,
+      titleOfPaperPresented,
+      eventName,
+      sponsoredBy,
+      date,
+      venue,
+      participationType,
+  } = req.body;
+
+  const newAcademic = new Academic({
+      user: req.user._id,
+      type,
+      titleOfPaperPresented,
+      eventName,
+      sponsoredBy,
+      date,
+      venue,
+      participationType,
+  });
+
+  if (req.file) {
+    let url = req.file.path;
+    if (!url.endsWith('.pdf')) {
+      url += '.pdf';
+    }
+    newAcademic.proof = {
+      url: url,
+      filename: req.file.filename
+    };
+  }
+
+  await newAcademic.save();
+
+  console.log("Cloudinary Upload File Info:", req.file);
+  req.flash("success", "New Academic Entry Created!");
+  res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
+}

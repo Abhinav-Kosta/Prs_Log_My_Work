@@ -1,0 +1,109 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+    <div class="col-8 offset-2">
+        <div class="container mt-5">
+          <h2 class="mb-4"><i class="bi bi-lightbulb"></i> New Patent Entry</h2>
+          <form action="/<%= currUser.role %>/patents" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="title" class="form-label">Patent Title</label>
+              <input type="text" class="form-control" id="title" name="title" required>
+              <div class="valid-feedback">
+                    Title looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Provide Title!
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <label for="type" class="form-label">Patent Type</label>
+              <select class="form-select" id="type" name="type" required>
+                <option value="">Select</option>
+                <option value="National">National</option>
+                <option value="International">International</option>
+              </select>
+              <div class="valid-feedback">
+                    Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Choose an option!
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <label for="patentFileNo" class="form-label">Patent File Number</label>
+              <input type="text" class="form-control" id="patentFileNo" name="patentFileNo" required>
+              <div class="valid-feedback">
+                    File Number looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Provide File Number!
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <label for="applicationNo" class="form-label">Application Number</label>
+              <input type="text" class="form-control" id="applicationNo" name="applicationNo" required>
+              <div class="valid-feedback">
+                    Application Number looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Provide Application Number!
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <label for="dateOfFiling" class="form-label">Date of Filing</label>
+              <input type="date" class="form-control" id="dateOfFiling" name="dateOfFiling" required>
+              <div class="valid-feedback">
+                    Date looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Provide Date!
+              </div>
+            </div>
+        
+            <div class="mb-3">
+              <label for="specificationType" class="form-label">Specification Type</label>
+              <select class="form-select" id="specificationType" name="specificationType" required>
+                <option value="">Select</option>
+                <option value="Provisional">Provisional</option>
+                <option value="Complete">Complete</option>
+              </select>
+              <div class="valid-feedback">
+                    Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Choose an option!
+              </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="proof" class="form-label">Proof</label>
+                <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
+                <small class="form-text text-muted">Upload PDF file under 2MB.</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="remarks" class="form-label">Remarks</label>
+              <select class="form-select" id="remarks" name="remarks" required>
+                <option value="">Select</option>
+                <option value="Applied">Applied</option>
+                <option value="Awarded">Awarded</option>
+                <option value="Published">Published</option>
+                <option value="Under Examination">Under Examination</option>
+              </select>
+              <div class="valid-feedback">
+                    Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Choose an option!
+              </div>
+            </div>
+        
+            <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Submit Patent</button>
+            <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+          </form>
+        </div>
+    </div>
+</div>

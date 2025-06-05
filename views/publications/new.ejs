@@ -1,0 +1,82 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-journal"></i> New Publication Entry</h2>
+      <form action="/<%= currUser.role %>/publications" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">Publication Title</label>
+          <input type="text" class="form-control" id="title" name="title" required>
+          <div class="invalid-feedback">Please provide a title.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="coAuthors" class="form-label">Co-Authors</label>
+          <input type="text" class="form-control" id="coAuthors" name="coAuthors" placeholder="e.g. John Doe, Jane Smith">
+        </div>
+
+        <div class="mb-3">
+          <label for="journalName" class="form-label">Journal Name</label>
+          <input type="text" class="form-control" id="journalName" name="journalName" required>
+          <div class="invalid-feedback">Please provide a journal name.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="issnNumber" class="form-label">ISSN Number</label>
+          <input type="text" class="form-control" id="issnNumber" name="issnNumber">
+        </div>
+
+        <div class="mb-3">
+          <label for="publicationDate" class="form-label">Publication Date</label>
+          <input type="date" class="form-control" id="publicationDate" name="publicationDate" required>
+          <div class="invalid-feedback">Please provide a date.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="volume" class="form-label">Volume</label>
+          <input type="text" class="form-control" id="volume" name="volume">
+        </div>
+
+        <div class="mb-3">
+          <label for="pageNumber" class="form-label">Page Number(s)</label>
+          <input type="text" class="form-control" id="pageNumber" name="pageNumber" placeholder="e.g. 120-132">
+        </div>
+
+        <div class="mb-3">
+          <label for="indexedIn" class="form-label">Indexed In</label>
+          <select class="form-select" id="indexedIn" name="indexedIn" required>
+            <option value="">Select Index</option>
+            <option value="Scopus">Scopus</option>
+            <option value="PubMed">PubMed</option>
+            <option value="Medline">Medline</option>
+            <option value="Other">Other</option>
+            <option value="None">None</option>
+          </select>
+          <div class="invalid-feedback">Please choose an index.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="link" class="form-label">Publication Link (if any)</label>
+          <input type="url" class="form-control" id="link" name="link" placeholder="https://example.com">
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
+          <small class="form-text text-muted">Upload PDF file under 2MB.</small>
+        </div>
+
+        <div class="mb-3">
+          <label for="impactFactor" class="form-label">Impact Factor</label>
+          <input type="number" step="0.01" class="form-control" id="impactFactor" name="impactFactor">
+        </div>
+
+        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Submit Publication</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/proof.js"></script>

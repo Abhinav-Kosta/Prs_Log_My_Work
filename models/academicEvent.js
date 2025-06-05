@@ -43,6 +43,10 @@ const academicEventSchema = new mongoose.Schema({
       'Delegate'
     ],
     required: true
+  },
+  proof: {
+    url: String,        // Cloudinary secure URL
+    filename: String    // Cloudinary public_id or original filename
   }
 });
 

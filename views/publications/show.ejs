@@ -113,6 +113,21 @@
           </div>
         <% } %>
       </div>
+
+      <% if (publication.proof && publication.proof.url) { %>
+        <div class="alert alert-secondary mt-4">
+          <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>
+          <strong>Proof Document:</strong>
+          <a href="<%= publication.proof.url %>" class="btn btn-sm btn-outline-danger ms-2" download>
+            <!-- target="_blank" -->
+            <i class="bi bi-download"></i> Download PDF
+          </a>
+          <a href="<%= publication.proof.url %>" target="_blank" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-eye"></i> View PDF
+          </a>
+          <%= console.log(publication.proof.url) %>
+        </div>
+      <% } %>
       
       <div class="card-footer bg-light">
         <div class="d-flex justify-content-between">

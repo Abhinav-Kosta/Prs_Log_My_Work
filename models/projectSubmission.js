@@ -33,6 +33,10 @@ const projectSubmissionSchema = new mongoose.Schema({
   },
   remarks: {
     type: String
+  },
+  proof: {
+    url: String,
+    filename: String,
   }
 });
 

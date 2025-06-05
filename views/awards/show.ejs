@@ -67,6 +67,24 @@
               </p>
             </div>
           </div>
+
+          <div class="col-8 offset-2">
+            <% if (award.proof && award.proof.url) { %>
+              <div class="alert alert-secondary mt-4">
+                <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>
+                <strong>Proof Document:</strong>
+                <a href="<%= award.proof.url %>?fl_attachment" class="btn btn-sm btn-outline-danger ms-2" download>
+                  <i class="bi bi-download"></i> Download PDF
+                </a>
+                <a href="<%= award.proof.url %>" target="_blank" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-eye"></i> View PDF
+                </a>
+              </div>
+            <% } else { %>
+              <div class="alert alert-warning">No proof document found.</div>
+            <% } %>
+          </div>
+
         </div>
       </div>
       

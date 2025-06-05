@@ -101,3 +101,41 @@ module.exports.summaryIndex = async (req, res) => {
     scope: userId ? "faculty" : department ? "department" : "school"
   });
 };
+
+module.exports.renderNew = async (req, res) => {
+  res.render("./awards/new.ejs");
+}
+
+module.exports.create = async (req, res) => {
+  const {
+      awardTitle,
+      awardingAgency,
+      awardDetails,
+      date,
+  } = req.body;
+
+  const newAward = new Award({
+      user: req.user._id,
+      awardTitle,
+      awardingAgency,
+      awardDetails,
+      date,
+  });
+
+  if (req.file) {
+    let url = req.file.path;
+    if (!url.endsWith('.pdf')) {
+      url += '.pdf';
+    }
+    newAward.proof = {
+      url: url,
+      filename: req.file.filename
+    };
+  }
+
+  await newAward.save();
+
+  console.log("Cloudinary Upload File Info:", req.file);
+  req.flash("success", "New Award Entry Created!");
+  res.redirect(`/${req.user.role}/awards/${req.user._id}`);
+}

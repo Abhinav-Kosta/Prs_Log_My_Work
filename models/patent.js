@@ -36,6 +36,10 @@ const patentSchema = new mongoose.Schema({
     type: String,
     enum: ["Applied", "Awarded", "Published", "Under Examination"],
     required: true
+  },
+  proof: {
+    url: String,        // Cloudinary secure URL
+    filename: String    // Cloudinary public_id or original filename
   }
 });
 

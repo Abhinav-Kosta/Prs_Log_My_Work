@@ -1,0 +1,70 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-award"></i> New Award Entry</h2>
+      <form action="/<%= currUser.role %>/awards" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="awardTitle" class="form-label">Award Title</label>
+          <input type="text" class="form-control" id="awardTitle" name="awardTitle" required>
+          <div class="valid-feedback">
+            Title looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide award title!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="awardingAgency" class="form-label">Awarding Agency</label>
+          <input type="text" class="form-control" id="awardingAgency" name="awardingAgency" required>
+          <div class="valid-feedback">
+            Agency name looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide awarding agency!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date of Award</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+          <div class="valid-feedback">
+            Date looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide date of award!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="awardDetails" class="form-label">Award Details</label>
+          <select class="form-select" id="awardDetails" name="awardDetails" required>
+            <option value="">Select</option>
+            <option value="Certificate">Certificate</option>
+            <option value="Memento">Memento</option>
+            <option value="Cash Prize">Cash Prize</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Choose an award detail!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
+          <small class="form-text text-muted">Upload PDF file under 2MB.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Submit Award</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-calendar-event"></i> New Academic Event Entry</h2>
+      <form action="/<%= currUser.role %>/academic-events" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="type" class="form-label">Event Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select</option>
+            <option value="Conference">Conference</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Seminar">Seminar</option>
+            <option value="Symposia">Symposia</option>
+            <option value="FDP">FDP</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Choose an event type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="titleOfPaperPresented" class="form-label">Title of Paper Presented</label>
+          <input type="text" class="form-control" id="titleOfPaperPresented" name="titleOfPaperPresented" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Provide a title!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="eventName" class="form-label">Event Name</label>
+          <input type="text" class="form-control" id="eventName" name="eventName" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Provide event name!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="sponsoredBy" class="form-label">Sponsored By</label>
+          <input type="text" class="form-control" id="sponsoredBy" name="sponsoredBy" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Provide sponsor name!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date of Event</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+          <div class="valid-feedback">Date looks good!</div>
+          <div class="invalid-feedback">Provide a date!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="venue" class="form-label">Venue</label>
+          <input type="text" class="form-control" id="venue" name="venue" required>
+          <div class="valid-feedback">Venue looks good!</div>
+          <div class="invalid-feedback">Provide venue!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="participationType" class="form-label">Participation Type</label>
+          <select class="form-select" id="participationType" name="participationType" required>
+            <option value="">Select</option>
+            <option value="Poster Presentation">Poster Presentation</option>
+            <option value="Oral Presentation">Oral Presentation</option>
+            <option value="Guest Speaker">Guest Speaker</option>
+            <option value="Chairman">Chairman</option>
+            <option value="Co-Chairman">Co-Chairman</option>
+            <option value="Keynote Speaker">Keynote Speaker</option>
+            <option value="Delegate">Delegate</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Choose a participation type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof Document</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
+          <small class="form-text text-muted">Upload PDF file under 2MB.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Submit Event</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

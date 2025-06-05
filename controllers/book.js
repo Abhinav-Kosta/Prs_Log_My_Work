@@ -102,3 +102,38 @@ module.exports.summaryIndex = async (req, res) => {
     scope: userId ? "faculty" : department ? "department" : "school"
   });
 };
+
+module.exports.renderNew = async (req, res) => {
+  res.render("./books/new.ejs");
+}
+
+module.exports.create = async (req, res) => {
+    const { title, isbn, publisher, publicationDate } = req.body;
+
+    const newBook = new Book({
+        user: req.user._id,
+        title,
+        isbn,
+        publisher,
+        publicationDate
+    });
+
+    // Handle Cloudinary file upload (PDF)
+    if (req.file) {
+        let url = req.file.path;
+        if (!url.endsWith('.pdf')) {
+            url += '.pdf';
+        }
+
+        newBook.proof = {
+            url: url,
+            filename: req.file.filename
+        };
+    }
+
+    await newBook.save();
+
+    console.log("Cloudinary Upload File Info:", req.file);
+    req.flash("success", "New Book Chapter Created!");
+    res.redirect(`/${req.user.role}/books/${req.user._id }`);
+};
