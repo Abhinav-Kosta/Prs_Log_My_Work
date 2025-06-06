@@ -145,3 +145,32 @@ module.exports.create = async (req, res) => {
   req.flash("success", "New Project Entry Created!");
   res.redirect(`/${req.user.role}/projects/${req.user._id}`);
 }
+
+module.exports.renderEdit = async (req, res) => {
+  const { pjtId } = req.params;
+  const project = await Project.findById(pjtId);
+
+  if(!project){
+    req.flash("error", "Project you requested does not exists.");
+    return res.redirect(`${req.user.role}/projects/${req.user._id}`);
+  }
+
+  res.render("projects/edit.ejs", { project });
+}
+
+module.exports.update = async (req, res) => {
+  const { pjtId } = req.params;
+  const updatedData = { ...req.body };
+  const project = await Project.findByIdAndUpdate(pjtId, updatedData, { new : true });
+
+  if(req.file){
+    project.proof = {
+      url : req.file.path,
+      filename : req.file.filename
+    }
+    await project.save();
+  }
+
+  req.flash("success", "Project updated successfully");
+  res.redirect(`/${req.user.role}/projects/${req.user._id}`);
+}

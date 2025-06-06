@@ -1,0 +1,87 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Patent Entry</h2>
+      <form action="/<%= currUser.role %>/patents/<%= patent._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">Patent Title</label>
+          <input type="text" class="form-control" id="title" name="title" value="<%= patent.title %>" required>
+          <div class="valid-feedback">Title looks good!</div>
+          <div class="invalid-feedback">Provide Title!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="type" class="form-label">Patent Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select</option>
+            <option value="National" <%= patent.type === 'National' ? 'selected' : '' %>>National</option>
+            <option value="International" <%= patent.type === 'International' ? 'selected' : '' %>>International</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Choose an option!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="patentFileNo" class="form-label">Patent File Number</label>
+          <input type="text" class="form-control" id="patentFileNo" name="patentFileNo" value="<%= patent.patentFileNo %>" required>
+          <div class="valid-feedback">File Number looks good!</div>
+          <div class="invalid-feedback">Provide File Number!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="applicationNo" class="form-label">Application Number</label>
+          <input type="text" class="form-control" id="applicationNo" name="applicationNo" value="<%= patent.applicationNo %>" required>
+          <div class="valid-feedback">Application Number looks good!</div>
+          <div class="invalid-feedback">Provide Application Number!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dateOfFiling" class="form-label">Date of Filing</label>
+          <input type="date" class="form-control" id="dateOfFiling" name="dateOfFiling" value="<%= patent.dateOfFiling.toISOString().split('T')[0] %>" required>
+          <div class="valid-feedback">Date looks good!</div>
+          <div class="invalid-feedback">Provide Date!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="specificationType" class="form-label">Specification Type</label>
+          <select class="form-select" id="specificationType" name="specificationType" required>
+            <option value="">Select</option>
+            <option value="Provisional" <%= patent.specificationType === 'Provisional' ? 'selected' : '' %>>Provisional</option>
+            <option value="Complete" <%= patent.specificationType === 'Complete' ? 'selected' : '' %>>Complete</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Choose an option!</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Current Proof</label><br>
+          <% if (patent.proof && patent.proof.url) { %>
+            <a href="<%= patent.proof.url %>" target="_blank" class="btn btn-outline-primary btn-sm mb-2">View Uploaded PDF</a>
+          <% } else { %>
+            <p class="text-muted">No file uploaded</p>
+          <% } %>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
+          <small class="form-text text-muted">Upload new PDF to replace existing (optional).</small>
+        </div>
+
+        <div class="mb-3">
+          <label for="remarks" class="form-label">Remarks</label>
+          <select class="form-select" id="remarks" name="remarks" required>
+            <option value="">Select</option>
+            <option value="Applied" <%= patent.remarks === 'Applied' ? 'selected' : '' %>>Applied</option>
+            <option value="Awarded" <%= patent.remarks === 'Awarded' ? 'selected' : '' %>>Awarded</option>
+            <option value="Published" <%= patent.remarks === 'Published' ? 'selected' : '' %>>Published</option>
+            <option value="Under Examination" <%= patent.remarks === 'Under Examination' ? 'selected' : '' %>>Under Examination</option>
+          </select>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Choose an option!</div>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Update Patent</button>
+        <a href="/<%= currUser.role %>/patents" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

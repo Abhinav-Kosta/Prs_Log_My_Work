@@ -1,0 +1,54 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-journal-bookmark"></i> Edit Book Chapter Entry</h2>
+      <form action="/<%= currUser.role %>/books/<%= book._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">Book Chapter Title</label>
+          <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>" required>
+          <div class="valid-feedback">
+              Title looks good!
+          </div>
+          <div class="invalid-feedback">
+              Provide a title!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="publicationDate" class="form-label">Publication Date</label>
+          <input type="date" class="form-control" id="publicationDate" name="publicationDate" value="<%= book.publicationDate.toISOString().split('T')[0] %>" required>
+          <div class="valid-feedback">
+              Date looks good!
+          </div>
+          <div class="invalid-feedback">
+              Provide publication date!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="isbn" class="form-label">ISBN</label>
+          <input type="text" class="form-control" id="isbn" name="isbn" value="<%= book.isbn %>">
+          <div class="form-text">Optional</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="publisher" class="form-label">Publisher</label>
+          <input type="text" class="form-control" id="publisher" name="publisher" value="<%= book.publisher %>">
+          <div class="form-text">Optional</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof Document</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
+          <small class="form-text text-muted">Upload new PDF if you want to replace the current one.</small>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-arrow-repeat"></i> Update Book Chapter</button>
+        <a href="/<%= currUser.role %>/books" class="btn btn-secondary ms-2">Cancel</a>
+
+      </form>
+    </div>
+  </div>
+</div>

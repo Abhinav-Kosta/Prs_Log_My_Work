@@ -139,3 +139,35 @@ module.exports.create = async (req, res) => {
     req.flash("success", "New Patent Entry Created!");
     res.redirect(`/${req.user.role}/patents/${req.user._id }`);
 };
+
+module.exports.renderEdit = async (req, res) => {
+  let { patentId } = req.params;
+  const patent = await Patent.findById(patentId);
+
+  if(!patent){
+    req.flash("error", "Patent you requested for does not exists!");
+    return res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+  }
+
+  res.render("patents/edit.ejs", { patent });
+}
+
+module.exports.update = async (req, res) => {
+  const { patentId } = req.params;
+  const updatedData = { ...req.body };
+
+  // Find and update the patent
+  let patent = await Patent.findByIdAndUpdate(patentId, updatedData, { new: true });
+
+  // If file uploaded, update the proof
+  if (req.file) {
+    patent.proof = {
+      url: req.file.path,
+      filename: req.file.filename
+    };
+    await patent.save(); // Save the updated proof
+  }
+
+  req.flash("success", "Patent updated successfully");
+  res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+}

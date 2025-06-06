@@ -1,0 +1,70 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Award Entry</h2>
+      <form action="/<%= currUser.role %>/awards/<%= award._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+        <div class="mb-3">
+          <label for="awardTitle" class="form-label">Award Title</label>
+          <input type="text" class="form-control" id="awardTitle" name="awardTitle" value="<%= award.awardTitle %>" required>
+          <div class="valid-feedback">
+            Title looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide award title!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="awardingAgency" class="form-label">Awarding Agency</label>
+          <input type="text" class="form-control" id="awardingAgency" name="awardingAgency" value="<%= award.awardingAgency %>" required>
+          <div class="valid-feedback">
+            Agency name looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide awarding agency!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date of Award</label>
+          <input type="date" class="form-control" id="date" name="date" value="<%= award.date.toISOString().slice(0,10) %>" required>
+          <div class="valid-feedback">
+            Date looks good!
+          </div>
+          <div class="invalid-feedback">
+            Provide date of award!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="awardDetails" class="form-label">Award Details</label>
+          <select class="form-select" id="awardDetails" name="awardDetails" required>
+            <option value="">Select</option>
+            <option value="Certificate" <%= award.awardDetails === 'Certificate' ? 'selected' : '' %>>Certificate</option>
+            <option value="Memento" <%= award.awardDetails === 'Memento' ? 'selected' : '' %>>Memento</option>
+            <option value="Cash Prize" <%= award.awardDetails === 'Cash Prize' ? 'selected' : '' %>>Cash Prize</option>
+            <option value="Other" <%= award.awardDetails === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+          <div class="invalid-feedback">
+            Choose an award detail!
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Update Proof (optional)</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
+          <small class="form-text text-muted">Upload PDF file under 2MB. Existing file will be retained if left blank.</small>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Update Award</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+
+      </form>
+    </div>
+  </div>
+</div>

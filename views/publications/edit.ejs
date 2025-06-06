@@ -1,0 +1,84 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Publication</h2>
+      <form action="/<%= currUser.role %>/publications/<%= publication._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+        <div class="mb-3">
+          <label for="title" class="form-label">Publication Title</label>
+          <input type="text" class="form-control" id="title" name="title" required value="<%= publication.title %>">
+          <div class="invalid-feedback">Please provide a title.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="coAuthors" class="form-label">Co-Authors</label>
+          <input type="text" class="form-control" id="coAuthors" name="coAuthors" placeholder="e.g. John Doe, Jane Smith" value="<%= publication.coAuthors %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="journalName" class="form-label">Journal Name</label>
+          <input type="text" class="form-control" id="journalName" name="journalName" required value="<%= publication.journalName %>">
+          <div class="invalid-feedback">Please provide a journal name.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="issnNumber" class="form-label">ISSN Number</label>
+          <input type="text" class="form-control" id="issnNumber" name="issnNumber" value="<%= publication.issnNumber %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="publicationDate" class="form-label">Publication Date</label>
+          <input type="date" class="form-control" id="publicationDate" name="publicationDate" required value="<%= publication.publicationDate.toISOString().split('T')[0] %>">
+          <div class="invalid-feedback">Please provide a date.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="volume" class="form-label">Volume</label>
+          <input type="text" class="form-control" id="volume" name="volume" value="<%= publication.volume %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="pageNumber" class="form-label">Page Number(s)</label>
+          <input type="text" class="form-control" id="pageNumber" name="pageNumber" value="<%= publication.pageNumber %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="indexedIn" class="form-label">Indexed In</label>
+          <select class="form-select" id="indexedIn" name="indexedIn" required>
+            <option value="">Select Index</option>
+            <option value="Scopus" <%= publication.indexedIn === 'Scopus' ? 'selected' : '' %>>Scopus</option>
+            <option value="PubMed" <%= publication.indexedIn === 'PubMed' ? 'selected' : '' %>>PubMed</option>
+            <option value="Medline" <%= publication.indexedIn === 'Medline' ? 'selected' : '' %>>Medline</option>
+            <option value="Other" <%= publication.indexedIn === 'Other' ? 'selected' : '' %>>Other</option>
+            <option value="None" <%= publication.indexedIn === 'None' ? 'selected' : '' %>>None</option>
+          </select>
+          <div class="invalid-feedback">Please choose an index.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="link" class="form-label">Publication Link (if any)</label>
+          <input type="url" class="form-control" id="link" name="link" placeholder="https://example.com" value="<%= publication.link %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof (PDF)</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
+          <% if (publication.proofUrl) { %>
+            <small class="form-text text-muted">Current file: <a href="<%= publication.proofUrl %>" target="_blank">View</a></small>
+          <% } %>
+        </div>
+
+        <div class="mb-3">
+          <label for="impactFactor" class="form-label">Impact Factor</label>
+          <input type="number" step="0.01" class="form-control" id="impactFactor" name="impactFactor" value="<%= publication.impactFactor %>">
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Update Publication</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/js/proof.js"></script>

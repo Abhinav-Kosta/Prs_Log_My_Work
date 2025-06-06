@@ -1,0 +1,74 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Academic Event Entry</h2>
+      <form action="/<%= currUser.role %>/academic-events/<%= academic._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+        <div class="mb-3">
+          <label for="type" class="form-label">Event Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select</option>
+            <option value="Conference" <%= academic.type === "Conference" ? "selected" : "" %>>Conference</option>
+            <option value="Workshop" <%= academic.type === "Workshop" ? "selected" : "" %>>Workshop</option>
+            <option value="Seminar" <%= academic.type === "Seminar" ? "selected" : "" %>>Seminar</option>
+            <option value="Symposia" <%= academic.type === "Symposia" ? "selected" : "" %>>Symposia</option>
+            <option value="FDP" <%= academic.type === "FDP" ? "selected" : "" %>>FDP</option>
+          </select>
+          <div class="invalid-feedback">Choose an event type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="titleOfPaperPresented" class="form-label">Title of Paper Presented</label>
+          <input type="text" class="form-control" id="titleOfPaperPresented" name="titleOfPaperPresented" value="<%= academic.titleOfPaperPresented %>" required>
+          <div class="invalid-feedback">Provide a title!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="eventName" class="form-label">Event Name</label>
+          <input type="text" class="form-control" id="eventName" name="eventName" value="<%= academic.eventName %>" required>
+          <div class="invalid-feedback">Provide event name!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="sponsoredBy" class="form-label">Sponsored By</label>
+          <input type="text" class="form-control" id="sponsoredBy" name="sponsoredBy" value="<%= academic.sponsoredBy %>" required>
+          <div class="invalid-feedback">Provide sponsor name!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date of Event</label>
+          <input type="date" class="form-control" id="date" name="date" value="<%= academic.date.toISOString().split('T')[0] %>" required>
+          <div class="invalid-feedback">Provide a date!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="venue" class="form-label">Venue</label>
+          <input type="text" class="form-control" id="venue" name="venue" value="<%= academic.venue %>" required>
+          <div class="invalid-feedback">Provide venue!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="participationType" class="form-label">Participation Type</label>
+          <select class="form-select" id="participationType" name="participationType" required>
+            <option value="">Select</option>
+            <% const roles = ["Poster Presentation", "Oral Presentation", "Guest Speaker", "Chairman", "Co-Chairman", "Keynote Speaker", "Delegate"]; %>
+            <% roles.forEach(role => { %>
+              <option value="<%= role %>" <%= academic.participationType === role ? "selected" : "" %>><%= role %></option>
+            <% }) %>
+          </select>
+          <div class="invalid-feedback">Choose a participation type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="proof" class="form-label">Proof Document</label>
+          <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
+          <small class="form-text text-muted">Upload new PDF only if updating (max 2MB). Existing proof: <a href="<%= academic.proof.url %>" target="_blank">View</a></small>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Update Event</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+      </form>
+    </div>
+  </div>
+</div>

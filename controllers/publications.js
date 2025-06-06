@@ -153,3 +153,33 @@ module.exports.create = async (req, res) => {
     req.flash("success", "New Publication Entry Created!");
     res.redirect(`/${req.user.role}/publications/${req.user._id}`);
 };
+
+module.exports.renderEdit = async (req, res) => {
+  let { pubId } = req.params;
+  const publication = await Publication.findById(pubId);
+
+  if(!publication){
+    req.flash("error", "publication you requested for does not exists!");
+    return res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+  }
+
+  res.render("publications/edit.ejs", { publication });
+}
+
+module.exports.update = async (req, res) => {
+  let { pubId } = req.params;
+  const updatedData = { ...req.body };
+
+  const publication = await Publication.findByIdAndUpdate(pubId, updatedData, { new: true });
+
+  if (req.file) {
+    publication.proof = {
+      url: req.file.path,
+      filename: req.file.filename
+    };
+    await publication.save();
+  }
+
+  req.flash("success", "Publication updated successfully");
+  res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+}

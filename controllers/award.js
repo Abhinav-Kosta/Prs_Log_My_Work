@@ -139,3 +139,32 @@ module.exports.create = async (req, res) => {
   req.flash("success", "New Award Entry Created!");
   res.redirect(`/${req.user.role}/awards/${req.user._id}`);
 }
+
+module.exports.renderEdit = async (req, res) => {
+  const { awdId } = req.params;
+  const award = await Award.findById(awdId);
+
+  if(!award){
+    req.flash("error", "Award you are trying to access doesn't exists");
+    return res.redirect(`/${req.user.role}/awards/${req.user._id}`);
+  }
+
+  res.render("awards/edit.ejs", { award });
+}
+
+module.exports.update = async (req, res) => {
+  const { awdId } = req.params;
+  const updatedData = { ...req.body };
+  const award = await Award.findByIdAndUpdate(awdId, updatedData, { new : true });
+
+  if(req.file){
+    award.proof = {
+      url : req.file.path,
+      filename : req.file.filename
+    }
+    await award.save();
+  }
+
+  req.flash("success", "Award updated successfully!");
+  res.redirect(`/${req.user.role}/awards/${req.user._id}`);
+}

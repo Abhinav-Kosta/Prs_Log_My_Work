@@ -145,3 +145,34 @@ module.exports.create = async (req, res) => {
   req.flash("success", "New Academic Entry Created!");
   res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
 }
+
+module.exports.renderEdit = async (req, res) => {
+  let { acdId } = req.params;
+
+  let academic = await Academic.findById(acdId);
+
+  if(!academic){
+    req.flash("error", "Academic Event you requested for does not exists!");
+    return res.redirect(`/${req.user.role}/academic-events/${req.user._id }`);
+  }
+
+  res.render("academics/edit.ejs", { academic });
+}
+
+module.exports.update = async (req, res) => {
+  let { acdId } = req.params;
+  let updatedData = { ...req.body };
+
+  let academic = await Academic.findByIdAndUpdate(acdId, updatedData, { new : true });
+
+  if(req.file){
+    academic.proof = {
+      url : req.file.path,
+      filename: req.file.filename,
+    };
+    await academic.save();
+  }
+
+  req.flash("Academic Event updated successfully!");
+  res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
+}

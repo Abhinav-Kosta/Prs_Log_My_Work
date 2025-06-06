@@ -137,3 +137,33 @@ module.exports.create = async (req, res) => {
     req.flash("success", "New Book Chapter Created!");
     res.redirect(`/${req.user.role}/books/${req.user._id }`);
 };
+
+module.exports.renderEdit = async (req, res) => {
+  const { bookId } = req.params;
+  const book = await Book.findById(bookId);
+
+  if(!book){
+    req.flash("error", "Book Chapter you requested for does not exists!");
+    return res.redirect(`${req.user.role}/books/${req.user._id}`);
+  }
+
+  res.render("books/edit.ejs", {book});
+}
+
+module.exports.update = async (req, res) => {
+  const { bookId } = req.params;
+  const updatedData = { ...req.body };
+
+  const book = await Book.findByIdAndUpdate( bookId, updatedData, { new : true });
+
+  if(req.file){
+    book.proof = {
+      url : req.file.path,
+      filename : req.file.filename,
+    };
+    await book.save();
+  }
+
+  req.flash("success", "Book Chapter Updated successfully!");
+  res.redirect(`/${req.user.role}/books/${req.user._id}`);
+}
