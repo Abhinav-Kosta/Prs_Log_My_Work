@@ -1,4 +1,3 @@
-const { patentSchema, publicationSchema, academicSchema, bookSchema, awardSchema, projectSchema } = require("./schema");
 const ExpressError = require("./utils/ExpressError");
 const Patent = require("./models/patent");
 const Publication = require("./models/publish");
@@ -6,6 +5,14 @@ const Academic = require("./models/academicEvent");
 const Book = require("./models/bookChapter");
 const Award = require("./models/award");
 const Project = require("./models/projectSubmission");
+const { 
+    patentSchema, 
+    publicationSchema, 
+    academicSchema, 
+    bookSchema, 
+    awardSchema, 
+    projectSchema, 
+    } = require("./schema");
 
 module.exports.isAdmin = (req, res, next) => {
     if (!req.isAuthenticated() || req.user.role !== "admin") {
@@ -22,6 +29,14 @@ module.exports.isLoggedIn = (req, res, next) => {
         return res.redirect("/login");
     }
     next();
+};
+
+module.exports.isHOIOrAdmin = (req, res, next) => {
+  if (req.isAuthenticated() && (req.user.role === "hoi" || req.user.role === "admin")) {
+    return next();
+  }
+  req.flash("error", "Unauthorized access.");
+  res.redirect("/");
 };
 
 module.exports.validatePatent = (req, res, next) => {
