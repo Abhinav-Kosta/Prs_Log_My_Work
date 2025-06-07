@@ -157,7 +157,7 @@ module.exports.update = async (req, res) => {
   const updatedData = { ...req.body };
   const award = await Award.findByIdAndUpdate(awdId, updatedData, { new : true });
 
-  if(req.file){
+  if(req.file){ 
     award.proof = {
       url : req.file.path,
       filename : req.file.filename
@@ -166,5 +166,23 @@ module.exports.update = async (req, res) => {
   }
 
   req.flash("success", "Award updated successfully!");
+  res.redirect(`/${req.user.role}/awards/${req.user._id}`);
+}
+
+module.exports.destroy = async (req, res) => {
+  const { awdId } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+
+  if(!isMatch.user){
+    req.flash("error", "Incorrect Password! Deletion Cancelled.");
+    return res.redirect(`/${req.user.role}/awards/${req.user._id}`);
+  }
+
+  await Award.findByIdAndDelete(awdId);
+
+  req.flash("success", "Award deleted successfully!");
   res.redirect(`/${req.user.role}/awards/${req.user._id}`);
 }

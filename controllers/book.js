@@ -167,3 +167,21 @@ module.exports.update = async (req, res) => {
   req.flash("success", "Book Chapter Updated successfully!");
   res.redirect(`/${req.user.role}/books/${req.user._id}`);
 }
+
+module.exports.destroy = async (req, res) => {
+  const { bookId } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+
+  if(!isMatch.user){
+    req.flash("error", "incorrect password, deletion cancelled!");
+    return res.redirect(`/${req.user.role}/books/${req.user._id}`);
+  }
+
+  await Book.findByIdAndDelete(bookId);
+  
+  req.flash("success", "Book Chapter deleted successfully!");
+  res.redirect(`/${req.user.role}/books/${req.user._id}`);
+}

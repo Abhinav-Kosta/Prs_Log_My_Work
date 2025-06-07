@@ -176,3 +176,21 @@ module.exports.update = async (req, res) => {
   req.flash("Academic Event updated successfully!");
   res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
 }
+
+module.exports.destroy = async (req, res) => {
+  const { acdId } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+
+  if(!isMatch.user){
+    req.flash("error", "Incorrect Password! Deletion Cancelled");
+    return res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
+  }
+
+  await Academic.findByIdAndDelete(acdId);
+
+  req.flash("success", "Academic Record deleted successfully!");
+  res.redirect(`/${req.user.role}/academic-events/${req.user._id}`);
+}

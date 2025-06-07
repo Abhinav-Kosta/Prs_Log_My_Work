@@ -159,7 +159,7 @@
                 <label class="form-label">Faculty</label>
                 <select name="facultyId" class="form-select">
                   <% allFaculty.forEach(f => { %>
-                    <option value="<%= f._id %>" <%= facultyId == f._id ? 'selected' : '' %>><%= f.username %></option>
+                    <option value="<%= f._id %>" <%= facultyId == f._id ? 'selected' : '' %>><%= f.fullname %></option>
                   <% }) %>
                 </select>
             </div>

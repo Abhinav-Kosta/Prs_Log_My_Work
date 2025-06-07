@@ -171,3 +171,23 @@ module.exports.update = async (req, res) => {
   req.flash("success", "Patent updated successfully");
   res.redirect(`/${req.user.role}/patents/${req.user._id }`);
 }
+
+module.exports.destroy = async (req, res) => {
+  const { patId } = req.params;
+  const { password } = req.body;
+
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+  console.log(isMatch);
+
+  if(!isMatch.user){
+    req.flash("error", "incorrect password, deletion cancelled!");
+    return res.redirect(`/${req.user.role}/patents/${req.user._id}`);
+  }
+
+  await Patent.findByIdAndDelete(patId);
+
+  req.flash("success", "Patent deleted successfully!");
+  res.redirect(`/${req.user.role}/patents/${req.user._id}`);
+}

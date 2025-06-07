@@ -97,11 +97,11 @@ module.exports.validateProject = (req, res, next) => {
 }
 
 module.exports.isPatentOwner = async (req, res, next) => {
-    const { patentId } = req.params;
-    let patent = await Patent.findById(patentId);
+    const { patId } = req.params;
+    let patent = await Patent.findById(patId);
 
     if(!patent.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Patent.");
+        req.flash("error", "You are not the owner of this Patent.");
         return res.redirect(`/${req.user.role}/patents/${req.user._id }`);
     }
     next();
@@ -112,7 +112,7 @@ module.exports.isPublicationOwner = async (req, res, next) => {
     let publication = await Publication.findById(pubId);
 
     if(!publication.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Publication.");
+        req.flash("error", "You are not the owner of this Publication.");
         return res.redirect(`/${req.user.role}/publications/${req.user._id }`);
     }
     next();
@@ -123,7 +123,7 @@ module.exports.isAcademicOwner = async (req, res, next) => {
     let academic = await Academic.findById(acdId);
 
     if(!academic.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Academic.");
+        req.flash("error", "You are not the owner of this Academic.");
         return res.redirect(`/${req.user.role}/academic-events/${req.user._id }`);
     }
     next();
@@ -134,7 +134,7 @@ module.exports.isBookOwner = async (req, res, next) => {
     let book = await Book.findById(bookId);
 
     if(!book.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Book Chapter.");
+        req.flash("error", "You are not the owner of this Book Chapter.");
         return res.redirect(`/${req.user.role}/books/${req.user._id }`);
     }
     next();
@@ -145,7 +145,7 @@ module.exports.isAwardOwner = async (req, res, next) => {
     let award = await Award.findById(awdId);
 
     if(!award.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Award.");
+        req.flash("error", "You are not the owner of this Award.");
         return res.redirect(`/${req.user.role}/awards/${req.user._id }`);
     }
     next();
@@ -156,7 +156,7 @@ module.exports.isProjectOwner = async (req, res, next) => {
     let project = await Project.findById(pjtId);
 
     if(!project.user.equals(res.locals.currUser._id)){
-        req.flash("error", "You do not have permission to edit this Project.");
+        req.flash("error", "You are not the owner of this Project.");
         return res.redirect(`/${req.user.role}/projects/${req.user._id}`);
     }
     next();

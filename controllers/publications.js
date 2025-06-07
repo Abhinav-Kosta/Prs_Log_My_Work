@@ -160,7 +160,7 @@ module.exports.renderEdit = async (req, res) => {
 
   if(!publication){
     req.flash("error", "publication you requested for does not exists!");
-    return res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+    return res.redirect(`/${req.user.role}/publications/${req.user._id }`);
   }
 
   res.render("publications/edit.ejs", { publication });
@@ -181,5 +181,26 @@ module.exports.update = async (req, res) => {
   }
 
   req.flash("success", "Publication updated successfully");
-  res.redirect(`/${req.user.role}/patents/${req.user._id }`);
+  res.redirect(`/${req.user.role}/publications/${req.user._id }`);
+}
+
+module.exports.destroy = async (req, res) => {
+  const { pubId } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+
+  if(!isMatch.user){
+    req.flash("error", "Incorrect Password! Deletion Cancelled.");
+    return res.redirect(`/${req.user.role}/publications/${req.user._id}`);
+  }
+
+  // const deletedPublication = await Publication.findByIdAndDelete(pubId);
+  // console.log(deletedPublication);
+
+  await Publication.findByIdAndDelete(pubId);
+  
+  req.flash("success", "Publication deleted successfully.");
+  res.redirect(`/${req.user.role}/publications/${req.user._id}`);
 }

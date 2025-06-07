@@ -174,3 +174,21 @@ module.exports.update = async (req, res) => {
   req.flash("success", "Project updated successfully");
   res.redirect(`/${req.user.role}/projects/${req.user._id}`);
 }
+
+module.exports.destroy = async (req, res) => {
+  const { pjtId } = req.params;
+  const { password } = req.body;
+
+  const user = await User.findById(req.user._id);
+  const isMatch = await user.authenticate(password);
+
+  if(!isMatch.user){
+    req.flash("error", "incorrect password, deletion cancelled!");
+    return res.redirect(`/${req.user.role}/projects/${req.user._id}`);
+  }
+
+  await Project.findByIdAndDelete(pjtId);
+
+  req.flash("success", "Project deleted successfully!");
+  res.redirect(`/${req.user.role}/projects/${req.user._id}`);
+}
