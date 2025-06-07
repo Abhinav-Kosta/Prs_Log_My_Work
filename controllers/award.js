@@ -114,6 +114,22 @@ module.exports.create = async (req, res) => {
       date,
   } = req.body;
 
+  const normalizedRegex = new RegExp(
+    `^\\s*${awardTitle.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+    'i'
+  );
+
+  // Check for duplicates in the DB (case & space-insensitive)
+  const existing = await Award.findOne({
+    user: req.user._id,
+    awardTitle: { $regex: normalizedRegex }
+  });
+
+  if (existing) {
+    req.flash("error", "An award with this title already exists.");
+    return res.redirect(`/${req.user.role}/awards/new`);
+  }
+
   const newAward = new Award({
       user: req.user._id,
       awardTitle,

@@ -110,25 +110,41 @@ module.exports.renderNew = async (req, res) => {
 module.exports.create = async (req, res) => {
     const { title, isbn, publisher, publicationDate } = req.body;
 
+    // Normalize the title: remove spaces and convert to lowercase
+    const normalizedRegex = new RegExp(
+      `^\\s*${title.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+      'i'
+    );
+  
+    // Check for duplicates in the DB (case & space-insensitive)
+    const existing = await Book.findOne({
+      user: req.user._id,
+      title: { $regex: normalizedRegex }
+    });
+  
+    if (existing) {
+      req.flash("error", "A book chapter with this title already exists.");
+      return res.redirect(`/${req.user.role}/books/new`);
+    }
+
     const newBook = new Book({
-        user: req.user._id,
-        title,
-        isbn,
-        publisher,
-        publicationDate
+      user: req.user._id,
+      title,
+      isbn,
+      publisher,
+      publicationDate
     });
 
     // Handle Cloudinary file upload (PDF)
     if (req.file) {
-        let url = req.file.path;
-        if (!url.endsWith('.pdf')) {
-            url += '.pdf';
-        }
-
-        newBook.proof = {
-            url: url,
-            filename: req.file.filename
-        };
+      let url = req.file.path;
+      if (!url.endsWith('.pdf')) {
+          url += '.pdf';
+      }
+      newBook.proof = {
+          url: url,
+          filename: req.file.filename
+      };
     }
 
     await newBook.save();

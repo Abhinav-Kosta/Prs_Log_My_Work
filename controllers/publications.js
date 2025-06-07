@@ -108,50 +108,65 @@ module.exports.summaryIndex = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-    const {
-        title,
-        coAuthors,
-        journalName,
-        issnNumber,
-        publicationDate,
-        volume,
-        pageNumber,
-        indexedIn,
-        link,
-        impactFactor
-    } = req.body;
+  const {
+      title,
+      coAuthors,
+      journalName,
+      issnNumber,
+      publicationDate,
+      volume,
+      pageNumber,
+      indexedIn,
+      link,
+      impactFactor
+  } = req.body;
 
-    const newPublication = new Publication({
-        user: req.user._id,
-        title,
-        coAuthors,
-        journalName,
-        issnNumber,
-        publicationDate,
-        volume,
-        pageNumber,
-        indexedIn,
-        link,
-        impactFactor
-    });
+  // Normalize the title: remove spaces and convert to lowercase
+  const normalizedRegex = new RegExp(
+    `^\\s*${title.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+    'i'
+  );
 
-    if (req.file) {
-      let url = req.file.path;
-      if (!url.endsWith('.pdf')) {
-        url += '.pdf';
-      }
+  // Check for duplicates in the DB (case & space-insensitive)
+  const existing = await Publication.findOne({
+    user: req.user._id,
+    title: { $regex: normalizedRegex }
+  });
 
-      newPublication.proof = {
-        url: url,
-        filename: req.file.filename
-      };
+  if (existing) {
+    req.flash("error", "A project with this title already exists.");
+    return res.redirect(`/${req.user.role}/publications/new`);
+  }
+
+  const newPublication = new Publication({
+      user: req.user._id,
+      title,
+      coAuthors,
+      journalName,
+      issnNumber,
+      publicationDate,
+      volume,
+      pageNumber,
+      indexedIn,
+      link,
+      impactFactor
+  });
+
+  if (req.file) {
+    let url = req.file.path;
+    if (!url.endsWith('.pdf')) {
+      url += '.pdf';
     }
+    newPublication.proof = {
+      url: url,
+      filename: req.file.filename
+    };
+  }
 
-    await newPublication.save();
-
-    console.log("Cloudinary Upload File Info:", req.file);
-    req.flash("success", "New Publication Entry Created!");
-    res.redirect(`/${req.user.role}/publications/${req.user._id}`);
+  await newPublication.save();
+  console.log("Cloudinary Upload File Info:", req.file);
+  req.flash("success", "New Publication Entry Created!");
+  res.redirect(`/${req.user.role}/publications/${req.user._id}`);
 };
 
 module.exports.renderEdit = async (req, res) => {

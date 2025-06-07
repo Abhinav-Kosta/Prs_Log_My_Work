@@ -117,6 +117,23 @@ module.exports.create = async (req, res) => {
       remarks
   } = req.body;
 
+  // Normalize the title: remove spaces and convert to lowercase
+  const normalizedRegex = new RegExp(
+    `^\\s*${title.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+    'i'
+  );
+
+  // Check for duplicates in the DB (case & space-insensitive)
+  const existing = await Project.findOne({
+    user: req.user._id,
+    title: { $regex: normalizedRegex }
+  });
+
+  if (existing) {
+    req.flash("error", "A project with this title already exists.");
+    return res.redirect(`/${req.user.role}/projects/new`);
+  }
+
   const newProject = new Project({
       user: req.user._id,
       title,

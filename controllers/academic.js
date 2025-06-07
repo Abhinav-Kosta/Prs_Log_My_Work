@@ -117,6 +117,23 @@ module.exports.create = async (req, res) => {
       participationType,
   } = req.body;
 
+  // Normalize the title: remove spaces and convert to lowercase
+  const normalizedRegex = new RegExp(
+    `^\\s*${titleOfPaperPresented.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+    'i'
+  );
+
+  // Check for duplicates in the DB (case & space-insensitive)
+  const existing = await Academic.findOne({
+    user: req.user._id,
+    titleOfPaperPresented: { $regex: normalizedRegex }
+  });
+
+  if (existing) {
+    req.flash("error", "An academic event with this title already exists.");
+    return res.redirect(`/${req.user.role}/academic-events/new`);
+  }
+  
   const newAcademic = new Academic({
       user: req.user._id,
       type,

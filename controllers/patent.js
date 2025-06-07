@@ -109,6 +109,23 @@ module.exports.renderNew = async (req, res) => {
 module.exports.create = async (req, res) => {
     const { title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
 
+    // Normalize the title: remove spaces and convert to lowercase
+    const normalizedRegex = new RegExp(
+      `^\\s*${title.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+      'i'
+    );
+  
+    // Check for duplicates in the DB (case & space-insensitive)
+    const existing = await Patent.findOne({
+      user: req.user._id,
+      title: { $regex: normalizedRegex }
+    });
+  
+    if (existing) {
+      req.flash("error", "A patent with this title already exists.");
+      return res.redirect(`/${req.user.role}/patents/new`);
+    }    
+
     const newPatent = new Patent({
         user: req.user._id,
         title,
