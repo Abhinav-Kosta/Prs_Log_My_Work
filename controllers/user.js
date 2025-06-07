@@ -19,7 +19,13 @@ module.exports.renderLogin = (req, res) => {
 module.exports.verifyRoleAndLogin = (req, res, next) => {
     const { role } = req.params;
 
-    passport.authenticate("local", (err, user, info) => {
+    // console.log(req.body);
+
+    passport.authenticate("local", {
+        usernameField: "facultyId", // This tells Passport to look at req.body.facultyId
+        failureFlash: true,
+        failureRedirect: `/login/${role}`
+    }, (err, user, info) => {
         if (err || !user) {
             req.flash("error", "Invalid credentials.");
             return res.redirect(`/login/${role}`);
@@ -32,7 +38,7 @@ module.exports.verifyRoleAndLogin = (req, res, next) => {
 
         req.logIn(user, (err) => {
             if (err) return next(err);
-            req.flash("success", `Welcome back ${user.username}!`);
+            req.flash("success", `Welcome back ${user.fullname}!`);
             return res.redirect(redirectMap[role]);
         });
     })(req, res, next);

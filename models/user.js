@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  username: {
+  fullname: {
     type: String
   },
   role: {
@@ -29,6 +29,8 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, {
+  usernameField: 'facultyId',
+});
 
 module.exports = mongoose.model('User', userSchema);

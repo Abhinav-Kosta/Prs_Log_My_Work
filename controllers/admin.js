@@ -19,8 +19,14 @@ module.exports.renderSignup = async (req, res) => {
 
 module.exports.signUp = async (req, res) => {
     try {
-        const { facultyId, username, role, school, department, password } = req.body;
+        const { facultyId, fullname, role, school, department, password } = req.body;
 
+        const existingUser = await User.findOne({ facultyId });
+        if (existingUser) {
+          req.flash("error", "Faculty ID already exists. Please use a different ID.");
+          return res.redirect("/admin/signup");
+        }
+        
         // Role-specific validation
         if (!["faculty", "hoi", "admin"].includes(role)) {
           req.flash("error", "Invalid role.");
@@ -47,14 +53,14 @@ module.exports.signUp = async (req, res) => {
 
         const newUser = new User({
           facultyId,
-          username,
+          fullname,
           role,
           school: (role === "faculty" || role === "hoi") ? school : undefined,
           department: role === "faculty" ? department : undefined
         });
 
         const registeredUser = await User.register(newUser, password);
-        // console.log("Registered user saved to DB:", registeredUser);
+        console.log("Registered user saved to DB:", registeredUser);
 
         req.flash("success", `Successfully created ${role} user!`);
         res.redirect("/admin/dashboard");        

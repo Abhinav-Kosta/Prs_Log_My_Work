@@ -25,9 +25,9 @@ const init = async () => {
     console.log("Old users removed.");
   
     for (let user of initData) {
-      const { facultyId, username, role, password, department, school } = user;
+      const { facultyId, fullname, role, password, department, school } = user;
 
-      const newUserData = { facultyId, username, role };
+      const newUserData = { facultyId, fullname, role };
       if (role !== "admin") {
         newUserData.school = school; // Add school for non-admin users
         if (role === "faculty") {

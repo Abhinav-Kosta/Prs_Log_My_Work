@@ -6,7 +6,7 @@
         <h2 class="mb-1">
           <i class="bi bi-journal-text me-2"></i>
           <% if (user) { %>
-            <%= user.username %>'s Publications
+            <%= user.fullname %>'s Publications
           <% } else if (department) { %>
             Department of <%= department %> - Publications
           <% } else { %>

@@ -6,7 +6,7 @@
         <h2 class="mb-1">
           <i class="bi bi-calendar-event me-2"></i>
           <% if (user) { %>
-            <%= user.username %>'s Academic Events
+            <%= user.fullname %>'s Academic Events
           <% } else if (department) { %>
             Department of <%= department %> – Academic Events
           <% } else { %>

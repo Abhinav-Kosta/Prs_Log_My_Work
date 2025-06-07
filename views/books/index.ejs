@@ -6,7 +6,7 @@
         <h2 class="mb-1">
           <i class="bi bi-book me-2"></i>
           <% if (user) { %>
-            <%= user.username %>'s Books & Chapters
+            <%= user.fullname %>'s Books & Chapters
           <% } else if (department) { %>
             Department of <%= department %> – Books & Chapters
           <% } else { %>
