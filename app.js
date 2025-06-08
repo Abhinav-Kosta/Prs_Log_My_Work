@@ -106,6 +106,10 @@ app.use("/admin", adminRouter);
 app.use("/summary", summaryRouter);
 app.use("/changePassword", changePassRouter);
 
+app.get("/developed", async (req, res) => {
+    res.render("developed.ejs");
+})
+
 
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page not found!"));
