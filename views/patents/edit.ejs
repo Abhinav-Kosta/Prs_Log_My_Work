@@ -18,6 +18,7 @@
             <option value="">Select</option>
             <option value="National" <%= patent.type === 'National' ? 'selected' : '' %>>National</option>
             <option value="International" <%= patent.type === 'International' ? 'selected' : '' %>>International</option>
+            <option value="Other" <%= patent.type === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Choose an option!</div>
@@ -50,6 +51,7 @@
             <option value="">Select</option>
             <option value="Provisional" <%= patent.specificationType === 'Provisional' ? 'selected' : '' %>>Provisional</option>
             <option value="Complete" <%= patent.specificationType === 'Complete' ? 'selected' : '' %>>Complete</option>
+            <option value="Other" <%= patent.specificationType === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Choose an option!</div>
@@ -74,6 +76,7 @@
             <option value="Awarded" <%= patent.remarks === 'Awarded' ? 'selected' : '' %>>Awarded</option>
             <option value="Published" <%= patent.remarks === 'Published' ? 'selected' : '' %>>Published</option>
             <option value="Under Examination" <%= patent.remarks === 'Under Examination' ? 'selected' : '' %>>Under Examination</option>
+            <option value="Other" <%= patent.remarks === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Choose an option!</div>

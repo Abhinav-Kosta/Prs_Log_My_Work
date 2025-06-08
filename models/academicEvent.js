@@ -8,7 +8,7 @@ const academicEventSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Conference', 'Workshop', 'Seminar', 'Symposia', 'FDP'],
+    enum: ['Conference', 'Workshop', 'Seminar', 'Symposia', 'FDP', 'Other'],
     required: true
   },
   titleOfPaperPresented: {
@@ -40,7 +40,8 @@ const academicEventSchema = new mongoose.Schema({
       'Chairman',
       'Co-Chairman',
       'Keynote Speaker',
-      'Delegate'
+      'Delegate',
+      'Other'
     ],
     required: true
   },

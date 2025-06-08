@@ -21,8 +21,8 @@ function handleRoleChange(role) {
 });
 
 const departmentOptions = {
-    ASET: ["Computer Science", "Information Technology"],
-    ALS: ["Civil Law", "Criminal Law"]
+    ASET: ["Computer Science", "Information Technology", "Mechanical", "Electronics and Communication", "Civil", "Physics", "Chemistry", "Mathematics"],
+    ALS: ["Civil Law", "Criminal Law"],
   };
 
   function updateDepartments() {

@@ -12,7 +12,7 @@ const patentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["National", "International"],
+    enum: ["National", "International", "Other"],
     required: true
   },
   patentFileNo: {
@@ -29,12 +29,12 @@ const patentSchema = new mongoose.Schema({
   },
   specificationType: {
     type: String,
-    enum: ["Provisional", "Complete"],
+    enum: ["Provisional", "Complete", "Other"],
     required: true
   },
   remarks: {
     type: String,
-    enum: ["Applied", "Awarded", "Published", "Under Examination"],
+    enum: ["Applied", "Awarded", "Published", "Under Examination", "Other"],
     required: true
   },
   proof: {

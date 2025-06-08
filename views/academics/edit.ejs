@@ -14,6 +14,7 @@
             <option value="Seminar" <%= academic.type === "Seminar" ? "selected" : "" %>>Seminar</option>
             <option value="Symposia" <%= academic.type === "Symposia" ? "selected" : "" %>>Symposia</option>
             <option value="FDP" <%= academic.type === "FDP" ? "selected" : "" %>>FDP</option>
+            <option value="Other" <%= academic.type === "Other" ? "selected" : "" %>>Other</option>
           </select>
           <div class="invalid-feedback">Choose an event type!</div>
         </div>
@@ -52,7 +53,7 @@
           <label for="participationType" class="form-label">Participation Type</label>
           <select class="form-select" id="participationType" name="participationType" required>
             <option value="">Select</option>
-            <% const roles = ["Poster Presentation", "Oral Presentation", "Guest Speaker", "Chairman", "Co-Chairman", "Keynote Speaker", "Delegate"]; %>
+            <% const roles = ["Poster Presentation", "Oral Presentation", "Guest Speaker", "Chairman", "Co-Chairman", "Keynote Speaker", "Delegate", "Other"]; %>
             <% roles.forEach(role => { %>
               <option value="<%= role %>" <%= academic.participationType === role ? "selected" : "" %>><%= role %></option>
             <% }) %>

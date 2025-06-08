@@ -12,7 +12,7 @@ const projectSubmissionSchema = new mongoose.Schema({
   },
   piOrCoPi: {
     type: String,
-    enum: ['PI', 'Co-PI'],
+    enum: ['PI', 'Co-PI', 'Other'],
     required: true
   },
   fundingAgency: {
