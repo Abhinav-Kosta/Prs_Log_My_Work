@@ -121,7 +121,7 @@ module.exports.indexExport = async (req, res) => {
   sheet.getCell('A2').font = { color: { argb: 'FFFFFFFF' }, bold: true, size: 14 }; // White text
   // Add department name in row 3 (previously row 2)
   sheet.mergeCells('A3', 'M3');
-  sheet.getCell('A3').value = "Details about Papers Published ";
+  sheet.getCell('A3').value = "Details about Papers Published";
   sheet.getCell('A3').alignment = { horizontal: 'center' };
   sheet.getCell('A3').font = { bold: true, size: 14 };
   sheet.getCell('A3').fill = {
@@ -294,6 +294,215 @@ module.exports.summaryIndex = async (req, res) => {
     department,
     scope: userId ? 'faculty' : department ? 'department' : 'school'
   });
+};
+
+module.exports.summaryIndexExport = async (req, res) => {
+  const { userId, department } = req.params;
+  const { range = 'all', year, month, quarter, half } = req.query;
+
+  const dateFilter = getDateRange(range, parseInt(year), parseInt(month), parseInt(quarter), parseInt(half));
+  let filter = dateFilter.$gte ? { publicationDate: dateFilter } : {};
+
+  let user = null;
+  let publications = [];
+  let departmentName = '';
+
+  // Faculty-specific
+  if (userId) {
+    user = await User.findById(userId);
+    if (!user) {
+      req.flash("error", "User not found.");
+      return res.redirect("/");
+    }
+    filter.user = userId;
+    publications = await Publication.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = user.department?.toUpperCase() || 'UNKNOWN';
+  }
+
+  // Department-wide
+  else if (department) {
+    const usersInDept = await User.find({ department }).select("_id name");
+    const userIds = usersInDept.map(u => u._id);
+    filter.user = { $in: userIds };
+    publications = await Publication.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = department.toUpperCase();
+  }
+
+  // School-wide
+  else {
+    // Assuming HOI session contains school info
+    const hoiSchool = req.user.school; // or wherever your session stores this
+    const usersInSchool = await User.find({ school: hoiSchool }).select("_id name");
+    const userIds = usersInSchool.map(u => u._id);
+    filter.user = { $in: userIds };
+    publications = await Publication.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = 'ALL DEPARTMENTS';
+  }
+
+  const getFilterDisplayText = (range, year, month, quarter, half) => {
+    switch (range) {
+      case 'all':
+        return 'All Time';
+      case 'yearly':
+        return `Yearly - ${year}`;
+      case 'monthly':
+        const monthNames = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return `Monthly - ${monthNames[month - 1]} ${year}`;
+      case 'quarterly':
+        const quarters = {
+          0: '(Jan - Mar)',
+          1: '(Apr - Jun)', 
+          2: '(Jul - Sep)',
+          3: '(Oct - Dec)'
+        };
+        return `Quarterly - ${quarters[quarter]} - ${year}`;
+      case 'half':
+        const halves = {
+          0: '(Jan - Jun)',
+          1: '(Jul - Dec)'
+        };
+        return `Half Yearly - ${halves[half]} - ${year}`;
+      default:
+        return 'All Time';
+    }
+  };
+
+  const filterText = getFilterDisplayText(range, parseInt(year), parseInt(month), parseInt(quarter), parseInt(half));
+
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet('Publications Summary');
+
+  // Add filter header in row 1
+  sheet.mergeCells('A1', 'M1'); // Adjusted for 13 columns
+  sheet.getCell('A1').value = `Filter: ${filterText}`;
+  sheet.getCell('A1').alignment = { horizontal: 'center' };
+  sheet.getCell('A1').font = { bold: true, size: 12 };
+  sheet.getCell('A1').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'FFF2CC' } // Light Yellow
+  };
+
+  // Add university name in row 2
+  sheet.mergeCells('A2', 'M2');
+  sheet.getCell('A2').value = "AMITY UNIVERSITY, MADHYA PRADESH, GWALIOR CAMPUS";
+  sheet.getCell('A2').alignment = { horizontal: 'center' };
+  sheet.getCell('A2').font = { bold: true, size: 14 };
+  sheet.getCell('A2').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'A52A2A' } // Maroon
+  };
+  sheet.getCell('A2').font = { color: { argb: 'FFFFFFFF' }, bold: true, size: 14 }; // White text
+
+  // Add scope title in row 3
+  sheet.mergeCells('A3', 'M3');
+  sheet.getCell('A3').value = "Details about Papers Published";
+  sheet.getCell('A3').alignment = { horizontal: 'center' };
+  sheet.getCell('A3').font = { bold: true, size: 14 };
+  sheet.getCell('A3').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'D9E1F2' } // Light Blue
+  };
+
+  // Define columns structure
+  sheet.columns = [
+    { key: "serial_number", width: 8 },
+    { key: 'department', width: 20 },
+    { key: 'name', width: 25 },
+    { key: 'designation', width: 20 },
+    { key: 'coAuthors', width: 30 },
+    { key: 'title', width: 50 },
+    { key: 'nameOfJournal', width: 30 },
+    { key: 'indexed', width: 15 },
+    { key: 'volume', width: 12 },
+    { key: 'pageNo', width: 15 },
+    { key: 'date', width: 15 },
+    { key: 'impact', width: 15 },
+    { key: 'link', width: 30 }
+  ];
+
+  // Add headers in row 4
+  const headerRow = sheet.getRow(4);
+  headerRow.values = [
+    "S. No.",
+    "Department",
+    "Faculty Name",
+    "Designation",
+    "Co-Authors",
+    "Title of Paper",
+    "Name of Journal",
+    "Indexed In",
+    "Volume",
+    "Page No.",
+    "Publication Date",
+    "Impact Factor",
+    "Proof Link"
+  ];
+
+  // Style the header row
+  headerRow.font = { bold: true };
+  headerRow.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'D9D9D9' } // Light Grey
+  };
+  headerRow.alignment = { horizontal: 'center', vertical: 'middle' };
+  headerRow.eachCell(cell => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' }
+    };
+  });
+
+  // Add publication data rows
+  publications.forEach((pub, index) => {
+    const row = sheet.addRow({
+      serial_number: index + 1,
+      department: userId ? departmentName : (pub.user?.department?.toUpperCase() || pub.user?.school?.toUpperCase() || 'UNKNOWN'),
+      name: userId ? user.fullname : (pub.user?.fullname || 'Unknown'),
+      designation: userId ? (user.designation || '') : (pub.user?.designation || ''),
+      coAuthors: pub.coAuthors || '',
+      title: pub.title,
+      nameOfJournal: pub.journalName,
+      indexed: pub.indexedIn,
+      volume: pub.volume || '',
+      pageNo: pub.pageNumber || '',
+      date: pub.publicationDate.toLocaleDateString('en-US'),
+      impact: pub.impactFactor || '',
+      link: pub.proof?.url || ''
+    });
+
+    // Wrap text and center-align all cells
+    row.eachCell({ includeEmpty: true }, (cell) => {
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: true
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+    });
+  });
+
+  // Set response headers and send file
+  const scope = userId ? 'faculty' : department ? 'department' : 'school';
+  const fileName = `publications-summary-${scope}-${Date.now()}.xlsx`;
+  
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+  await workbook.xlsx.write(res);
+  res.end();
 };
 
 module.exports.create = async (req, res) => {

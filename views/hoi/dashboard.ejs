@@ -243,6 +243,12 @@
               <button class="btn btn-success w-100">Apply</button>
             </div>
           </form>
+
+          <div class="col-md-2 align-self-end">
+              <a href="/hoi/dashboard/export?range-school=<%= rangeSchool %>&year-school=<%= yearSchool %><% if (rangeSchool === 'monthly') { %>&month-school=<%= monthSchool %><% } %><% if (rangeSchool === 'quarterly') { %>&quarter-school=<%= quarterSchool %><% } %><% if (rangeSchool === 'half') { %>&half-school=<%= halfSchool %><% } %>" class="btn btn-success w-100">
+                  Export Summary
+              </a>
+          </div>
         
         <!--Department Wise Records -->
       <div class="row mt-4">
@@ -276,6 +282,8 @@
                       %>
 
                       <a href="<%= basePathPub + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathPub + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>
@@ -300,6 +308,8 @@
                       %>
 
                       <a href="<%= basePathAcad + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathAcad + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>
@@ -323,6 +333,8 @@
                       %>
 
                       <a href="<%= basePathProj + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathProj + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>
@@ -346,6 +358,8 @@
                       %>
 
                       <a href="<%= basePathPat + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathPat + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>
@@ -369,6 +383,8 @@
                       %>
 
                       <a href="<%= basePathBook + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathBook + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>
@@ -392,6 +408,8 @@
                       %>
 
                       <a href="<%= basePathAwards + query %>" class="btn btn-primary">View All</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a href="<%= basePathAwards + "/export" + query %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
           </div>

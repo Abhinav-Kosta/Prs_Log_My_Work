@@ -278,6 +278,198 @@ module.exports.summaryIndex = async (req, res) => {
   });
 };
 
+module.exports.summaryIndexExport = async (req, res) => {
+  const { userId, department } = req.params;
+  const { range = "all", year, month, quarter, half } = req.query;
+
+  const dateFilter = getDateRange(range, parseInt(year), parseInt(month), parseInt(quarter), parseInt(half));
+  let filter = dateFilter.$gte ? { publicationDate: dateFilter } : {};
+
+  let user = null;
+  let books = [];
+  let departmentName = '';
+
+  // Faculty-specific
+  if (userId && userId !== "school" && userId !== "department") {
+    user = await User.findById(userId);
+    if (!user) {
+      req.flash("error", "User not found.");
+      return res.redirect("/");
+    }
+    filter.user = userId;
+    books = await Book.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = user.department?.toUpperCase() || 'UNKNOWN';
+  }
+
+  // Department-wide
+  else if (department) {
+    const usersInDept = await User.find({ department }).select("_id name");
+    const userIds = usersInDept.map(u => u._id);
+    filter.user = { $in: userIds };
+    books = await Book.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = department.toUpperCase();
+  }
+
+  // School-wide
+  else {
+    const hoiSchool = req.user.school;
+    const usersInSchool = await User.find({ school: hoiSchool }).select("_id name");
+    const userIds = usersInSchool.map(u => u._id);
+    filter.user = { $in: userIds };
+    books = await Book.find(filter).populate('user').sort({ publicationDate: -1 });
+    departmentName = 'ALL DEPARTMENTS';
+  }
+
+  // Function to generate filter display text
+  const getFilterDisplayText = (range, year, month, quarter, half) => {
+    switch (range) {
+      case 'all':
+          return 'All Time';
+      case 'yearly':
+          return `Yearly - ${year}`;
+      case 'monthly':
+          const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+          ];
+        return `Monthly - ${monthNames[month - 1]} ${year}`;
+      case 'quarterly':
+          const quarters = {
+              0: '(Jan - Mar)',
+              1: '(Apr - Jun)', 
+              2: '(Jul - Sep)',
+              3: '(Oct - Dec)'
+          };
+          return `Quarterly - ${quarters[quarter]} - ${year}`;
+      case 'half':
+          const halves = {
+              0: '(Jan - Jun)',
+              1: '(Jul - Dec)'
+          };
+          return `Half Yearly - ${halves[half]} - ${year}`;
+      default:
+          return 'All Time';
+    }
+  };
+
+  const filterText = getFilterDisplayText(range, year, month, quarter, half);
+
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet("Book Chapters Summary");
+
+  // Add filter header in row 1 (NEW)
+  sheet.mergeCells('A1', 'H1');
+  sheet.getCell('A1').value = `${filterText}`;
+  sheet.getCell('A1').alignment = { horizontal: 'center' };
+  sheet.getCell('A1').font = { bold: true, size: 20 };
+  sheet.getCell('A1').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'FFF2CC' }  // Light Yellow
+  };
+
+  // 👉 Add university name in row 2 (previously row 1)
+  sheet.mergeCells('A2', 'H2');
+  sheet.getCell('A2').value = "AMITY UNIVERSITY, MADHYA PRADESH, GWALIOR CAMPUS";
+  sheet.getCell('A2').alignment = { horizontal: 'center' };
+  sheet.getCell('A2').font = { bold: true, size: 14 };
+  sheet.getCell('A2').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'A52A2A' }  // Maroon
+  };
+
+  sheet.getCell('A2').font = { color: { argb: 'FFFFFFFF' }, bold: true, size: 14 }; // White text
+  // Add department name in row 3 (previously row 2)
+  sheet.mergeCells('A3', 'H3');
+  sheet.getCell('A3').value = "Details of Books or Book Chapters Authored";
+  sheet.getCell('A3').alignment = { horizontal: 'center' };
+  sheet.getCell('A3').font = { bold: true, size: 14 };
+  sheet.getCell('A3').fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'D9E1F2' }  // Light Dirty Blue
+  };
+
+  // Define columns structure (without adding headers yet)
+  sheet.columns = [
+      { key: "serial_number", width: 5},
+      { key: 'department', width: 40 },
+      { key: 'name', width: 30 },
+      { key: 'designation', width: 30 },
+      { key: 'title', width: 25 },
+      { key: 'date', width: 25 },
+      { key: 'isbn', width: 25},
+      { key: 'publisher', width: 25}
+  ];
+
+  // Manually add headers in row 4 (previously row 3)
+  const headerRow = sheet.getRow(4);
+  headerRow.values = [
+      "S. No.",
+      'Department',
+      "Name",
+      "Designation",
+      "Title of Book/Book chapter",
+      "Date / Year of Publication",
+      "ISBN Number",
+      "Name of the Publisher/Place"
+  ];
+
+  // Style the header row (row 4)
+  headerRow.font = { bold: true };
+  headerRow.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'D9D9D9' }  // Light Grey
+  };
+  headerRow.alignment = { horizontal: 'center' };
+  headerRow.eachCell(cell => {
+    cell.border = {
+      top: { style: 'thin' },
+      left: { style: 'thin' },
+      bottom: { style: 'thin' },
+      right: { style: 'thin' }
+    };
+  });
+
+  books.forEach((book, index) => {
+    const row = sheet.addRow({
+      serial_number: index + 1,
+      department: userId ? departmentName : (book.user?.department?.toUpperCase() || book.user?.school?.toUpperCase() || 'UNKNOWN'),
+      name: userId ? user.fullname : (book.user?.fullname || 'Unknown'),
+      designation: userId ? (user.designation || '') : (book.user?.designation || ''),
+      title: book.title,
+      date: book.publicationDate.toLocaleDateString('en-IN'),
+      isbn: book.isbn,
+      publisher: book.publisher,
+    });
+
+    // Wrap text and center-align all cells
+    row.eachCell({ includeEmpty: true }, (cell) => {
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+        wrapText: true
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+      };
+    });
+  });
+
+  const scope = userId ? 'faculty' : department ? 'department' : 'school';
+  const fileName = `publications-summary-${scope}-${Date.now()}.xlsx`;
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+  await workbook.xlsx.write(res);
+  res.end();
+};
+
 module.exports.renderNew = async (req, res) => {
   res.render("./books/new.ejs");
 }

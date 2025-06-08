@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
   fullname: {
     type: String
   },
+  designation: {
+    type: String,
+    required: true
+  },
   role: {
     type: String,
     enum: ["faculty", "hoi", "admin"],

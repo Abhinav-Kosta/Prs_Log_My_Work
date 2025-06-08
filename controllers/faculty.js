@@ -109,7 +109,7 @@ module.exports.exportFacultySummary = async (req, res) => {
       fgColor: { argb: 'FFF2CC' }  // Light Yellow
     };
 
-    // 👉 Add university name in row 2 (previously row 1)
+    // Add university name in row 2 (previously row 1)
     sheet.mergeCells('A2', 'I2');
     sheet.getCell('A2').value = "AMITY UNIVERSITY, MADHYA PRADESH, GWALIOR CAMPUS";
     sheet.getCell('A2').alignment = { horizontal: 'center' };

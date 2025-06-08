@@ -34,6 +34,8 @@ router.get("/new", (req, res) => {
 
 router.get("/dashboard", wrapAsync(hoiController.dashboard));
 
+router.get("/dashboard/export", wrapAsync(hoiController.export));
+
 router.get("/publications/new", wrapAsync(publicationsController.renderNew));
 router.get("/publications/:userId/indexExport", wrapAsync(publicationsController.indexExport));
 router.get("/publications/:pubId/edit", wrapAsync(publicationsController.renderEdit));
