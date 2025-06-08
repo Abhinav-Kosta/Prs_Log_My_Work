@@ -9,39 +9,6 @@ body {
     flex: 1;
 }
 
-/* Footer Styling */
-/* .f-info-links a {
-    text-decoration: none;
-    color: #222222;
-}
-
-.f-info-links a:hover {
-    text-decoration: underline;
-}
-
-.f-info-socials, .f-info-links, .f-info-brand {
-    width: 100%;
-    vertical-align: middle;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.f-info-socials i {
-    margin-right: 1rem;
-    font-size: 1.5rem;
-}
-
-.f-info {
-    text-align: center;
-    display: flex;
-    height: 8rem;
-    background-color: #ebebeb;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: space-evenly;
-} */
-
 /* navbar.css */
 nav.navbar {
     background: linear-gradient(90deg, #6e7dff, #8896ff);
@@ -124,4 +91,321 @@ footer {
     background-color: #fff7da;
     color: #7d6506;
     border-left: 5px solid #ffcf33;
+}
+
+/* ---------------------------------------------------------------------- */
+/* New Styling applied from here */
+/* Faculty Dashboard Styles */
+.container.mt-4 {
+    padding: 0 15px !important;
+    max-width: 1200px !important;
+}
+
+h2 {
+    color: #2b2d42 !important;
+    font-weight: 600 !important;
+    margin-bottom: 1rem !important;
+    font-size: 2rem !important;
+}
+
+.lead {
+    color: #4a4e69 !important;
+    font-weight: 500 !important;
+    margin-bottom: 2rem !important;
+    font-size: 1.25rem !important;
+}
+
+/* Filter Form Styles */
+.row.g-3.mb-4 {
+    background-color: #f8f9fa !important;
+    padding: 1.5rem !important;
+    border-radius: 10px !important;
+    margin-bottom: 2rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+.form-label {
+    font-weight: 500 !important;
+    color: #4a4e69 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.form-select {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.95rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.form-select:focus {
+    border-color: #6e7dff !important;
+    box-shadow: 0 0 0 0.25rem rgba(110, 125, 255, 0.25) !important;
+}
+
+.btn-primary {
+    background-color: #6e7dff !important;
+    border-color: #6e7dff !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+    background-color: #5b6bd9 !important;
+    border-color: #5b6bd9 !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Export Button */
+.col-md-2.align-self-end {
+    margin-bottom: 2rem !important;
+}
+
+.btn-success {
+    background-color: #4bb543 !important;
+    border-color: #4bb543 !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-success:hover {
+    background-color: #3fa338 !important;
+    border-color: #3fa338 !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Cards Section */
+.row.mt-4 {
+    margin-top: 2rem !important;
+}
+
+.card {
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transition: all 0.3s ease !important;
+    height: 100% !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* .card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+} */
+
+.card-body {
+    padding: 1.5rem !important;
+}
+
+.card-title {
+    color: #2b2d42 !important;
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.display-4 {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: #6e7dff !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .row.g-3.mb-4 {
+        padding: 1rem !important;
+    }
+    
+    #date-selectors-personal .col-md-6 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .col-md-2.align-self-end {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .card {
+        margin-bottom: 1rem !important;
+    }
+    
+    .card-body {
+        padding: 1.25rem !important;
+    }
+    
+    .display-4 {
+        font-size: 2rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .row.g-3.mb-4 > .col-md-3,
+    .row.g-3.mb-4 > .col-md-2 {
+        width: 100% !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    #date-selectors-personal .col-md-6 {
+        width: 100% !important;
+    }
+    
+    .btn-primary, .btn-success {
+        width: 100% !important;
+    }
+    
+    .card-body a.btn {
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .card-body a.btn + a.btn {
+        margin-left: 0 !important;
+    }
+}
+
+/* Delete Modal Styles - Won't interfere with functionality */
+#deleteModal .modal-dialog {
+    max-width: 500px !important;
+    margin: 1.75rem auto !important;
+}
+
+#deleteModal .modal-content {
+    border: 2px solid #dc3545 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    box-shadow: 0 5px 20px rgba(220, 53, 69, 0.2) !important;
+}
+
+#deleteModal .modal-header {
+    background-color: #dc3545 !important;
+    border-bottom: none !important;
+    padding: 1rem 1.5rem !important;
+}
+
+#deleteModal .modal-title {
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+}
+
+#deleteModal .modal-body {
+    padding: 1.5rem !important;
+    font-size: 1rem !important;
+}
+
+#deleteModal .form-control {
+    border: 1px solid #ced4da !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 0.75rem !important;
+    margin-top: 0.5rem !important;
+}
+
+#deleteModal .form-control:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+#deleteModal .modal-footer {
+    border-top: 1px solid #e9ecef !important;
+    padding: 1rem 1.5rem !important;
+    justify-content: flex-end !important;
+}
+
+#deleteModal .btn-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+}
+
+#deleteModal .btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+#deleteModal .btn-danger:hover {
+    background-color: #bb2d3b !important;
+    border-color: #b02a37 !important;
+}
+
+/* Ensure modal backdrop works properly */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Make sure modal animations work */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out !important;
+}
+
+/* Delete Modal Fixes */
+#deleteModal {
+    pointer-events: auto !important; /* Prevents mouse event interference */
+}
+
+#deleteModal .modal-dialog {
+    pointer-events: none !important; /* Allows clicks to pass through to modal */
+}
+
+#deleteModal .modal-content {
+    pointer-events: auto !important; /* Re-enables interactions for content */
+    position: relative !important; /* Ensures proper stacking */
+    z-index: 1060 !important; /* Higher than default Bootstrap modal */
+}
+
+/* Remove any hover transitions that might cause flickering */
+#deleteModal .modal-content,
+#deleteModal .btn,
+#deleteModal .form-control {
+    transition: none !important;
+}
+
+/* Keep the rest of your modal styling */
+#deleteModal .modal-header {
+    background-color: #dc3545 !important;
+    border-bottom: none !important;
+    padding: 1rem 1.5rem !important;
+}
+
+#deleteModal .modal-title {
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    color: white !important;
+}
+
+#deleteModal .modal-body {
+    padding: 1.5rem !important;
+}
+
+#deleteModal .form-control {
+    border: 1px solid #ced4da !important;
+    border-radius: 5px !important;
+    padding: 8px 12px !important;
+}
+
+#deleteModal .modal-footer {
+    border-top: 1px solid #dee2e6 !important;
+    padding: 1rem !important;
+}
+
+#deleteModal .btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    min-width: 80px !important;
+}
+
+/* Ensure modal backdrop stays stable */
+.modal-backdrop.show {
+    opacity: 0.5 !important;
+    pointer-events: auto !important;
 }
