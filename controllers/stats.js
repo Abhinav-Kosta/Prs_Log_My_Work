@@ -23,14 +23,19 @@ module.exports.getUserStats = async (userId, range = 'all', year, month, quarter
         bookChaptersCount,
         patentsCount,
         projectsCount,
-        publicationsCount
+        publicationsCount,
+        scopusPublicationsCount
         ] = await Promise.all([
         AcademicEvent.countDocuments(dateQuery("date")),
         Award.countDocuments(dateQuery("date")),
         BookChapter.countDocuments(dateQuery("publicationDate")),
         Patent.countDocuments(dateQuery("dateOfFiling")),
         ProjectSubmission.countDocuments(dateQuery("dateOfSubmission")),
-        Publication.countDocuments(dateQuery("publicationDate"))
+        Publication.countDocuments(dateQuery("publicationDate")),
+        Publication.countDocuments({ 
+          ...dateQuery("publicationDate"), 
+          indexedIn: "Scopus"
+        })
       ]);
 
     return {
@@ -39,7 +44,8 @@ module.exports.getUserStats = async (userId, range = 'all', year, month, quarter
         bookChapters: bookChaptersCount,
         patents: patentsCount,
         projects: projectsCount,
-        publications: publicationsCount
+        publications: publicationsCount,
+        scopusPublications: scopusPublicationsCount
     };
 };
 
@@ -76,21 +82,37 @@ module.exports.getHOIStats = async ({
       : { user: { $in: userIds } };
   };
 
-  // Step 3: Count documents
+  // Step 3: Build Scopus query separately to avoid conflicts
+  const scopusQuery = () => {
+    const baseQuery = {
+      user: { $in: userIds },
+      indexedIn: "Scopus"
+    };
+    
+    if (Object.keys(dateFilter).length > 0) {
+      baseQuery.publicationDate = dateFilter;
+    }
+    
+    return baseQuery;
+  };
+
+  // Step 4: Count documents
   const [
     academicEventsCount,
     awardsCount,
     bookChaptersCount,
     patentsCount,
     projectsCount,
-    publicationsCount
+    publicationsCount,
+    scopusPublicationsCount
   ] = await Promise.all([
     AcademicEvent.countDocuments(dateQuery("date")),
     Award.countDocuments(dateQuery("date")),
     BookChapter.countDocuments(dateQuery("publicationDate")),
     Patent.countDocuments(dateQuery("dateOfFiling")),
     ProjectSubmission.countDocuments(dateQuery("dateOfSubmission")),
-    Publication.countDocuments(dateQuery("publicationDate"))
+    Publication.countDocuments(dateQuery("publicationDate")),
+    Publication.countDocuments(scopusQuery())
   ]);
 
   return {
@@ -99,6 +121,7 @@ module.exports.getHOIStats = async ({
     bookChapters: bookChaptersCount,
     patents: patentsCount,
     projects: projectsCount,
-    publications: publicationsCount
+    publications: publicationsCount,
+    scopusPublications: scopusPublicationsCount
   };
 };

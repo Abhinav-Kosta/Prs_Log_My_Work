@@ -34,6 +34,9 @@ router.get("/new", (req, res) => {
 
 router.get("/dashboard", wrapAsync(facultyController.dashboard));
 
+//Excel export
+router.get("/dashboard/export", isLoggedIn, facultyController.exportFacultySummary);
+
 router.get("/publications/new", wrapAsync(publicationsController.renderNew));
 router.get("/publications/:pubId/edit", wrapAsync(publicationsController.renderEdit));
 router.get("/publications/:userId/:pubId", wrapAsync(publicationsController.show));
