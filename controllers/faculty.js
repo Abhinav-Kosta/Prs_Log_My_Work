@@ -1,12 +1,5 @@
 const { getUserStats } = require("./stats.js");
-const getDateRange = require("../utils/dateRange.js");
 const ExcelJS = require('exceljs');
-const Publication = require('../models/publish.js');
-const AcademicEvent = require('../models/academicEvent.js');
-const Project = require('../models/projectSubmission.js');
-const Patent = require('../models/patent.js');
-const BookChapter = require('../models/bookChapter.js');
-const Award = require('../models/award.js');
 
 module .exports.dashboard = async (req, res) => {
     // const range = req.query.range || 'all';
@@ -105,7 +98,7 @@ module.exports.exportFacultySummary = async (req, res) => {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet('Summary Stats');
 
-    // 👉 Add filter header in row 1 (NEW)
+    // Add filter header in row 1 (NEW)
     sheet.mergeCells('A1', 'I1');
     sheet.getCell('A1').value = `${filterText}`;
     sheet.getCell('A1').alignment = { horizontal: 'center' };
@@ -128,7 +121,7 @@ module.exports.exportFacultySummary = async (req, res) => {
     };
     sheet.getCell('A2').font = { color: { argb: 'FFFFFFFF' }, bold: true, size: 14 }; // White text
 
-    // 👉 Add department name in row 3 (previously row 2)
+    // Add department name in row 3 (previously row 2)
     sheet.mergeCells('A3', 'I3');
     sheet.getCell('A3').value = `${departmentName}`;
     sheet.getCell('A3').alignment = { horizontal: 'center' };
@@ -139,7 +132,7 @@ module.exports.exportFacultySummary = async (req, res) => {
       fgColor: { argb: 'D9E1F2' }  // Light Dirty Blue
     };
 
-    // 👉 Define columns structure (without adding headers yet)
+    // Define columns structure (without adding headers yet)
     sheet.columns = [
         { key: "serial_number", width: 5},
         { key: 'name', width: 20 },
@@ -166,7 +159,7 @@ module.exports.exportFacultySummary = async (req, res) => {
         "No. of Awards/ Achievements"
     ];
 
-    // 👉 Style the header row (row 4, previously row 3)
+    // Style the header row (row 4, previously row 3)
     headerRow.font = { bold: true };
     headerRow.fill = {
       type: 'pattern',
@@ -183,7 +176,7 @@ module.exports.exportFacultySummary = async (req, res) => {
       };
     });
 
-    // 👉 Add data row with center alignment (now row 5)
+    // Add data row with center alignment (now row 5)
     const dataRow = sheet.addRow({
         serial_number: 1,
         name: req.user.fullname,
@@ -196,7 +189,7 @@ module.exports.exportFacultySummary = async (req, res) => {
         awards: stats.awards,
     });
 
-    // 👉 Center align the data row
+    // Center align the data row
     dataRow.alignment = { horizontal: 'center' };
     dataRow.eachCell(cell => {
       cell.border = {

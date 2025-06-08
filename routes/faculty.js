@@ -38,6 +38,7 @@ router.get("/dashboard", wrapAsync(facultyController.dashboard));
 router.get("/dashboard/export", isLoggedIn, facultyController.exportFacultySummary);
 
 router.get("/publications/new", wrapAsync(publicationsController.renderNew));
+router.get("/publications/:userId/indexExport", wrapAsync(publicationsController.indexExport));
 router.get("/publications/:pubId/edit", wrapAsync(publicationsController.renderEdit));
 router.get("/publications/:userId/:pubId", wrapAsync(publicationsController.show));
 router.get("/publications/:userId", wrapAsync(publicationsController.index));
@@ -47,6 +48,7 @@ router.delete("/publications/:pubId", isLoggedIn, isPublicationOwner, wrapAsync(
 
 router.get("/academic-events/new", wrapAsync(academicController.renderNew));
 router.get("/academic-events/:acdId/edit", wrapAsync(academicController.renderEdit));
+router.get("/academic-events/:userId/indexExport", wrapAsync(academicController.indexExport));
 router.get("/academic-events/:userId/:acdId", wrapAsync(academicController.show));
 router.get("/academic-events/:userId", wrapAsync(academicController.index));
 router.post("/academic-events", isLoggedIn, upload.single('proof'), validateAcademic, wrapAsync(academicController.create));
@@ -55,6 +57,7 @@ router.delete("/academic-events/:acdId", isLoggedIn, isAcademicOwner, wrapAsync(
 
 router.get("/awards/new", wrapAsync(awardController.renderNew));
 router.get("/awards/:awdId/edit", wrapAsync(awardController.renderEdit));
+router.get("/awards/:userId/indexExport", wrapAsync(awardController.indexExport));
 router.get("/awards/:userId/:awdId", wrapAsync(awardController.show));
 router.get("/awards/:userId", wrapAsync(awardController.index));
 router.post("/awards", isLoggedIn, upload.single('proof'), validateAward, wrapAsync(awardController.create));
@@ -63,6 +66,7 @@ router.delete("/awards/:awdId", isLoggedIn, isAwardOwner, wrapAsync(awardControl
 
 router.get("/books/new", wrapAsync(bookController.renderNew));
 router.get("/books/:bookId/edit", wrapAsync(bookController.renderEdit));
+router.get("/books/:userId/indexExport", wrapAsync(bookController.indexExport));
 router.get("/books/:userId/:bookId", wrapAsync(bookController.show));
 router.get("/books/:userId", wrapAsync(bookController.index));
 router.post("/books", isLoggedIn, upload.single('proof'), validateBook, wrapAsync(bookController.create));
@@ -71,6 +75,7 @@ router.delete("/books/:bookId", isLoggedIn, isBookOwner, wrapAsync(bookControlle
 
 router.get("/patents/new", wrapAsync(patentController.renderNew));
 router.get("/patents/:userId", wrapAsync(patentController.index));
+router.get("/patents/:userId/indexExport", wrapAsync(patentController.indexExport));
 router.get("/patents/:patentId/edit", wrapAsync(patentController.renderEdit));
 router.get("/patents/:userId/:patId", wrapAsync(patentController.show));
 router.post("/patents", isLoggedIn, upload.single('proof'), validatePatent, wrapAsync(patentController.create));
@@ -79,6 +84,7 @@ router.delete("/patents/:patId", isLoggedIn, isPatentOwner, wrapAsync(patentCont
 
 router.get("/projects/new", wrapAsync(projectController.renderNew));
 router.get("/projects/:pjtId/edit", wrapAsync(projectController.renderEdit));
+router.get("/projects/:userId/indexExport", wrapAsync(projectController.indexExport));
 router.get("/projects/:userId/:pjtId", wrapAsync(projectController.show));
 router.get("/projects/:userId", wrapAsync(projectController.index));
 router.post("/projects", isLoggedIn, upload.single('proof'), validateProject, wrapAsync(projectController.create));
