@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "v20.19.1"
+  },
   "name": "log_my_work",
   "version": "1.0.0",
   "description": "FacultyTrack is a centralized web platform designed for college faculty to seamlessly log and monitor their academic contributions, including research papers, seminars, book publications, and more. It provides a streamlined interface for tracking monthly activities, ensuring organized documentation, performance insights, and institutional reporting.",
