@@ -33,7 +33,7 @@ const publicationSchema = new mongoose.Schema({
   },
   indexedIn: {
     type: String, // e.g. "Scopus", "PubMed", "Other"
-    enum: ["Scopus", "PubMed", "Medline", "Other", "None"],
+    enum: ["Scopus", "SCI/SCI-E", "UGC-CARE", "Other", "None"],
     default: "None"
   },
   otherIndex: {

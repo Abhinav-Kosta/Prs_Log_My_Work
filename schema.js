@@ -21,7 +21,7 @@ module.exports.publicationSchema = Joi.object({
   publicationDate: Joi.date().required(),
   volume: Joi.string().allow(''), // optional
   pageNumber: Joi.string().allow(''), // optional
-  indexedIn: Joi.string().valid("Scopus", "PubMed", "Medline", "Other", "None").required(),
+  indexedIn: Joi.string().valid("Scopus", "SCI/SCI-E", "UGC-CARE", "Other", "None").required(),
   otherIndex: Joi.string().allow(''),
   link: Joi.string().uri().allow(''), // optional, must be valid URL if provided
   impactFactor: Joi.number().min(0).allow(null), // optional, can be null or a non-negative number
