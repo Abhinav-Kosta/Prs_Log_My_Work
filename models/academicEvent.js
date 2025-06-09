@@ -12,7 +12,7 @@ const academicEventSchema = new mongoose.Schema({
     required: true
   },
   otherEvent: {
-    type: string
+    type: String
   },
   titleOfPaperPresented: {
     type: String,
