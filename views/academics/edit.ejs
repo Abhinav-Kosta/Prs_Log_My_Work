@@ -20,7 +20,12 @@
         </div>
 
         <div class="mb-3">
-          <label for="titleOfPaperPresented" class="form-label">Title of Paper Presented</label>
+          <label for="otherEvent" class="form-label">Other Event Type</label>
+          <input type="text" class="form-control" id="otherEvent" name="otherEvent" value="<%= academic.otherEvent %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="titleOfPaperPresented" class="form-label">Title of Event</label>
           <input type="text" class="form-control" id="titleOfPaperPresented" name="titleOfPaperPresented" value="<%= academic.titleOfPaperPresented %>" required>
           <div class="invalid-feedback">Provide a title!</div>
         </div>
@@ -53,12 +58,23 @@
           <label for="participationType" class="form-label">Participation Type</label>
           <select class="form-select" id="participationType" name="participationType" required>
             <option value="">Select</option>
-            <% const roles = ["Poster Presentation", "Oral Presentation", "Guest Speaker", "Chairman", "Co-Chairman", "Keynote Speaker", "Delegate", "Other"]; %>
+            <% const roles = ["Organizing Secretary", "Attendee", "Guest Speaker", "Chairman", "Co-Chairman", "Keynote Speaker", "Delegate", "Other"]; %>
             <% roles.forEach(role => { %>
               <option value="<%= role %>" <%= academic.participationType === role ? "selected" : "" %>><%= role %></option>
             <% }) %>
           </select>
           <div class="invalid-feedback">Choose a participation type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherPart" class="form-label">Other Participation Type</label>
+          <input type="text" class="form-control" id="otherPart" name="otherPart" value="<%= academic.otherPart %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration</label>
+          <input type="text" class="form-control" id="duration" name="duration" value="<%= academic.duration %>" required>
+          <div class="invalid-feedback">Provide duration!</div>
         </div>
 
         <div class="mb-3">

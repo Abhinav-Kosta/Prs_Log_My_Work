@@ -81,6 +81,14 @@
             </div>
 
             <div class="mb-3">
+              <label for="otherSpec" class="form-label">Other Specification (If Other selected in Specification)</label>
+              <input type="text" class="form-control" id="otherSpec" name="otherSpec">
+              <div class="valid-feedback">
+                    Looks good!
+              </div>
+            </div>
+
+            <div class="mb-3">
                 <label for="proof" class="form-label">Proof</label>
                 <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
                 <small class="form-text text-muted">Upload PDF file under 2MB.</small>
@@ -93,9 +101,20 @@
                 <option value="Applied">Applied</option>
                 <option value="Awarded">Awarded</option>
                 <option value="Published">Published</option>
-                <option value="Under Examination">Under Examination</option>
+                <option value="Granted">Granted</option>
                 <option value="Other">Other</option>
               </select>
+              <div class="valid-feedback">
+                    Looks good!
+              </div>
+              <div class="invalid-feedback">
+                    Choose an option!
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="otherRemark" class="form-label">Other Remark (If Other selected in Remarks)</label>
+              <input type="text" class="form-control" id="otherRemark" name="otherRemark">
               <div class="valid-feedback">
                     Looks good!
               </div>

@@ -32,10 +32,16 @@ const patentSchema = new mongoose.Schema({
     enum: ["Provisional", "Complete", "Other"],
     required: true
   },
+  otherSpec : {
+    type: String,
+  },
   remarks: {
     type: String,
-    enum: ["Applied", "Awarded", "Published", "Under Examination", "Other"],
+    enum: ["Applied", "Awarded", "Published", "Granted", "Other"],
     required: true
+  },
+  otherRemark: {
+    type: String,
   },
   proof: {
     url: String,        // Cloudinary secure URL

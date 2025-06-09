@@ -36,6 +36,9 @@ const publicationSchema = new mongoose.Schema({
     enum: ["Scopus", "PubMed", "Medline", "Other", "None"],
     default: "None"
   },
+  otherIndex: {
+    type: String
+  },
   link: {
     type: String
   },

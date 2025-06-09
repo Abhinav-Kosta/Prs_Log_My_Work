@@ -11,6 +11,9 @@ const academicEventSchema = new mongoose.Schema({
     enum: ['Conference', 'Workshop', 'Seminar', 'Symposia', 'FDP', 'Other'],
     required: true
   },
+  otherEvent: {
+    type: string
+  },
   titleOfPaperPresented: {
     type: String,
     required: true
@@ -34,8 +37,8 @@ const academicEventSchema = new mongoose.Schema({
   participationType: {
     type: String,
     enum: [
-      'Poster Presentation',
-      'Oral Presentation',
+      'Organizing Secretary',
+      'Attendee',
       'Guest Speaker',
       'Chairman',
       'Co-Chairman',
@@ -44,6 +47,12 @@ const academicEventSchema = new mongoose.Schema({
       'Other'
     ],
     required: true
+  },
+  otherPart: {
+    type: String
+  },
+  duration: {
+    type: String
   },
   proof: {
     url: String,        // Cloudinary secure URL

@@ -56,6 +56,14 @@
         </div>
 
         <div class="mb-3">
+          <label for="otherDetail" class="form-label">Other Detail (if "other" selected above)</label>
+          <input type="text" class="form-control" id="otherDetail" name="otherDetail" value="<%= award.otherDetail %>">
+          <div class="valid-feedback">
+            Looks good!
+          </div>
+        </div>
+
+        <div class="mb-3">
           <label for="proof" class="form-label">Update Proof (optional)</label>
           <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
           <small class="form-text text-muted">Upload PDF file under 2MB. Existing file will be retained if left blank.</small>

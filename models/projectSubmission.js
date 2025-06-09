@@ -15,6 +15,9 @@ const projectSubmissionSchema = new mongoose.Schema({
     enum: ['PI', 'Co-PI', 'Other'],
     required: true
   },
+  otherRole: {
+    type: String,
+  },
   fundingAgency: {
     type: String,
     required: true

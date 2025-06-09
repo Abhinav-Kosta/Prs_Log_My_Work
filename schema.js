@@ -6,8 +6,10 @@ module.exports.patentSchema = Joi.object({
   patentFileNo: Joi.string().required(),
   applicationNo: Joi.string().required(),
   dateOfFiling: Joi.date().required(),
-  specificationType: Joi.string().valid("Provisional", "Complete").required(),
-  remarks: Joi.string().valid("Applied", "Awarded", "Published", "Under Examination").required(),
+  specificationType: Joi.string().valid("Provisional", "Complete", "Other").required(),
+  otherSpec: Joi.string().allow(''),
+  remarks: Joi.string().valid("Applied", "Awarded", "Published", "Granted", "Other").required(),
+  otherRemark: Joi.string().allow(''),
   proof: Joi.any()
 });
 
@@ -20,6 +22,7 @@ module.exports.publicationSchema = Joi.object({
   volume: Joi.string().allow(''), // optional
   pageNumber: Joi.string().allow(''), // optional
   indexedIn: Joi.string().valid("Scopus", "PubMed", "Medline", "Other", "None").required(),
+  otherIndex: Joi.string().allow(''),
   link: Joi.string().uri().allow(''), // optional, must be valid URL if provided
   impactFactor: Joi.number().min(0).allow(null), // optional, can be null or a non-negative number
   proof: Joi.any()
@@ -27,8 +30,9 @@ module.exports.publicationSchema = Joi.object({
 
 module.exports.academicSchema = Joi.object({
   titleOfPaperPresented: Joi.string().required(),
-  type: Joi.string().valid("Conference", "Workshop", "Seminar", "Symposia", "FDP").required(),
+  type: Joi.string().valid("Conference", "Workshop", "Seminar", "Symposia", "FDP", "Other").required(),
   eventName: Joi.string().required(),
+  otherEvent: Joi.string().allow(''),
   sponsoredBy: Joi.string().required(),
   date: Joi.date().required(),
   venue: Joi.string().required(),
@@ -39,8 +43,11 @@ module.exports.academicSchema = Joi.object({
       "Chairman",
       "Co-Chairman",
       "Keynote Speaker",
-      "Delegate"
+      "Delegate",
+      "Other"
     ).required(),
+  otherPart: Joi.string().allow(''),
+  duration: Joi.string().required(),
   proof: Joi.any()
 });
 
@@ -57,12 +64,14 @@ module.exports.awardSchema = Joi.object({
   awardTitle: Joi.string().required(),
   awardingAgency: Joi.string().required(),
   awardDetails: Joi.string().valid("Certificate", "Memento", "Cash Prize", "Other"),
+  otherDetail: Joi.string().allow(''),
   proof: Joi.any()
-});
+}); 
 
 module.exports.projectSchema = Joi.object({
   title: Joi.string().required(),
-  piOrCoPi: Joi.string().valid("PI", "Co-PI").required(),
+  piOrCoPi: Joi.string().valid("PI", "Co-PI", "Other").required(),
+  otherRole: Joi.string().allow(''),
   fundingAgency: Joi.string().required(),
   dateOfSubmission: Joi.date().required(),
   fundRequestedLacs: Joi.number().required(),

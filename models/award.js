@@ -23,6 +23,9 @@ const awardSchema = new mongoose.Schema({
     enum: ['Certificate', 'Memento', 'Cash Prize', 'Other'],
     required: true
   },
+  otherDetail: {
+    type: String,
+  },
   proof: {
     url: String,        // Cloudinary secure URL
     filename: String    // Cloudinary public_id or original filename

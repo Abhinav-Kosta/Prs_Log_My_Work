@@ -58,6 +58,12 @@
         </div>
 
         <div class="mb-3">
+          <label for="otherSpec" class="form-label">Other Specification</label>
+          <input type="text" class="form-control" id="otherSpec" name="otherSpec" value="<%= patent.otherSpec %>">
+          <div class="valid-feedback">Other Specification looks good!</div>
+        </div>
+
+        <div class="mb-3">
           <label class="form-label">Current Proof</label><br>
           <% if (patent.proof && patent.proof.url) { %>
             <a href="<%= patent.proof.url %>" target="_blank" class="btn btn-outline-primary btn-sm mb-2">View Uploaded PDF</a>
@@ -75,11 +81,17 @@
             <option value="Applied" <%= patent.remarks === 'Applied' ? 'selected' : '' %>>Applied</option>
             <option value="Awarded" <%= patent.remarks === 'Awarded' ? 'selected' : '' %>>Awarded</option>
             <option value="Published" <%= patent.remarks === 'Published' ? 'selected' : '' %>>Published</option>
-            <option value="Under Examination" <%= patent.remarks === 'Under Examination' ? 'selected' : '' %>>Under Examination</option>
+            <option value="Granted" <%= patent.remarks === 'Granted' ? 'selected' : '' %>>Under Examination</option>
             <option value="Other" <%= patent.remarks === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Choose an option!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherRemark" class="form-label">Other Remark</label>
+          <input type="text" class="form-control" id="otherRemark" name="otherRemark" value="<%= patent.otherRemark %>">
+          <div class="valid-feedback">Other Remark looks good!</div>
         </div>
 
         <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Update Patent</button>

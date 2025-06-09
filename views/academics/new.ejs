@@ -20,8 +20,14 @@
           <div class="invalid-feedback">Choose an event type!</div>
         </div>
 
+        div class="mb-3">
+          <label for="otherEvent" class="form-label">Other Event Type (fill if "other" selected above)</label>
+          <input type="text" class="form-control" id="otherEvent" name="otherEvent">
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
         <div class="mb-3">
-          <label for="titleOfPaperPresented" class="form-label">Title of Paper Presented</label>
+          <label for="titleOfPaperPresented" class="form-label">Title of Event</label>
           <input type="text" class="form-control" id="titleOfPaperPresented" name="titleOfPaperPresented" required>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Provide a title!</div>
@@ -59,8 +65,8 @@
           <label for="participationType" class="form-label">Participation Type</label>
           <select class="form-select" id="participationType" name="participationType" required>
             <option value="">Select</option>
-            <option value="Poster Presentation">Poster Presentation</option>
-            <option value="Oral Presentation">Oral Presentation</option>
+            <option value="Organizing Secretary">Organizing Secretary</option>
+            <option value="Attendee">Attendee</option>
             <option value="Guest Speaker">Guest Speaker</option>
             <option value="Chairman">Chairman</option>
             <option value="Co-Chairman">Co-Chairman</option>
@@ -70,6 +76,19 @@
           </select>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Choose a participation type!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherPart" class="form-label">Other Participation Type (fill if "other" selected above)</label>
+          <input type="text" class="form-control" id="otherPart" name="otherPart">
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration</label>
+          <input type="text" class="form-control" id="duration" name="duration" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Provide duration!</div>
         </div>
 
         <div class="mb-3">
