@@ -125,7 +125,7 @@
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
-                      <h5 class="card-title">Book Chapters</h5>
+                      <h5 class="card-title">Books/Book Chapters</h5>
                       <p class="display-4"><%= counts.bookChapters %></p>
                       <a href="/hoi/books/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -367,7 +367,7 @@
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
-                      <h5 class="card-title">Book Chapters</h5>
+                      <h5 class="card-title">Books/Book Chapters</h5>
                       <p class="display-4"><%= filteredCounts.bookChapters %></p>
 
                       <% 

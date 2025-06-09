@@ -37,8 +37,8 @@ module.exports.academicSchema = Joi.object({
   date: Joi.date().required(),
   venue: Joi.string().required(),
   participationType: Joi.string().valid(
-      "Poster Presentation",
-      "Oral Presentation",
+      "Organizing Secretary",
+      "Attendee",
       "Guest Speaker",
       "Chairman",
       "Co-Chairman",
