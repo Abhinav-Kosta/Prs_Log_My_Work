@@ -20,6 +20,9 @@ const bookChapterSchema = new mongoose.Schema({
   publisher: {
     type: String
   },
+  link: {
+    type: String
+  },
   proof: {
     url: String,        // Cloudinary secure URL
     filename: String    // Cloudinary public_id or original filename

@@ -63,6 +63,19 @@
             </div>
           </div>
 
+          <div class="col-md-6">
+              <% if (book.link) { %>
+                <div class="alert alert-light">
+                  <i class="bi bi-link-45deg me-2"></i>
+                  <strong>Full Text:</strong> 
+                  <a href="<%= book.link %>" target="_blank" class="alert-link">
+                    <%= book.link %>
+                  </a>
+                </div>
+              <% } %>
+          </div>
+
+
           <div class="col-8 offset-2">
             <% if (book.proof && book.proof.url) { %>
               <div class="alert alert-secondary mt-4">

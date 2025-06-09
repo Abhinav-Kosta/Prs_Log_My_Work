@@ -56,6 +56,7 @@ module.exports.bookSchema = Joi.object({
   publicationDate: Joi.date().required(),
   isbn: Joi.string().required(),
   publisher: Joi.string().required(),
+  link: Joi.string().uri().required(),
   proof: Joi.any()
 });
 

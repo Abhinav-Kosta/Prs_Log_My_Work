@@ -40,6 +40,11 @@
         </div>
 
         <div class="mb-3">
+          <label for="link" class="form-label">Publication Link (if any)</label>
+          <input type="url" class="form-control" id="link" name="link" placeholder="https://example.com" value="<%= book.link %>" required>
+        </div>
+
+        <div class="mb-3">
           <label for="proof" class="form-label">Proof Document</label>
           <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf">
           <small class="form-text text-muted">Upload new PDF if you want to replace the current one.</small>

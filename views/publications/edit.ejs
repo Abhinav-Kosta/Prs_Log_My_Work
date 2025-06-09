@@ -48,8 +48,8 @@
           <select class="form-select" id="indexedIn" name="indexedIn" required>
             <option value="">Select Index</option>
             <option value="Scopus" <%= publication.indexedIn === 'Scopus' ? 'selected' : '' %>>Scopus</option>
-            <option value="SCI/SCI-E" <%= publication.indexedIn === 'SCI/SCI-E' ? 'selected' : '' %>>PubMed</option>
-            <option value="UGC-CARE" <%= publication.indexedIn === 'UGC-CARE' ? 'selected' : '' %>>Medline</option>
+            <option value="SCI/SCI-E" <%= publication.indexedIn === 'SCI/SCI-E' ? 'selected' : '' %>>SCI/SCI-E</option>
+            <option value="UGC-CARE" <%= publication.indexedIn === 'UGC-CARE' ? 'selected' : '' %>>UGC-CARE</option>
             <option value="Other" <%= publication.indexedIn === 'Other' ? 'selected' : '' %>>Other</option>
             <option value="None" <%= publication.indexedIn === 'None' ? 'selected' : '' %>>None</option>
           </select>
