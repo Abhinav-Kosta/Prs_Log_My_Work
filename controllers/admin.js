@@ -19,7 +19,7 @@ module.exports.renderSignup = async (req, res) => {
 
 module.exports.signUp = async (req, res) => {
     try {
-        const { facultyId, fullname, role, school, department, password } = req.body;
+        const { facultyId, fullname, designation, role, school, department, password } = req.body;
 
         const existingUser = await User.findOne({ facultyId });
         if (existingUser) {
@@ -54,6 +54,7 @@ module.exports.signUp = async (req, res) => {
         const newUser = new User({
           facultyId,
           fullname,
+          designation,
           role,
           school: (role === "faculty" || role === "hoi") ? school : undefined,
           department: role === "faculty" ? department : undefined
