@@ -554,11 +554,11 @@ module.exports.renderEdit = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  const { patentId } = req.params;
+  const { patId } = req.params;
   const updatedData = { ...req.body };
 
   // Find and update the patent
-  let patent = await Patent.findByIdAndUpdate(patentId, updatedData, { new: true });
+  let patent = await Patent.findByIdAndUpdate(patId, updatedData, { new: true });
 
   // If file uploaded, update the proof
   if (req.file) {
