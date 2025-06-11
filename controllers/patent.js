@@ -494,10 +494,16 @@ module.exports.create = async (req, res) => {
     const { variety, title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
 
     // Normalize the title: remove spaces and convert to lowercase
-    const normalizedRegex = new RegExp(
-      `^\\s*${title.trim().replace(/\s+/g, '\\s*')}\\s*$`,
-      'i'
-    );
+    function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  const escapedTitle = escapeRegExp(title.trim());
+  // Normalize the title: remove spaces and convert to lowercase
+  const normalizedRegex = new RegExp(
+    `^\\s*${escapedTitle.replace(/\s+/g, '\\s*')}\\s*$`,
+    'i'
+  );
   
     // Check for duplicates in the DB (case & space-insensitive)
     const existing = await Patent.findOne({

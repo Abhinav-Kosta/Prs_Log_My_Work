@@ -480,8 +480,15 @@ module.exports.create = async (req, res) => {
       date,
   } = req.body;
 
+  // Normalize the title: include special character case handler
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  const escapedTitle = escapeRegExp(title.trim());
+  // Normalize the title: remove spaces and convert to lowercase
   const normalizedRegex = new RegExp(
-    `^\\s*${awardTitle.trim().replace(/\s+/g, '\\s*')}\\s*$`,
+    `^\\s*${escapedTitle.replace(/\s+/g, '\\s*')}\\s*$`,
     'i'
   );
 
