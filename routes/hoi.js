@@ -41,7 +41,7 @@ router.get("/publications/:userId/indexExport", wrapAsync(publicationsController
 router.get("/publications/:pubId/edit", wrapAsync(publicationsController.renderEdit));
 router.get("/publications/:userId/:pubId", wrapAsync(publicationsController.show));
 router.get("/publications/:userId", wrapAsync(publicationsController.index));
-router.post("/publications", isLoggedIn, validatePublication, wrapAsync(publicationsController.create));
+router.post("/publications", isLoggedIn, validatePublication, upload.single('proof'), wrapAsync(publicationsController.create));
 router.put("/publications/:pubId", isLoggedIn, isPublicationOwner,  upload.single('proof'), validatePublication, wrapAsync(publicationsController.update));
 router.delete("/publications/:pubId", isLoggedIn, isPublicationOwner, wrapAsync(publicationsController.destroy));
 
