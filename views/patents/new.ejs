@@ -4,6 +4,17 @@
         <div class="container mt-5">
           <h2 class="mb-4"><i class="bi bi-lightbulb"></i> New Patent Entry</h2>
           <form action="/<%= currUser.role %>/patents" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+            
+            <div class="mb-3">
+                <label for="variety" class="form-label">Variety</label>
+                <select class="form-select" id="variety" name="variety" required>
+                  <option value="">Select</option>
+                  <option value="Patent">Patent</option>
+                  <option value="Copyright">Copyright</option>
+                </select>
+                <div class="invalid-feedback">Please choose a type.</div>
+            </div>
+
             <div class="mb-3">
               <label for="title" class="form-label">Patent Title</label>
               <input type="text" class="form-control" id="title" name="title" required>
@@ -98,7 +109,7 @@
               <label for="remarks" class="form-label">Remarks</label>
               <select class="form-select" id="remarks" name="remarks" required>
                 <option value="">Select</option>
-                <option value="Applied">Applied</option>
+                <option value="Filed">Filed</option>
                 <option value="Awarded">Awarded</option>
                 <option value="Published">Published</option>
                 <option value="Granted">Granted</option>

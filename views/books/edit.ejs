@@ -4,7 +4,16 @@
     <div class="container mt-5">
       <h2 class="mb-4"><i class="bi bi-journal-bookmark"></i> Edit Books/Book Chapter Entry</h2>
       <form action="/<%= currUser.role %>/books/<%= book._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-        
+        <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select Type</option>
+            <option value="Book" <%= book.type === 'Book' ? 'selected' : '' %>>Book</option>
+            <option value="Book Chapters" <%= book.type === 'Book Chapters' ? 'selected' : '' %>>Book Chapters</option>
+          </select>
+          <div class="invalid-feedback">Please choose a type.</div>
+        </div>
+
         <div class="mb-3">
           <label for="title" class="form-label">Books/Book Chapter Title</label>
           <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>" required>

@@ -6,6 +6,16 @@
       <form action="/<%= currUser.role %>/publications/<%= publication._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
 
         <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select Type</option>
+            <option value="Journal" <%= publication.type === 'Journal' ? 'selected' : '' %>>Journal</option>
+            <option value="Conference" <%= publication.type === 'Conference' ? 'selected' : '' %>>Conference</option>
+          </select>
+          <div class="invalid-feedback">Please choose a type.</div>
+        </div>
+        
+        <div class="mb-3">
           <label for="title" class="form-label">Publication Title</label>
           <input type="text" class="form-control" id="title" name="title" required value="<%= publication.title %>">
           <div class="invalid-feedback">Please provide a title.</div>

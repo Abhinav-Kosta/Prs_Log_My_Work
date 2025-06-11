@@ -491,7 +491,7 @@ module.exports.renderNew = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
-    const { title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
+    const { variety, title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
 
     // Normalize the title: remove spaces and convert to lowercase
     const normalizedRegex = new RegExp(
@@ -512,6 +512,7 @@ module.exports.create = async (req, res) => {
 
     const newPatent = new Patent({
         user: req.user._id,
+        variety,
         title,
         type,
         patentFileNo,

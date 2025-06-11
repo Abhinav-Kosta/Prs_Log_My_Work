@@ -25,6 +25,10 @@
             <%= publication.title %>
           </h4>
           <span class="badge bg-white text-primary fs-6">
+            <%= publication.type ? publication.type : 'UNKNOWN' %>
+          </span>
+
+          <span class="badge bg-white text-primary fs-6">
             <%= publication.indexedIn %>
           </span>
         </div>

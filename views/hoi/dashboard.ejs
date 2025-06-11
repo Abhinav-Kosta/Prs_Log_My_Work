@@ -4,7 +4,7 @@
       <h2>Welcome, <%= user.fullname %>!</h2>
       <p class="lead">HOI Dashboard</p>
 
-      <form class="row g-3 mb-4" method="GET" action="/hoi/dashboard">
+      <!-- <form class="row g-3 mb-4" method="GET" action="/hoi/dashboard">
             <div class="col-md-3">
               <label for="range-personal" class="form-label">Filter Range</label>
               <select class="form-select" id="range-personal" name="range-personal" required onchange="toggleDateSelectors('personal')">
@@ -16,9 +16,9 @@
               </select>
             </div>
 
-            <div id="date-selectors-personal" class="col-md-5 row">
+            <div id="date-selectors-personal" class="col-md-5 row"> -->
             <!-- Month selector -->
-            <div class="col-md-6" id="month-group-personal">
+            <!-- <div class="col-md-6" id="month-group-personal">
               <label for="month-personal" class="form-label">Month</label>
               <select class="form-select" id="month-personal" name="month-personal">
                 <% for (let m = 0; m < 12; m++) { %>
@@ -27,10 +27,10 @@
                   </option>
                 <% } %>
               </select>
-            </div>
+            </div> -->
 
             <!-- Quarter selector -->
-            <div class="col-md-6 d-none" id="quarter-group-personal">
+            <!-- <div class="col-md-6 d-none" id="quarter-group-personal">
               <label for="quarter-personal" class="form-label">Quarter</label>
               <select class="form-select" id="quarter-personal" name="quarter-personal">
                 <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
@@ -38,19 +38,19 @@
                 <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
                 <option value="3" <%= quarter == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
               </select>
-            </div>
+            </div> -->
 
             <!-- Half-year selector -->
-            <div class="col-md-6 d-none" id="half-group-personal">
+            <!-- <div class="col-md-6 d-none" id="half-group-personal">
               <label for="half-personal" class="form-label">Half-Year</label>
               <select class="form-select" id="half-personal" name="half-personal">
                 <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
                 <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
               </select>
-            </div>
+            </div> -->
 
             <!-- Year always shown -->
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <label for="year-personal" class="form-label">Year</label>
               <select class="form-select" id="year-personal" name="year-personal">
                 <% const thisYear = new Date().getFullYear(); %>
@@ -59,21 +59,21 @@
                 <% } %>
                     </select>
             </div>
-        </div>
+        </div> -->
 
-        <div class="col-md-2 align-self-end">
+        <!-- <div class="col-md-2 align-self-end">
             <button class="btn btn-primary w-100">Apply</button>
         </div>
-      </form>
+      </form> -->
 
-      <div class="col-md-2 align-self-end">
+      <!-- <div class="col-md-2 align-self-end">
           <a href="/faculty/dashboard/export?range-personal=<%= range %>&year-personal=<%= year %><% if (range === 'monthly') { %>&month-personal=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter-personal=<%= quarter %><% } %><% if (range === 'half') { %>&half-personal=<%= half %><% } %>" class="btn btn-success w-100">
               Export Summary
           </a>
-      </div>
+      </div> -->
 
       <!--Personal Records-->
-      <div class="row mt-4">
+      <!-- <div class="row mt-4">
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
@@ -144,7 +144,7 @@
                       <a href="/hoi/awards/<%= user._id %>/indexExport?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-success">Export Details</a>
                   </div>
               </div>
-          </div>
+          </div> -->
 
           <hr class="my-4">
 

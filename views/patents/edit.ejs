@@ -6,6 +6,16 @@
       <form action="/<%= currUser.role %>/patents/<%= patent._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
         
         <div class="mb-3">
+          <label for="variety" class="form-label">Variety</label>
+          <select class="form-select" id="variety" name="variety" required>
+            <option value="">Select</option>
+            <option value="Patent" <%= patent.variety === 'Patent' ? 'selected' : '' %>>Patent</option>
+            <option value="Copyright" <%= patent.variety === 'Copyright' ? 'selected' : '' %>>Copyright</option>
+          </select>
+          <div class="invalid-feedback">Please choose a variety.</div>
+        </div>
+        
+        <div class="mb-3">
           <label for="title" class="form-label">Patent Title</label>
           <input type="text" class="form-control" id="title" name="title" value="<%= patent.title %>" required>
           <div class="valid-feedback">Title looks good!</div>
@@ -78,7 +88,7 @@
           <label for="remarks" class="form-label">Remarks</label>
           <select class="form-select" id="remarks" name="remarks" required>
             <option value="">Select</option>
-            <option value="Applied" <%= patent.remarks === 'Applied' ? 'selected' : '' %>>Applied</option>
+            <option value="Filed" <%= patent.remarks === 'Filed' ? 'selected' : '' %>>Filed</option>
             <option value="Awarded" <%= patent.remarks === 'Awarded' ? 'selected' : '' %>>Awarded</option>
             <option value="Published" <%= patent.remarks === 'Published' ? 'selected' : '' %>>Published</option>
             <option value="Granted" <%= patent.remarks === 'Granted' ? 'selected' : '' %>>Under Examination</option>

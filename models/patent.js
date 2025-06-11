@@ -6,6 +6,11 @@ const patentSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  variety: {
+    type: String,
+    enum: ['Patent', 'Copyright'],
+    required: true,
+  },
   title: {
     type: String,
     required: true
@@ -37,7 +42,7 @@ const patentSchema = new mongoose.Schema({
   },
   remarks: {
     type: String,
-    enum: ["Applied", "Awarded", "Published", "Granted", "Other"],
+    enum: ["Filed", "Awarded", "Published", "Granted", "Other"],
     required: true
   },
   otherRemark: {

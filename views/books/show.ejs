@@ -25,7 +25,7 @@
             <%= book.title %>
           </h4>
           <span class="badge bg-white text-primary fs-6">
-            <%= book.isbn ? 'Book' : 'Chapter' %>
+            <%= book.type ?  book.type  : 'UNKNOWN' %>
           </span>
         </div>
       </div>

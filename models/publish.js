@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const publicationSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ["Journal", "Conference"],
+    required: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -40,7 +45,8 @@ const publicationSchema = new mongoose.Schema({
     type: String
   },
   link: {
-    type: String
+    type: String,
+    required: true,
   },
   impactFactor: {
     type: Number

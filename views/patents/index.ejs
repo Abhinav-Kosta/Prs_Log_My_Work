@@ -50,7 +50,7 @@
                   <i class="bi <%= 
                     patent.type === 'National' ? 'bi-flag' : 'bi-globe'
                   %> me-1"></i>
-                  <%= patent.type %>
+                  <%= patent.type %> &nbsp; <%= patent.variety ? patent.variety : 'UNKNOWN' %>
                 </span>
                 <h5 class="card-title mb-1"><%= patent.title %></h5>
                 <p class="text-muted small mb-2">

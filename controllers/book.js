@@ -475,7 +475,7 @@ module.exports.renderNew = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
-    const { title, isbn, publisher, publicationDate } = req.body;
+    const { type, title, isbn, publisher, publicationDate } = req.body;
 
     // Normalize the title: remove spaces and convert to lowercase
     const normalizedRegex = new RegExp(
@@ -496,6 +496,7 @@ module.exports.create = async (req, res) => {
 
     const newBook = new Book({
       user: req.user._id,
+      type,
       title,
       isbn,
       publisher,

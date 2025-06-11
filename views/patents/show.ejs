@@ -25,6 +25,9 @@
             <%= patent.title %>
           </h4>
           <span class="badge bg-white text-primary fs-6">
+            <%= patent.variety ? patent.variety : 'UNKNOWN' %>
+          </span>
+          <span class="badge bg-white text-primary fs-6">
             <%= patent.type %>
           </span>
         </div>

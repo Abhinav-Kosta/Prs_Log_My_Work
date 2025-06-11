@@ -6,6 +6,11 @@ const bookChapterSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  type: {
+    type: String,
+    enum: ['Book', 'Book Chapters'],
+    required: true,
+  },
   title: {
     type: String,
     required: true // assuming title is essential
