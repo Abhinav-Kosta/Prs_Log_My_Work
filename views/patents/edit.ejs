@@ -6,7 +6,7 @@
       <form action="/<%= currUser.role %>/patents/<%= patent._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
         
         <div class="mb-3">
-          <label for="variety" class="form-label">Variety</label>
+          <label for="variety" class="form-label">Publication Type</label>
           <select class="form-select" id="variety" name="variety" required>
             <option value="">Select</option>
             <option value="Patent" <%= patent.variety === 'Patent' ? 'selected' : '' %>>Patent</option>
@@ -16,14 +16,14 @@
         </div>
         
         <div class="mb-3">
-          <label for="title" class="form-label">Patent Title</label>
+          <label for="title" class="form-label">Title</label>
           <input type="text" class="form-control" id="title" name="title" value="<%= patent.title %>" required>
           <div class="valid-feedback">Title looks good!</div>
           <div class="invalid-feedback">Provide Title!</div>
         </div>
 
         <div class="mb-3">
-          <label for="type" class="form-label">Patent Type</label>
+          <label for="type" class="form-label">Type</label>
           <select class="form-select" id="type" name="type" required>
             <option value="">Select</option>
             <option value="National" <%= patent.type === 'National' ? 'selected' : '' %>>National</option>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="patentFileNo" class="form-label">Patent File Number</label>
+          <label for="patentFileNo" class="form-label">File Number</label>
           <input type="text" class="form-control" id="patentFileNo" name="patentFileNo" value="<%= patent.patentFileNo %>" required>
           <div class="valid-feedback">File Number looks good!</div>
           <div class="invalid-feedback">Provide File Number!</div>
