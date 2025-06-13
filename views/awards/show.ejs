@@ -1,0 +1,127 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="mb-1"><i class="bi bi-trophy me-2"></i>Award Details</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/<%= user.role %>/dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/<%= user.role %>/awards/<%= user._id %>">All Awards</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Details</li>
+          </ol>
+        </nav>
+      </div>
+      <a href="/<%= user.role %>/awards/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Awards
+      </a>
+    </div>
+
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">
+            <i class="bi bi-trophy me-2"></i>
+            <%= award.awardTitle %>
+          </h4>
+          <span class="badge bg-white text-primary fs-6">
+            <%= award.awardDetails %>
+          </span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-4">
+              <h5 class="fw-bold border-bottom pb-2 mb-3">Award Information</h5>
+              <p class="mb-3">
+                <i class="bi bi-award text-primary me-2"></i>
+                <strong>Title:</strong> <%= award.awardTitle %>
+              </p>
+              <p class="mb-3">
+                <i class="bi bi-building text-primary me-2"></i>
+                <strong>Awarded By:</strong> <%= award.awardingAgency %>
+              </p>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mb-4">
+              <h5 class="fw-bold border-bottom pb-2 mb-3">Details</h5>
+              <p class="mb-3">
+                <i class="bi bi-calendar-date text-primary me-2"></i>
+                <strong>Date Received:</strong> 
+                <%= award.date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+              </p>
+              <p class="mb-3">
+                <i class="bi bi-gift text-primary me-2"></i>
+                <strong>Award Type:</strong> 
+                <span class="badge bg-<%= 
+                  award.awardDetails === 'Certificate' ? 'info' : 
+                  award.awardDetails === 'Cash Prize' ? 'success' : 
+                  award.awardDetails === 'Memento' ? 'warning text-dark' : 'secondary'
+                %>">
+                  <%= award.awardDetails %>
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-8 offset-2">
+            <% if (award.proof && award.proof.url) { %>
+              <div class="alert alert-secondary mt-4">
+                <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>
+                <strong>Proof Document:</strong>
+                <a href="<%= award.proof.url %>?fl_attachment" class="btn btn-sm btn-outline-danger ms-2" download>
+                  <i class="bi bi-download"></i> Download PDF
+                </a>
+                <a href="<%= award.proof.url %>" target="_blank" class="btn btn-sm btn-outline-primary">
+                  <i class="bi bi-eye"></i> View PDF
+                </a>
+              </div>
+            <% } else { %>
+              <div class="alert alert-warning">No proof document found.</div>
+            <% } %>
+          </div>
+
+        </div>
+      </div>
+      
+      <div class="card-footer bg-light">
+        <div class="d-flex justify-content-between">
+          <a href="/<%= user.role %>/awards/<%= award._id %>/edit" 
+             class="btn btn-primary">
+            <i class="bi bi-pencil"></i> Edit Award
+          </a>
+          
+          <button class="btn btn-danger"
+                  data-id="<%= award._id %>"
+                  data-role="<%= user.role %>"
+                  data-collection="awards"
+                  onclick="openDeleteModal(this)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal">
+            Delete
+          </button>
+
+          <%- include("../includes/deletePasswordModal") %>
+          
+        </div>
+      </div>
+    </div>
+
+    <% if (award.attachment) { %>
+      <div class="card shadow-sm mt-4">
+        <div class="card-header bg-light">
+          <h5 class="mb-0"><i class="bi bi-paperclip me-2"></i>Supporting Documents</h5>
+        </div>
+        <div class="card-body">
+          <a href="<%= award.attachment %>" class="btn btn-outline-primary" target="_blank">
+            <i class="bi bi-file-earmark-pdf"></i> View Certificate
+          </a>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</body>

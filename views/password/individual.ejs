@@ -1,0 +1,90 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container mt-5">
+  <h2 class="mb-4"><i class="bi bi-lock"></i> Change Password</h2>
+
+  <!-- Own Password Change -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      Change Your Password
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/changePassword" class="needs-validation" novalidate>
+        <div class="mb-3">
+          <label for="currentPassword" class="form-label">Current Password</label>
+          <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+        </div>
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New Password</label>
+          <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm New Password</label>
+          <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+        </div>
+        <button type="submit" class="btn btn-success">Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <% if (currUser.role === "hoi" || currUser.role === "admin") { %>
+    <!-- HOI/Admin can change faculty password -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-warning text-dark">
+        Change Faculty Password
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/changePassword/faculty" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="facultyId" class="form-label">Select Faculty</label>
+            <select class="form-select" name="facultyId" id="facultyId" required>
+              <option value="">Choose Faculty</option>
+              <% faculties.forEach(fac => { %>
+                <option value="<%= fac._id %>"><%= fac.fullname %> (<%= fac.facultyId %>)</option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="newFacultyPassword" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="newFacultyPassword" name="newPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmFacultyPassword" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirmFacultyPassword" name="confirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-danger">Change Faculty Password</button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+
+  <% if (currUser.role === "admin") { %>
+    <!-- Admin can change HOI password -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header bg-info text-white">
+        Change HOI Password
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/changePassword/hoi" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="hoiId" class="form-label">Select HOI</label>
+            <select class="form-select" name="hoiId" id="hoiId" required>
+              <option value="">Choose HOI</option>
+              <% hois.forEach(h => { %>
+                <option value="<%= h._id %>"><%= h.fullname %> (<%= h.facultyId %>)</option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="newHoiPassword" class="form-label">New Password</label>
+            <input type="password" class="form-control" id="newHoiPassword" name="newPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="confirmHoiPassword" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirmHoiPassword" name="confirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-secondary">Change HOI Password</button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+</div>

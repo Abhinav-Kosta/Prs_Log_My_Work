@@ -1,0 +1,93 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+  <h2 class="mb-4"><i class="bi bi-folder-plus"></i> Create New Record</h2>
+  <p class="text-muted mb-4">Choose the type of collection you'd like to create:</p>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <!-- Patent -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/patents/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-file-earmark-text fs-1 mb-3 text-primary"></i>
+            <h5 class="card-title">Patent</h5>
+            <p class="card-text text-muted">Add a new patent record to your profile.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Publication -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/publications/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-journal-text fs-1 mb-3 text-success"></i>
+            <h5 class="card-title">Publication</h5>
+            <p class="card-text text-muted">Log your latest publication or journal article.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/academic-events/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-c-circle fs-1 mb-3 text-warning"></i>
+            <h5 class="card-title">Academic Events</h5>
+            <p class="card-text text-muted">Register new Academic Event materials.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Book Chapter -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/books/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-book fs-1 mb-3 text-info"></i>
+            <h5 class="card-title">Book Chapter</h5>
+            <p class="card-text text-muted">Add a book chapter contribution.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Award -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/awards/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-trophy fs-1 mb-3 text-danger"></i>
+            <h5 class="card-title">Award</h5>
+            <p class="card-text text-muted">Record awards or recognitions.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Project Submission -->
+    <div class="col">
+      <a href="/<%= currUser.role %>/projects/new" class="text-decoration-none text-dark">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body text-center">
+            <i class="bi bi-file-earmark-code fs-1 mb-3 text-secondary"></i>
+            <h5 class="card-title">Project</h5>
+            <p class="card-text text-muted">Submit new project entries.</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+</style>
