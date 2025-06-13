@@ -29,9 +29,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended : true }));
 app.use(express.json());
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/faculty2";
+const MONGO_URL = "mongodb://127.0.0.1:27017/faculty2";
 
-const dbUrl = process.env.ATLASDB_URL;
+// const dbUrl = process.env.ATLASDB_URL;
 
 main()
     .then(() => {
@@ -42,13 +42,13 @@ main()
     })
 
 async function main(){
-    await mongoose.connect(dbUrl);
-    // await mongoose.connect(MONGO_URL);
+    // await mongoose.connect(dbUrl);
+    await mongoose.connect(MONGO_URL);
 }
 
 const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    // mongoUrl: MONGO_URL,
+    // mongoUrl: dbUrl,
+    mongoUrl: MONGO_URL,
     crypto: {
         secret: process.env.SECRET,
     },
@@ -106,7 +106,11 @@ app.use("/admin", adminRouter);
 app.use("/summary", summaryRouter);
 app.use("/changePassword", changePassRouter);
 
-app.get("/developed", async (req, res) => {
+app.get("/developed", (req, res) => {
+    if(!req.isAuthenticated()){
+        req.flash("error", "You must be logged in to view this page!");
+        return res.redirect("/login/faculty");
+    }
     res.render("developed.ejs");
 })
 
@@ -117,6 +121,17 @@ app.get("/developed", async (req, res) => {
 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something unexpected occured." } = err;
+    // Ensure currUser, success, and error are defined for error pages
+    if (!req.user) {
+        res.locals.currUser = null;
+    }
+    // Ensure flash variables are defined
+    if (!res.locals.success) {
+        res.locals.success = null;
+    }
+    if (!res.locals.error) {
+        res.locals.error = null;
+    }
     res.status(statusCode).render("./error.ejs", { message });
 
     // res.send("Something went wrong!");

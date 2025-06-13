@@ -5,6 +5,7 @@
       <p class="lead">HOI Dashboard</p>
 
       <form class="row g-3 mb-4" method="GET" action="/hoi/dashboard">
+        <div class="row mb-3">
             <div class="col-md-3">
               <label for="range-personal" class="form-label">Filter Range</label>
               <select class="form-select" id="range-personal" name="range-personal" required onchange="toggleDateSelectors('personal')">
@@ -16,53 +17,56 @@
               </select>
             </div>
 
-            <div id="date-selectors-personal" class="col-md-5 row">
-            <!-- Month selector -->
-            <div class="col-md-6" id="month-group-personal">
-              <label for="month-personal" class="form-label">Month</label>
-              <select class="form-select" id="month-personal" name="month-personal">
-                <% for (let m = 0; m < 12; m++) { %>
-                  <option value="<%= m %>" <%= month == m ? 'selected' : '' %>>
-                    <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
-                  </option>
-                <% } %>
-              </select>
-            </div>
+            <div id="date-selectors-personal" class="col-md-7">
+              <div class="row">
+                <!-- Month selector -->
+                <div class="col-md-4" id="month-group-personal">
+                  <label for="month-personal" class="form-label">Month</label>
+                  <select class="form-select" id="month-personal" name="month-personal">
+                    <% for (let m = 0; m < 12; m++) { %>
+                      <option value="<%= m %>" <%= month == m ? 'selected' : '' %>>
+                        <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
+                      </option>
+                    <% } %>
+                  </select>
+                </div>
 
-            <!-- Quarter selector -->
-            <div class="col-md-6 d-none" id="quarter-group-personal">
-              <label for="quarter-personal" class="form-label">Quarter</label>
-              <select class="form-select" id="quarter-personal" name="quarter-personal">
-                <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
-                <option value="1" <%= quarter == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
-                <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
-                <option value="3" <%= quarter == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
-              </select>
-            </div>
+                <!-- Quarter selector -->
+                <div class="col-md-4 d-none" id="quarter-group-personal">
+                  <label for="quarter-personal" class="form-label">Quarter</label>
+                  <select class="form-select" id="quarter-personal" name="quarter-personal">
+                    <option value="0" <%= quarter == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
+                    <option value="1" <%= quarter == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
+                    <option value="2" <%= quarter == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
+                    <option value="3" <%= quarter == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
+                  </select>
+                </div>
 
-            <!-- Half-year selector -->
-            <div class="col-md-6 d-none" id="half-group-personal">
-              <label for="half-personal" class="form-label">Half-Year</label>
-              <select class="form-select" id="half-personal" name="half-personal">
-                <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
-                <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
-              </select>
-            </div>
+                <!-- Half-year selector -->
+                <div class="col-md-4 d-none" id="half-group-personal">
+                  <label for="half-personal" class="form-label">Half-Year</label>
+                  <select class="form-select" id="half-personal" name="half-personal">
+                    <option value="0" <%= half == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
+                    <option value="1" <%= half == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
+                  </select>
+                </div>
 
-            <!-- Year always shown -->
-            <div class="col-md-6">
-              <label for="year-personal" class="form-label">Year</label>
-              <select class="form-select" id="year-personal" name="year-personal">
-                <% const thisYear = new Date().getFullYear(); %>
-                <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
-                  <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
-                <% } %>
-                    </select>
+                <!-- Year always shown -->
+                <div class="col-md-4" id="year-group-personal">
+                  <label for="year-personal" class="form-label">Year</label>
+                  <select class="form-select" id="year-personal" name="year-personal">
+                    <% const thisYear = new Date().getFullYear(); %>
+                    <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
+                      <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
+                    <% } %>
+                  </select>
+                </div>
+                
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-primary w-100">Apply</button>
+                </div>
+              </div>
             </div>
-        </div>
-
-        <div class="col-md-2 align-self-end">
-            <button class="btn btn-primary w-100">Apply</button>
         </div>
       </form>
 
@@ -194,53 +198,54 @@
                 </select>
             </div>
 
-            <div id="date-selectors-school" class="col-md-5 row">
-              <!-- Month selector -->
-              <div class="col-md-6" id="month-group-school">
-                <label for="month-school" class="form-label">Month</label>
-                <select class="form-select" id="month-school" name="month-school">
-                  <% for (let m = 0; m < 12; m++) { %>
-                    <option value="<%= m %>" <%= monthSchool == m ? 'selected' : '' %>>
-                      <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
-                    </option>
-                  <% } %>
-                </select>
-              </div>
+            <div id="date-selectors-school" class="col-md-7">
+              <div class="row">
+                <!-- Month selector -->
+                <div class="col-md-4" id="month-group-school">
+                  <label for="month-school" class="form-label">Month</label>
+                  <select class="form-select" id="month-school" name="month-school">
+                    <% for (let m = 0; m < 12; m++) { %>
+                      <option value="<%= m %>" <%= monthSchool == m ? 'selected' : '' %>>
+                        <%= new Date(0, m).toLocaleString('default', { month: 'long' }) %>
+                      </option>
+                    <% } %>
+                  </select>
+                </div>
 
-              <!-- Quarter selector -->
-              <div class="col-md-6 d-none" id="quarter-group-school">
-                <label for="quarter-school" class="form-label">Quarter</label>
-                <select class="form-select" id="quarter-school" name="quarter-school">
-                  <option value="0" <%= quarterSchool == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
-                  <option value="1" <%= quarterSchool == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
-                  <option value="2" <%= quarterSchool == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
-                  <option value="3" <%= quarterSchool == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
-                </select>
-              </div>
+                <!-- Quarter selector -->
+                <div class="col-md-4 d-none" id="quarter-group-school">
+                  <label for="quarter-school" class="form-label">Quarter</label>
+                  <select class="form-select" id="quarter-school" name="quarter-school">
+                    <option value="0" <%= quarterSchool == 0 ? 'selected' : '' %>>Q1 (Jan–Mar)</option>
+                    <option value="1" <%= quarterSchool == 1 ? 'selected' : '' %>>Q2 (Apr–Jun)</option>
+                    <option value="2" <%= quarterSchool == 2 ? 'selected' : '' %>>Q3 (Jul–Sep)</option>
+                    <option value="3" <%= quarterSchool == 3 ? 'selected' : '' %>>Q4 (Oct–Dec)</option>
+                  </select>
+                </div>
 
-              <!-- Half-year selector -->
-              <div class="col-md-6 d-none" id="half-group-school">
-                <label for="half-school" class="form-label">Half-Year</label>
-                <select class="form-select" id="half-school" name="half-school">
-                  <option value="0" <%= halfSchool == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
-                  <option value="1" <%= halfSchool == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
-                </select>
-              </div>
+                <!-- Half-year selector -->
+                <div class="col-md-4 d-none" id="half-group-school">
+                  <label for="half-school" class="form-label">Half-Year</label>
+                  <select class="form-select" id="half-school" name="half-school">
+                    <option value="0" <%= halfSchool == 0 ? 'selected' : '' %>>1st Half (Jan–Jun)</option>
+                    <option value="1" <%= halfSchool == 1 ? 'selected' : '' %>>2nd Half (Jul–Dec)</option>
+                  </select>
+                </div>
 
-              <!-- Year always shown -->
-              <div class="col-md-6">
-                <label for="year-school" class="form-label">Year</label>
-                <select class="form-select" id="year-school" name="year-school">
-                  
-                  <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
-                    <option value="<%= y %>" <%= yearSchool == y ? 'selected' : '' %>><%= y %></option>
-                  <% } %>
-                      </select>
+                <!-- Year always shown -->
+                <div class="col-md-4" id="year-group-personal">
+                  <label for="year-school" class="form-label">Year</label>
+                  <select class="form-select" id="year-school" name="year-school">
+                    <% for (let y = thisYear; y >= thisYear - 10; y--) { %>
+                      <option value="<%= y %>" <%= yearSchool == y ? 'selected' : '' %>><%= y %></option>
+                    <% } %>
+                  </select>
+                </div>
+                
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-success w-100">Apply</button>
+                </div>
               </div>
-            </div>
-
-            <div class="col-md-2 align-self-end">
-              <button class="btn btn-success w-100">Apply</button>
             </div>
           </form>
 

@@ -508,7 +508,10 @@ module.exports.summaryIndexExport = async (req, res) => {
 module.exports.create = async (req, res) => {
   const {
       type,
+      articleType,
       title,
+      authorType,
+      otherAuthorType,
       coAuthors,
       journalName,
       issnNumber,
@@ -516,6 +519,8 @@ module.exports.create = async (req, res) => {
       volume,
       pageNumber,
       indexedIn,
+      peerReviewed,
+      affiliatedAmity,
       link,
       impactFactor
   } = req.body;
@@ -552,7 +557,10 @@ module.exports.create = async (req, res) => {
   const newPublication = new Publication({
       user: req.user._id,
       type,
+      articleType,
       title,
+      authorType,
+      otherAuthorType,
       coAuthors,
       journalName,
       issnNumber,
@@ -560,6 +568,8 @@ module.exports.create = async (req, res) => {
       volume,
       pageNumber,
       indexedIn,
+      peerReviewed,
+      affiliatedAmity,
       link,
       impactFactor
   });

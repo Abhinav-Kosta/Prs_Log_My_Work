@@ -159,7 +159,8 @@ h2 {
 }
 
 /* Export Button */
-.col-md-2.align-self-end {
+.col-md-2.align-self-end,
+.col-md-2.d-flex.align-items-end {
     margin-bottom: 2rem !important;
 }
 
@@ -225,7 +226,8 @@ h2 {
         margin-bottom: 1rem !important;
     }
     
-    .col-md-2.align-self-end {
+    .col-md-2.align-self-end,
+    .col-md-2.d-flex.align-items-end {
         margin-top: 1rem !important;
         margin-bottom: 1rem !important;
     }

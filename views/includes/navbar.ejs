@@ -6,18 +6,20 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" href="/<%= currUser.role %>/dashboard">Home</a>
+          <% if(currUser){ %>
+            <a class="nav-link" href="/<%= currUser.role %>/dashboard">Home</a>
+          <% } else { %>
+            <a class="nav-link" href="/">Home</a>
+          <% } %>
         </div>
   
         <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/<%= currUser.role %>/new">Create New Record</a>
-          <!-- <a class="nav-link" href="/changePassword">Change Password</a> -->
-          <% if(!currUser){ %>
-            <a class="nav-link" href="/login"><b>Log In</b></a>
-          <% } %>
-          
           <% if(currUser){ %>
+            <a class="nav-link" href="/<%= currUser.role %>/new">Create New Record</a>
+            <a class="nav-link" href="/changePassword">Change Password</a>
             <a class="nav-link" href="/logout"><b>Log Out</b></a>
+          <% } else { %>
+            <a class="nav-link" href="/login"><b>Log In</b></a>
           <% } %>
         </div>
       </div>

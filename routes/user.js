@@ -7,6 +7,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/new", (req, res) => {
+    if(!req.isAuthenticated()){
+        req.flash("error", "You must be logged in to view this page!");
+        return res.redirect("/login/faculty");
+    }
     res.render("record.ejs");
 })
 

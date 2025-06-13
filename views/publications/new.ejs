@@ -14,11 +14,38 @@
           </select>
           <div class="invalid-feedback">Please choose a type.</div>
         </div>
+
+        <div class="mb-3">
+          <label for="articleType" class="form-label">Article Type</label>
+          <select class="form-select" id="articleType" name="articleType" required>
+            <option value="">Select</option>
+            <option value="Research Paper">Research Paper</option>
+            <option value="Review Paper">Review Paper</option>
+          </select>
+          <div class="invalid-feedback">Please choose an article type.</div>
+        </div>
         
         <div class="mb-3">
           <label for="title" class="form-label">Publication Title</label>
           <input type="text" class="form-control" id="title" name="title" required>
           <div class="invalid-feedback">Please provide a title.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="authorType" class="form-label">Author Type</label>
+          <select class="form-select" id="authorType" name="authorType" required>
+            <option value="">Select</option>
+            <option value="First">First</option>
+            <option value="Corresponding">Corresponding</option>
+            <option value="First & Corresponding">First & Corresponding</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="invalid-feedback">Please choose an author type.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherAuthorType" class="form-label">Other (if Other chosen in "Author Type")</label>
+          <input type="text" class="form-control" id="otherAuthorType" name="otherAuthorType">
         </div>
 
         <div class="mb-3">
@@ -69,6 +96,26 @@
         <div class="mb-3">
           <label for="otherIndex" class="form-label">Other Index (if Other seleceted in "Indexed In")</label>
           <input type="text" class="form-control" id="otherIndex" name="otherIndex">
+        </div>
+
+        <div class="mb-3">
+          <label for="peerReviewed" class="form-label">Peer Reviewed</label>
+          <select class="form-select" id="peerReviewed" name="peerReviewed" required>
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <div class="invalid-feedback">Please choose peer reviewed or not.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="affiliatedAmity" class="form-label">Affiliated with Amity</label>
+          <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <div class="invalid-feedback">Please choose affiliation.</div>
         </div>
 
         <div class="mb-3">

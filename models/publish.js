@@ -6,10 +6,23 @@ const publicationSchema = new mongoose.Schema({
     enum: ["Journal", "Conference"],
     required: true,
   },
+  articleType: {
+    type: String,
+    enum: ["Research Paper", "Review Paper"],
+    required: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
+  },
+  authorType: {
+    type: String,
+    enum: ["First", "Corresponding", "First & Corresponding", "Other"],
+    required: true,
+  },
+  otherAuthorType: {
+    type: String
   },
   coAuthors: {
     type: String, // store as comma-separated or a formatted string
@@ -43,6 +56,16 @@ const publicationSchema = new mongoose.Schema({
   },
   otherIndex: {
     type: String
+  },
+  peerReviewed: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true,
+  },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
   },
   link: {
     type: String,

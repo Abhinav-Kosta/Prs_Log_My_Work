@@ -16,7 +16,10 @@ module.exports.patentSchema = Joi.object({
 
 module.exports.publicationSchema = Joi.object({
   type: Joi.string().valid("Journal", "Conference").required(),
+  articleType: Joi.string().valid("Research Paper", "Review Paper").required(),
   title: Joi.string().required(),
+  authorType: Joi.string().valid("First", "Corresponding", "First & Corresponding", "Other").required(),
+  otherAuthorType: Joi.string().allow(''),
   coAuthors: Joi.string().allow(''), // optional, can be empty string or comma-separated
   journalName: Joi.string().required(),
   issnNumber: Joi.string().allow(''), // optional
@@ -25,6 +28,8 @@ module.exports.publicationSchema = Joi.object({
   pageNumber: Joi.string().allow(''), // optional
   indexedIn: Joi.string().valid("Scopus", "SCI/SCI-E", "UGC-CARE", "Other", "None").required(),
   otherIndex: Joi.string().allow(''),
+  peerReviewed: Joi.string().valid("Yes", "No").required(),
+  affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
   link: Joi.string().uri().allow(''), // optional, must be valid URL if provided
   impactFactor: Joi.number().min(0).allow(null), // optional, can be null or a non-negative number
   proof: Joi.any()

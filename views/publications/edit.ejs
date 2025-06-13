@@ -14,11 +14,38 @@
           </select>
           <div class="invalid-feedback">Please choose a type.</div>
         </div>
+
+        <div class="mb-3">
+          <label for="articleType" class="form-label">Article Type</label>
+          <select class="form-select" id="articleType" name="articleType" required>
+            <option value="">Select Type</option>
+            <option value="Research Paper" <%= publication.articleType === 'Research Paper' ? 'selected' : '' %>>Research Paper</option>
+            <option value="Review Paper" <%= publication.articleType === 'Review Paper' ? 'selected' : '' %>>Review Paper</option>
+          </select>
+          <div class="invalid-feedback">Please choose an article type.</div>
+        </div>
         
         <div class="mb-3">
           <label for="title" class="form-label">Publication Title</label>
           <input type="text" class="form-control" id="title" name="title" required value="<%= publication.title %>">
           <div class="invalid-feedback">Please provide a title.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="authorType" class="form-label">Author Type</label>
+          <select class="form-select" id="authorType" name="authorType" required>
+            <option value="">Select Type</option>
+            <option value="First" <%= publication.authorType === 'First' ? 'selected' : '' %>>First</option>
+            <option value="Corresponding" <%= publication.authorType === 'Corresponding' ? 'selected' : '' %>>Corresponding</option>
+            <option value="First & Corresponding" <%= publication.authorType === 'First & Corresponding' ? 'selected' : '' %>>First & Corresponding</option>
+            <option value="Other" <%= publication.authorType === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
+          <div class="invalid-feedback">Please choose an author type.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherAuthorType" class="form-label">Other Author Type (If "Other" selected in Author Type)</label>
+          <input type="text" class="form-control" id="otherAuthorType" name="otherAuthorType" value="<%= publication.otherAuthorType %>">
         </div>
 
         <div class="mb-3">
@@ -69,6 +96,26 @@
         <div class="mb-3">
           <label for="otherIndex" class="form-label">Other Index</label>
           <input type="text" class="form-control" id="otherIndex" name="otherIndex" value="<%= publication.otherIndex %>">
+        </div>
+
+        <div class="mb-3">
+          <label for="peerReviewed" class="form-label">Peer Reviewed</label>
+          <select class="form-select" id="peerReviewed" name="peerReviewed" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= publication.peerReviewed === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= publication.peerReviewed === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose peered reviewed.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="affiliatedAmity" class="form-label">Affiliatied with Amity</label>
+          <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= publication.affiliatedAmity === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= publication.affiliatedAmity === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose affiliation.</div>
         </div>
 
         <div class="mb-3">

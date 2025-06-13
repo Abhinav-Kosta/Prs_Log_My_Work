@@ -39,30 +39,67 @@
           <div class="col-md-6">
             <div class="mb-4">
               <h5 class="fw-bold border-bottom pb-2 mb-3">Publication Information</h5>
+
               <p class="mb-3">
                 <i class="bi bi-journal text-primary me-2"></i>
                 <strong>Journal:</strong> <%= publication.journalName %>
               </p>
+              
+              <p class="mb-3">
+                <i class="bi bi-type text-primary me-2"></i>
+                <strong>Type:</strong> <%= publication.type %>
+              </p>
+              
+              <p class="mb-3">
+                <i class="bi bi-file-earmark-text text-primary me-2"></i>
+                <strong>Article Type:</strong> <%= publication.articleType %>
+              </p>
+              
+              <p class="mb-3">
+                <i class="bi bi-person-badge text-primary me-2"></i>
+                <strong>Author Type:</strong> <%= publication.authorType %>
+                <% if (publication.authorType === 'Other' && publication.otherAuthorType) { %>
+                  <br><span class="text-muted ms-4">(<%= publication.otherAuthorType %>)</span>
+                <% } %>
+              </p>
+              
               <p class="mb-3">
                 <i class="bi bi-upc-scan text-primary me-2"></i>
                 <strong>ISSN:</strong> <%= publication.issnNumber %>
               </p>
+              
               <p class="mb-3">
                 <i class="bi bi-calendar-date text-primary me-2"></i>
                 <strong>Published:</strong> 
                 <%= publication.publicationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
               </p>
+              
               <p class="mb-3">
                 <i class="bi bi-database text-primary me-2"></i>
                 <strong>Indexed In:</strong> 
                 <span class="badge bg-<%= 
                   publication.indexedIn === 'Scopus' ? 'danger' : 
-                  publication.indexedIn === 'PubMed' ? 'primary' : 
-                  publication.indexedIn === 'Medline' ? 'success' : 'secondary'
+                  publication.indexedIn === 'SCI/SCI-E' ? 'info' :
+                  publication.indexedIn === 'UGC-CARE' ? 'success' : 
+                  'secondary'
                 %>">
                   <%= publication.indexedIn %>
                 </span>
+                <% if (publication.indexedIn === 'Other' && publication.otherIndex) { %>
+                  <span class="text-muted ms-2">(<%= publication.otherIndex %>)</span>
+                <% } %>
               </p>
+              
+              <p class="mb-3">
+                <i class="bi bi-check-circle text-primary me-2"></i>
+                <strong>Peer Reviewed:</strong> <%= publication.peerReviewed %>
+              </p>
+              
+              <p class="mb-3">
+                <i class="bi bi-building text-primary me-2"></i>
+                <strong>Affiliated with Amity:</strong> <%= publication.affiliatedAmity %>
+              </p>
+              
             </div>
           </div>
           
