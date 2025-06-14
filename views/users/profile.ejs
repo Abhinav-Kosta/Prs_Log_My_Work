@@ -1,0 +1,61 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="container mt-5">
+      <h2 class="mb-4"><i class="bi bi-person-lines-fill"></i> Edit Profile</h2>
+
+      <form action="/<%= currUser.role %>/profile?_method=PUT" method="POST" class="needs-validation" novalidate>
+        
+        <input type="hidden" name="role" value="<%= currUser.role %>">
+        
+        <div class="mb-3">
+          <label for="facultyId" class="form-label">Faculty ID (Non-editable)</label>
+          <input type="text" class="form-control" id="facultyId" name="facultyId" value="<%= currUser.facultyId %>" readonly>
+        </div>
+
+        <div class="mb-3">
+          <label for="fullname" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="fullname" name="fullname" value="<%= currUser.fullname %>" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your full name.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="designation" class="form-label">Designation</label>
+          <input type="text" class="form-control" id="designation" name="designation" value="<%= currUser.designation %>" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your designation.</div>
+        </div>
+
+        <% if (currUser.role === "faculty" || currUser.role === "hoi") { %>
+        <div class="mb-3">
+          <label for="school" class="form-label">School (Non-editable)</label>
+          <input type="text" class="form-control" id="school" name="school" value="<%= currUser.school %>" readonly>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your school.</div>
+        </div>
+        <% } %>
+
+        <% if (currUser.role === "faculty") { %>
+        <div class="mb-3">
+          <label for="department" class="form-label">Department (Non-editable)</label>
+          <input type="text" class="form-control" id="department" name="department" value="<%= currUser.department %>" readonly>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please enter your department.</div>
+        </div>
+        <% } %>
+
+        <div class="mb-3">
+          <label for="dateOfJoining" class="form-label">Date of Joining</label>
+          <input type="date" class="form-control" id="dateOfJoining" name="dateOfJoining" value="<%= currUser.dateOfJoining ? currUser.dateOfJoining.toISOString().slice(0, 10) : '' %>" required>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">Please provide your date of joining.</div>
+        </div>
+
+        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Update Profile</button>
+        <a href="/<%= currUser.role %>/dashboard" class="btn btn-secondary ms-2">Cancel</a>
+
+      </form>
+    </div>
+  </div>
+</div>

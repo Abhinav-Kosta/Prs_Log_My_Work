@@ -5,7 +5,8 @@ const Academic = require("./models/academicEvent");
 const Book = require("./models/bookChapter");
 const Award = require("./models/award");
 const Project = require("./models/projectSubmission");
-const { 
+const {
+    editUserSchema,
     patentSchema, 
     publicationSchema, 
     academicSchema, 
@@ -38,6 +39,18 @@ module.exports.isHOIOrAdmin = (req, res, next) => {
   req.flash("error", "Unauthorized access.");
   res.redirect("/");
 };
+
+module.exports.validateUser = (req, res, next) => {
+    let { error } = editUserSchema.validate(req.body);
+
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    }
+    else{
+        next();
+    }
+}
 
 module.exports.validatePatent = (req, res, next) => {
     let { error } = patentSchema.validate(req.body);

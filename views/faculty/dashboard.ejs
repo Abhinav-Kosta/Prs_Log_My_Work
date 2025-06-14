@@ -1,5 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 <body>
+  <h1 class="text-center mb-4 fw-bold">Research  Data  Management  Software</h1>
+  
   <div class="container mt-4">
       <h2>Welcome, <%= user.fullname %>!</h2>
       <p class="lead">Faculty Dashboard</p>
@@ -104,7 +106,7 @@
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
-                      <h5 class="card-title">Projects</h5>
+                      <h5 class="card-title">Projects/Consultancies</h5>
                       <p class="display-4"><%= counts.projects %></p>
                       <a href="/faculty/projects/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -140,7 +142,7 @@
           <div class="col-md-4 mb-3">
               <div class="card">
                   <div class="card-body">
-                      <h5 class="card-title">Awards</h5>
+                      <h5 class="card-title">Awards/Achievements</h5>
                       <p class="display-4"><%= counts.awards %></p>
                       <a href="/faculty/awards/<%= user._id %>?range=<%= range %>&year=<%= year %><% if (range === 'monthly') { %>&month=<%= month %><% } %><% if (range === 'quarterly') { %>&quarter=<%= quarter %><% } %><% if (range === 'half') { %>&half=<%= half %><% } %>" class="btn btn-primary">View All</a>
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

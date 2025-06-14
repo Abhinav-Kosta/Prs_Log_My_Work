@@ -45,6 +45,10 @@
             <option value="Certificate" <%= award.awardDetails === 'Certificate' ? 'selected' : '' %>>Certificate</option>
             <option value="Memento" <%= award.awardDetails === 'Memento' ? 'selected' : '' %>>Memento</option>
             <option value="Cash Prize" <%= award.awardDetails === 'Cash Prize' ? 'selected' : '' %>>Cash Prize</option>
+            <option value="Travel Grant" <%= award.awardDetails === 'Travel Grant' ? 'selected' : '' %>>Travel Grant</option>
+            <option value="Fellowship" <%= award.awardDetails === 'Fellowship' ? 'selected' : '' %>>Fellowship</option>
+            <option value="International Visit" <%= award.awardDetails === 'International Visit' ? 'selected' : '' %>>International Visit</option>
+            <option value="Best Paper Award" <%= award.awardDetails === 'Best Paper Award' ? 'selected' : '' %>>Best Paper Award</option>
             <option value="Other" <%= award.awardDetails === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
           <div class="valid-feedback">
@@ -55,12 +59,23 @@
           </div>
         </div>
 
+
         <div class="mb-3">
           <label for="otherDetail" class="form-label">Other Detail (if "other" selected above)</label>
           <input type="text" class="form-control" id="otherDetail" name="otherDetail" value="<%= award.otherDetail %>">
           <div class="valid-feedback">
             Looks good!
           </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="affiliatedAmity" class="form-label">Affiliatied with Amity</label>
+          <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= award.affiliatedAmity === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= award.affiliatedAmity === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose affiliation.</div>
         </div>
 
         <div class="mb-3">

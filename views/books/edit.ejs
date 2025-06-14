@@ -26,6 +26,23 @@
         </div>
 
         <div class="mb-3">
+          <label for="authorType" class="form-label">Author Type</label>
+          <select class="form-select" id="authorType" name="authorType" required>
+            <option value="">Select Type</option>
+            <option value="First" <%= book.authorType === 'First' ? 'selected' : '' %>>First</option>
+            <option value="Corresponding" <%= book.authorType === 'Corresponding' ? 'selected' : '' %>>Corresponding</option>
+            <option value="First & Corresponding" <%= book.authorType === 'First & Corresponding' ? 'selected' : '' %>>First & Corresponding</option>
+            <option value="Other" <%= book.authorType === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
+          <div class="invalid-feedback">Please choose an author type.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="otherAuthorType" class="form-label">Other Author Type (If "Other" selected in Author Type)</label>
+          <input type="text" class="form-control" id="otherAuthorType" name="otherAuthorType" value="<%= book.otherAuthorType %>">
+        </div>
+
+        <div class="mb-3">
           <label for="publicationDate" class="form-label">Publication Date</label>
           <input type="date" class="form-control" id="publicationDate" name="publicationDate" value="<%= book.publicationDate.toISOString().split('T')[0] %>" required>
           <div class="valid-feedback">
@@ -46,6 +63,26 @@
           <label for="publisher" class="form-label">Publisher</label>
           <input type="text" class="form-control" id="publisher" name="publisher" value="<%= book.publisher %>">
           <div class="form-text">Optional</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="peerReviewed" class="form-label">Peer Reviewed</label>
+          <select class="form-select" id="peerReviewed" name="peerReviewed" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= book.peerReviewed === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= book.peerReviewed === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose peered reviewed.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="affiliatedAmity" class="form-label">Affiliatied with Amity</label>
+          <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= book.affiliatedAmity === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= book.affiliatedAmity === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose affiliation.</div>
         </div>
 
         <div class="mb-3">

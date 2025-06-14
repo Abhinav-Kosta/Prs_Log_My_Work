@@ -20,6 +20,7 @@ const { isLoggedIn,
     isBookOwner,
     isAwardOwner,
     isProjectOwner,
+    validateUser,
     validatePatent, 
     validatePublication, 
     validateAcademic,
@@ -31,6 +32,8 @@ const { isLoggedIn,
 router.get("/new", (req, res) => {
     res.render("record.ejs");
 })
+
+router.put("/profile", isLoggedIn, validateUser, wrapAsync(facultyController.editProfile));
 
 router.get("/dashboard", wrapAsync(facultyController.dashboard));
 

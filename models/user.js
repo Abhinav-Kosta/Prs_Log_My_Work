@@ -30,6 +30,9 @@ const userSchema = new mongoose.Schema({
     required: function () {
       return this.role === "faculty";
     }
+  },
+  dateOfJoining: {
+    type: Date,
   }
 });
 

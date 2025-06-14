@@ -1,5 +1,24 @@
 const Joi = require("joi");
 
+module.exports.editUserSchema = Joi.object({
+  fullname: Joi.string().required(),
+  designation: Joi.string().required(),
+  school: Joi.when('role', {
+    is: Joi.valid('faculty', 'hoi'),
+    then: Joi.string().required(),
+    otherwise: Joi.string().optional()
+  }),
+  department: Joi.when('role', {
+    is: 'faculty',
+    then: Joi.string().required(),
+    otherwise: Joi.string().optional()
+  }),
+  dateOfJoining: Joi.date().required(),
+  // facultyId is readonly on the frontend and not expected to be changed, but you can still allow it for internal consistency
+  facultyId: Joi.string().required(),
+  role: Joi.string().valid('faculty', 'hoi', 'admin').required()
+});
+
 module.exports.patentSchema = Joi.object({
   variety: Joi.string().valid("Patent", "Copyright").required(),
   title: Joi.string().required(),
@@ -61,9 +80,13 @@ module.exports.academicSchema = Joi.object({
 module.exports.bookSchema = Joi.object({
   type: Joi.string().valid("Book", "Book Chapters").required(),
   title: Joi.string().required(),
+  authorType: Joi.string().valid("First", "Corresponding", "First & Corresponding", "Other").required(),
+  otherAuthorType: Joi.string().allow(''),
   publicationDate: Joi.date().required(),
   isbn: Joi.string().required(),
   publisher: Joi.string().required(),
+  peerReviewed: Joi.string().valid("Yes", "No").required(),
+  affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
   link: Joi.string().uri().required(),
   proof: Joi.any()
 });
@@ -72,13 +95,24 @@ module.exports.awardSchema = Joi.object({
   date: Joi.date().required(),
   awardTitle: Joi.string().required(),
   awardingAgency: Joi.string().required(),
-  awardDetails: Joi.string().valid("Certificate", "Memento", "Cash Prize", "Other"),
+  awardDetails: Joi.string().valid(
+    "Certificate", 
+    "Memento", 
+    "Cash Prize", 
+    "Travel Grant",
+    "Fellowship", 
+    "International Visit",
+    "Best Paper Award",
+    "Other",
+  ),
   otherDetail: Joi.string().allow(''),
+  affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
   proof: Joi.any()
 }); 
 
 module.exports.projectSchema = Joi.object({
   title: Joi.string().required(),
+  type: Joi.string().valid("Project", "Consultancies").required(),
   piOrCoPi: Joi.string().valid("PI", "Co-PI", "Other").required(),
   otherRole: Joi.string().allow(''),
   fundingAgency: Joi.string().required(),

@@ -493,6 +493,7 @@ module.exports.renderNew = async (req, res) => {
 module.exports.create = async (req, res) => {
   const {
       title,
+      type,
       piOrCoPi,
       fundingAgency,
       dateOfSubmission,
@@ -526,6 +527,7 @@ module.exports.create = async (req, res) => {
   const newProject = new Project({
       user: req.user._id,
       title,
+      type,
       piOrCoPi,
       fundingAgency,
       dateOfSubmission,

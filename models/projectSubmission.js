@@ -6,6 +6,11 @@ const projectSubmissionSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  type: {
+    type: String,
+    enum: ['Project', 'Consultancies'],
+    required: true,
+  },
   title: {
     type: String,
     required: true

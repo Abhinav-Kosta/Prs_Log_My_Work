@@ -6,6 +6,16 @@
       <form action="/<%= currUser.role %>/projects" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
 
         <div class="mb-3">
+          <label for="type" class="form-label">Type</label>
+          <select class="form-select" id="type" name="type" required>
+            <option value="">Select</option>
+            <option value="Project">Project</option>
+            <option value="Consultancies">Consultancies</option>
+          </select>
+          <div class="invalid-feedback">Please choose a type.</div>
+        </div>
+
+        <div class="mb-3">
           <label for="title" class="form-label">Project Title</label>
           <input type="text" class="form-control" id="title" name="title" required>
           <div class="valid-feedback">Looks good!</div>

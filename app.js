@@ -114,6 +114,13 @@ app.get("/developed", (req, res) => {
     res.render("developed.ejs");
 })
 
+app.get("/profile", (req,res) => {
+    if(!req.isAuthenticated()){
+        req.flash("error", "You must be logged in to view this page!");
+        return res.redirect("/login/faculty");
+    }
+    res.render("users/profile.ejs");
+})
 
 // app.all("*", (req, res, next) => {
 //     next(new ExpressError(404, "Page not found!"));

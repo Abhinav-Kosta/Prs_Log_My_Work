@@ -475,7 +475,17 @@ module.exports.renderNew = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
-    const { type, title, isbn, publisher, publicationDate } = req.body;
+    const { 
+      type, 
+      title,
+      authorType, 
+      otherAuthorType, 
+      isbn, 
+      publisher, 
+      publicationDate,
+      peerReviewed,
+      affiliatedAmity,
+    } = req.body;
 
     // Normalize the title: include special character case handler
     function escapeRegExp(string) {
@@ -502,11 +512,15 @@ module.exports.create = async (req, res) => {
 
     const newBook = new Book({
       user: req.user._id,
-      type,
+      type, 
       title,
-      isbn,
-      publisher,
-      publicationDate
+      authorType, 
+      otherAuthorType, 
+      isbn, 
+      publisher, 
+      publicationDate,
+      peerReviewed,
+      affiliatedAmity,
     });
 
     // Handle Cloudinary file upload (PDF)

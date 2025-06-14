@@ -15,6 +15,14 @@ const bookChapterSchema = new mongoose.Schema({
     type: String,
     required: true // assuming title is essential
   },
+  authorType: {
+    type: String,
+    enum: ["First", "Corresponding", "First & Corresponding", "Other"],
+    required: true,
+  },
+  otherAuthorType: {
+    type: String
+  },
   publicationDate: {
     type: Date,
     required: true
@@ -24,6 +32,16 @@ const bookChapterSchema = new mongoose.Schema({
   },
   publisher: {
     type: String
+  },
+  peerReviewed: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true,
+  },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
   },
   link: {
     type: String

@@ -20,11 +20,25 @@ const awardSchema = new mongoose.Schema({
   },
   awardDetails: {
     type: String,
-    enum: ['Certificate', 'Memento', 'Cash Prize', 'Other'],
+    enum: [
+      'Certificate', 
+      'Memento', 
+      'Cash Prize', 
+      'Travel Grant',
+      'Fellowship', 
+      'International Visit',
+      'Best Paper Award',
+      'Other'
+    ],
     required: true
   },
   otherDetail: {
     type: String,
+  },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
   },
   proof: {
     url: String,        // Cloudinary secure URL

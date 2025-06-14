@@ -1,7 +1,18 @@
 const { getUserStats } = require("./stats.js");
+const User = require("../models/user.js");
 const ExcelJS = require('exceljs');
 
-module .exports.dashboard = async (req, res) => {
+module.exports.editProfile = async (req, res) => {
+  const updatedData = { ...req.body };
+
+  // Find and update the user
+  await User.findByIdAndUpdate(req.user._id, updatedData, { new: true });
+
+  req.flash("success", "Profile edited successfully");
+  res.redirect(`/${req.user.role}/dashboard`);
+}
+
+module.exports.dashboard = async (req, res) => {
     // const range = req.query.range || 'all';
     // const month = parseInt(req.query.month);
     // const year = parseInt(req.query.year); 
