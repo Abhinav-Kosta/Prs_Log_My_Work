@@ -477,6 +477,7 @@ module.exports.create = async (req, res) => {
       awardTitle,
       awardingAgency,
       awardDetails,
+      otherDetail,
       date,
       affiliatedAmity,
   } = req.body;
@@ -509,6 +510,7 @@ module.exports.create = async (req, res) => {
       awardTitle,
       awardingAgency,
       awardDetails,
+      otherDetail,
       affiliatedAmity,
       date,
   });

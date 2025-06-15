@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 <div class="row">
     <div class="col-8 offset-2">
-        <div class="container mt-5">
+        <div class="container">
           <h2 class="mb-4"><i class="bi bi-lightbulb"></i> New Patent Entry</h2>
           <form action="/<%= currUser.role %>/patents" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
             
@@ -100,6 +100,16 @@
             </div>
 
             <div class="mb-3">
+                <label for="affiliatedAmity" class="form-label">Affiliated with Amity</label>
+                <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+                  <option value="">Select</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+                <div class="invalid-feedback">Please choose affiliation.</div>
+            </div>
+
+            <div class="mb-3">
                 <label for="proof" class="form-label">Proof</label>
                 <input type="file" class="form-control" id="proof" name="proof" accept="application/pdf" required>
                 <small class="form-text text-muted">Upload PDF file under 2MB.</small>
@@ -140,3 +150,11 @@
         </div>
     </div>
 </div>
+<script src="/js/proof.js"></script>
+<script src="/js/otherField.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setupConditionalField("specificationType", "otherSpec");
+    setupConditionalField("remarks", "otherRemark");
+  });
+</script>

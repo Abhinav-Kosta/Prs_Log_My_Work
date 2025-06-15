@@ -27,9 +27,18 @@ module.exports.patentSchema = Joi.object({
   applicationNo: Joi.string().required(),
   dateOfFiling: Joi.date().required(),
   specificationType: Joi.string().valid("Provisional", "Complete", "Other").required(),
-  otherSpec: Joi.string().allow(''),
+  otherSpec: Joi.when("specificationType", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   remarks: Joi.string().valid("Filed", "Awarded", "Published", "Granted", "Other").required(),
-  otherRemark: Joi.string().allow(''),
+  otherRemark: Joi.when("remarks", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
+  affiliatedAmity: Joi.string().valid("Yes", "No").required(),
   proof: Joi.any()
 });
 
@@ -38,7 +47,11 @@ module.exports.publicationSchema = Joi.object({
   articleType: Joi.string().valid("Research Paper", "Review Paper").required(),
   title: Joi.string().required(),
   authorType: Joi.string().valid("First", "Corresponding", "First & Corresponding", "Other").required(),
-  otherAuthorType: Joi.string().allow(''),
+  otherAuthorType: Joi.when("authorType", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   coAuthors: Joi.string().allow(''), // optional, can be empty string or comma-separated
   journalName: Joi.string().required(),
   issnNumber: Joi.string().allow(''), // optional
@@ -46,7 +59,11 @@ module.exports.publicationSchema = Joi.object({
   volume: Joi.string().allow(''), // optional
   pageNumber: Joi.string().allow(''), // optional
   indexedIn: Joi.string().valid("Scopus", "SCI/SCI-E", "UGC-CARE", "Other", "None").required(),
-  otherIndex: Joi.string().allow(''),
+  otherIndex: Joi.when("indexedIn", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   peerReviewed: Joi.string().valid("Yes", "No").required(),
   affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
   link: Joi.string().uri().allow(''), // optional, must be valid URL if provided
@@ -58,7 +75,11 @@ module.exports.academicSchema = Joi.object({
   titleOfPaperPresented: Joi.string().required(),
   type: Joi.string().valid("Conference", "Workshop", "Seminar", "Symposia", "FDP", "Other").required(),
   eventName: Joi.string().required(),
-  otherEvent: Joi.string().allow(''),
+  otherEvent: Joi.when("type", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   sponsoredBy: Joi.string().required(),
   date: Joi.date().required(),
   venue: Joi.string().required(),
@@ -72,8 +93,13 @@ module.exports.academicSchema = Joi.object({
       "Delegate",
       "Other"
     ).required(),
-  otherPart: Joi.string().allow(''),
+  otherPart: Joi.when("participationType", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   duration: Joi.string().required(),
+  affiliatedAmity: Joi.string().valid("Yes", "No").required(),
   proof: Joi.any()
 });
 
@@ -81,12 +107,16 @@ module.exports.bookSchema = Joi.object({
   type: Joi.string().valid("Book", "Book Chapters").required(),
   title: Joi.string().required(),
   authorType: Joi.string().valid("First", "Corresponding", "First & Corresponding", "Other").required(),
-  otherAuthorType: Joi.string().allow(''),
+  otherAuthorType: Joi.when("authorType", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   publicationDate: Joi.date().required(),
   isbn: Joi.string().required(),
   publisher: Joi.string().required(),
   peerReviewed: Joi.string().valid("Yes", "No").required(),
-  affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
+  affiliatedAmity: Joi.string().valid("Yes", "No").required(),
   link: Joi.string().uri().required(),
   proof: Joi.any()
 });
@@ -105,8 +135,12 @@ module.exports.awardSchema = Joi.object({
     "Best Paper Award",
     "Other",
   ),
-  otherDetail: Joi.string().allow(''),
-  affiliatedAmity: Joi.string().valid("Yes", "No"). required(),
+  otherDetail: Joi.when("awardDetails", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
+  affiliatedAmity: Joi.string().valid("Yes", "No").required(),
   proof: Joi.any()
 }); 
 
@@ -114,11 +148,16 @@ module.exports.projectSchema = Joi.object({
   title: Joi.string().required(),
   type: Joi.string().valid("Project", "Consultancies").required(),
   piOrCoPi: Joi.string().valid("PI", "Co-PI", "Other").required(),
-  otherRole: Joi.string().allow(''),
+  otherRole: Joi.when("piOrCoPi", {
+    is: "Other",
+    then: Joi.string().required(),
+    otherwise: Joi.string().allow(""),
+  }),
   fundingAgency: Joi.string().required(),
   dateOfSubmission: Joi.date().required(),
   fundRequestedLacs: Joi.number().required(),
   durationYears: Joi.number().required(),
+  affiliatedAmity: Joi.string().valid("Yes", "No").required(),
   remarks: Joi.string().allow(''),
   proof: Joi.any()
 })

@@ -495,10 +495,12 @@ module.exports.create = async (req, res) => {
       title,
       type,
       piOrCoPi,
+      otherRole,
       fundingAgency,
       dateOfSubmission,
       fundRequestedLacs,
       durationYears,
+      affiliatedAmity,
       remarks
   } = req.body;
 
@@ -529,10 +531,12 @@ module.exports.create = async (req, res) => {
       title,
       type,
       piOrCoPi,
+      otherRole,
       fundingAgency,
       dateOfSubmission,
       fundRequestedLacs,
       durationYears,
+      affiliatedAmity,
       remarks
   });
 

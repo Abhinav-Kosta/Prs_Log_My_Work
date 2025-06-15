@@ -39,6 +39,11 @@ const projectSubmissionSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
+  },
   remarks: {
     type: String
   },

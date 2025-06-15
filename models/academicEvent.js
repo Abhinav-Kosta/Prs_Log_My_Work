@@ -51,6 +51,11 @@ const academicEventSchema = new mongoose.Schema({
   otherPart: {
     type: String
   },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
+  },
   duration: {
     type: String
   },

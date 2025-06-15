@@ -491,7 +491,19 @@ module.exports.renderNew = async (req, res) => {
 }
 
 module.exports.create = async (req, res) => {
-    const { variety, title, type, patentFileNo, applicationNo, dateOfFiling, specificationType, remarks } = req.body;
+    const { 
+      variety,
+      title, 
+      type, 
+      patentFileNo, 
+      applicationNo, 
+      dateOfFiling, 
+      specificationType,
+      otherSpec, 
+      remarks,
+      otherRemark,
+      affiliatedAmity
+    } = req.body;
 
     // Normalize the title: remove spaces and convert to lowercase
     function escapeRegExp(string) {
@@ -525,7 +537,10 @@ module.exports.create = async (req, res) => {
         applicationNo,
         dateOfFiling,
         specificationType,
-        remarks
+        otherSpec,
+        remarks,
+        otherRemark,
+        affiliatedAmity
     });
 
     // Handle Cloudinary file upload (PDF)

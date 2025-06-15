@@ -50,6 +50,11 @@
                   <%= academic.participationType %>
                 </span>
               </p>
+              <p class="mb-3">
+                <i class="bi bi-university text-primary me-2"></i>
+                <strong>Affiliated with Amity:</strong>
+                 <%= academic.affiliatedAmity %>
+              </p>
             </div>
           </div>
           
@@ -98,6 +103,7 @@
             <i class="bi bi-pencil"></i> Edit Event
           </a>
           
+          <!-- Temporarily disabling delete button in all
           <button class="btn btn-danger"
                   data-id="<%= academic._id %>"
                   data-role="<%= user.role %>"
@@ -106,7 +112,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#deleteModal">
             Delete
-          </button>
+          </button> -->
 
           <%- include("../includes/deletePasswordModal") %>
           

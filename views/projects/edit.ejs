@@ -70,6 +70,16 @@
         </div>
 
         <div class="mb-3">
+          <label for="affiliatedAmity" class="form-label">Affiliatied with Amity</label>
+          <select class="form-select" id="affiliatedAmity" name="affiliatedAmity" required>
+            <option value="">Select Type</option>
+            <option value="Yes" <%= project.affiliatedAmity === 'Yes' ? 'selected' : '' %>>Yes</option>
+            <option value="No" <%= project.affiliatedAmity === 'No' ? 'selected' : '' %>>No</option>
+          </select>
+          <div class="invalid-feedback">Please choose affiliation.</div>
+        </div>
+
+        <div class="mb-3">
           <label for="remarks" class="form-label">Remarks (Optional)</label>
           <textarea class="form-control" id="remarks" name="remarks" rows="3"><%= project.remarks || '' %></textarea>
         </div>
@@ -87,3 +97,10 @@
     </div>
   </div>
 </div>
+<script src="/js/proof.js"></script>
+<script src="/js/otherField.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setupConditionalField("piOrCoPi", "otherRole");
+  });
+</script>

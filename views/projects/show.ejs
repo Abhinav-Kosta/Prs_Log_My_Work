@@ -53,6 +53,11 @@
                 <i class="bi bi-building text-primary me-2"></i>
                 <strong>Funding Agency:</strong> <%= project.fundingAgency %>
               </p>
+              <p class="mb-3">
+                <i class="bi bi-university text-primary me-2"></i>
+                <strong>Affiliated with Amity:</strong>
+                <%= project.affiliatedAmity %>
+              </p>
             </div>
           </div>
           
@@ -120,7 +125,7 @@
             <i class="bi bi-pencil"></i> Edit Project
           </a>
           
-          <button class="btn btn-danger"
+          <!-- <button class="btn btn-danger"
                   data-id="<%= project._id %>"
                   data-role="<%= user.role %>"
                   data-collection="projects"
@@ -128,7 +133,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#deleteModal">
             Delete
-          </button>
+          </button> -->
 
           <%- include("../includes/deletePasswordModal") %>
           

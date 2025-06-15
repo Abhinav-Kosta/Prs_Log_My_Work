@@ -48,6 +48,11 @@ const patentSchema = new mongoose.Schema({
   otherRemark: {
     type: String,
   },
+  affiliatedAmity: {
+    type: String,
+    enum: ["Yes", "No"],
+    required: true
+  },
   proof: {
     url: String,        // Cloudinary secure URL
     filename: String    // Cloudinary public_id or original filename

@@ -50,6 +50,11 @@
                 <i class="bi bi-file-earmark-text text-primary me-2"></i>
                 <strong>Application No:</strong> <%= patent.applicationNo %>
               </p>
+              <p class="mb-3">
+                <i class="bi bi-university text-primary me-2"></i>
+                <strong>Affiliated with Amity:</strong>
+                <%= patent.affiliatedAmity %>
+              </p>
             </div>
           </div>
           
@@ -109,7 +114,7 @@
             <i class="bi bi-pencil"></i> Edit Patent
           </a>
           
-          <button class="btn btn-danger"
+          <!-- <button class="btn btn-danger"
                   data-id="<%= patent._id %>"
                   data-role="<%= user.role %>"
                   data-collection="patents"
@@ -117,7 +122,7 @@
                   data-bs-toggle="modal"
                   data-bs-target="#deleteModal">
             Delete
-          </button>
+          </button> -->
 
           <%- include("../includes/deletePasswordModal") %>
           

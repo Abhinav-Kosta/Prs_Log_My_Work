@@ -491,12 +491,16 @@ module.exports.renderNew = async (req, res) => {
 module.exports.create = async (req, res) => {
   const {
       type,
+      otherEvent,
       titleOfPaperPresented,
       eventName,
       sponsoredBy,
       date,
       venue,
+      duration,
+      affiliatedAmity,
       participationType,
+      otherPart
   } = req.body;
 
   // Normalize the title: include special character case handler
@@ -504,7 +508,7 @@ module.exports.create = async (req, res) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  const escapedTitle = escapeRegExp(title.trim());
+  const escapedTitle = escapeRegExp(titleOfPaperPresented.trim());
   // Normalize the title: remove spaces and convert to lowercase
   const normalizedRegex = new RegExp(
     `^\\s*${escapedTitle.replace(/\s+/g, '\\s*')}\\s*$`,
@@ -525,12 +529,16 @@ module.exports.create = async (req, res) => {
   const newAcademic = new Academic({
       user: req.user._id,
       type,
+      otherEvent,
       titleOfPaperPresented,
       eventName,
       sponsoredBy,
       date,
       venue,
       participationType,
+      duration,
+      affiliatedAmity,
+      otherPart
   });
 
   if (req.file) {
